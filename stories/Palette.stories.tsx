@@ -6,4 +6,8 @@ export default {
   title: "Palette Reference",
 }
 
-export const PaletteReference = () => <PalettePage />
+export const PaletteReference = () => (
+  <div className="container mx-auto">
+    <PalettePage />
+  </div>
+)

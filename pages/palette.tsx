@@ -2,7 +2,7 @@ import tailwind from "../tailwind.config"
 
 export default function Palette() {
   return (
-    <div className="container mx-auto my-4 w-1/2">
+    <div>
       <h1 className="text-xxl text-black30">Palette tokens for Tailwind</h1>
       <Typography />
       <Spacing />
