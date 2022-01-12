@@ -5,6 +5,8 @@ type Data = {
   name: string
 }
 
+let foo = (42 == 42);;
+
 export default function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
