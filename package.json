@@ -8,7 +8,8 @@
     "lint": "next lint --fix",
     "format": "prettier --write \"{pages,components,lib}/**/*.ts{,x}\"",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "prepare": "husky install"
   },
   "dependencies": {
     "next": "12.0.7",
@@ -35,6 +36,7 @@
     "eslint-config-next": "12.0.7",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-storybook": "^0.5.5",
+    "husky": "^7.0.4",
     "lint-staged": "11",
     "postcss": "^8.4.5",
     "prettier": "2.5.1",
