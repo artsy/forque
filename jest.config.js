@@ -6,4 +6,9 @@ module.exports = {
     "/node_modules/",
     "/cypress"
   ],
+  globals: {
+    "ts-jest": {
+      tsconfig: "tsconfig.jest.json"
+    }
+  }
 };
