@@ -1,8 +1,9 @@
+import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import Hello from "../components/Hello";
 
-export default function Home() {
+const Home: NextPage = () => {
   return (
     <div className="container mx-auto py-10 w-6/12">
       <Head>
@@ -69,3 +70,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default Home
