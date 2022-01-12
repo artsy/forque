@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Hello from "../components/Hello";
 
 export default function Home() {
   return (
@@ -63,6 +64,8 @@ export default function Home() {
           </span>
         </a>
       </footer>
+
+      <Hello />
     </div>
   )
 }
