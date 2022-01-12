@@ -9,5 +9,6 @@ module.exports = {
     "plugin:storybook/recommended",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
+    "prettier"
   ]
 }
