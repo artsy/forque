@@ -1,7 +1,7 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import Hello from "../components/Hello";
+import type { NextPage } from "next"
+import Head from "next/head"
+import Image from "next/image"
+import Hello from "../components/Hello"
 
 const Home: NextPage = () => {
   return (
@@ -18,17 +18,22 @@ const Home: NextPage = () => {
         </h1>
 
         <p className="text-xl my-10">
-          Get started by editing{' '}
-          <code className="">pages/index.js</code>
+          Get started by editing <code className="">pages/index.js</code>
         </p>
 
         <div className="">
-          <a href="https://nextjs.org/docs" className="inline-block w-4/12 mr-10 mb-10 p-8 text-left border-2 border-gray-400 rounded-lg">
+          <a
+            href="https://nextjs.org/docs"
+            className="inline-block w-4/12 mr-10 mb-10 p-8 text-left border-2 border-gray-400 rounded-lg"
+          >
             <h2 className="text-lg mb-4 font-bold">Documentation &rarr;</h2>
             <p>Find in-depth information about Next.js features and API.</p>
           </a>
 
-          <a href="https://nextjs.org/learn" className="inline-block w-4/12 mr-10 mb-10 p-8 text-left border-2 border-gray-400 rounded-lg">
+          <a
+            href="https://nextjs.org/learn"
+            className="inline-block w-4/12 mr-10 mb-10 p-8 text-left border-2 border-gray-400 rounded-lg"
+          >
             <h2 className="text-lg mb-4 font-bold">Learn &rarr;</h2>
             <p>Learn about Next.js in an interactive course with quizzes!</p>
           </a>
@@ -59,7 +64,7 @@ const Home: NextPage = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <span className="">
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
