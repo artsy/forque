@@ -5,7 +5,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint --fix",
+    "format": "prettier --write \"{pages,components,lib}/**/*.ts{,x}\"",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
