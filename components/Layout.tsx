@@ -11,7 +11,7 @@ export const Layout: React.FC = ({ children }) => {
       <header>
         <GlobalNav user={user} />
       </header>
-      <main className="container mx-auto py-6 w-6/12">{children}</main>
+      <main className="container mx-auto p-2 sm:py-4">{children}</main>
     </>
   ) : (
     <LoginForm />

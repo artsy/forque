@@ -12,12 +12,14 @@ function getTailwindFontSizes(textVariants) {
   return fontSizeMap
 }
 
+
 const tailwindCompatibleTheme = {
   fontFamily: {
     ...paletteTokensV3.fonts,
   },
   fontSize: {
     ...getTailwindFontSizes(paletteTokensV3.textVariants),
+    std: ["20px", { lineHeight: "1.33" }],
   },
   spacing: {
     0: "0px",
@@ -27,6 +29,8 @@ const tailwindCompatibleTheme = {
     ...paletteTokensV3.colors,
   },
 }
+
+console.log(tailwindCompatibleTheme)
 
 module.exports = {
   content: ["./{pages,components}/**/*.{js,ts,jsx,tsx}"],
