@@ -27,6 +27,7 @@ const tailwindCompatibleTheme = {
   },
   colors: {
     ...paletteTokensV3.colors,
+    'black50': '#999'
   },
 }
 
