@@ -11,5 +11,10 @@ module.exports = {
     "plugin:testing-library/react",
     "plugin:jest-dom/recommended",
   ],
-  rules: {},
+  rules: {
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { vars: "all", varsIgnorePattern: "^_" },
+    ],
+  },
 }
