@@ -1,7 +1,7 @@
 import React from "react"
 import Link from "next/link"
 import { parseISO, formatDistanceToNow } from "date-fns"
-import { RecentArtist } from "../../../pages/artists/dedupe"
+import type { RecentArtist } from "../../../../pages/artists/dedupe/index"
 
 interface Props {
   artists: RecentArtist[]
