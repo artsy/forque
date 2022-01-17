@@ -12,10 +12,10 @@ function getTailwindFontSizes(textVariants) {
   return fontSizeMap
 }
 
-
 const tailwindCompatibleTheme = {
   fontFamily: {
     ...paletteTokensV3.fonts,
+    mono: "monospace",
   },
   fontSize: {
     ...getTailwindFontSizes(paletteTokensV3.textVariants),
@@ -27,11 +27,11 @@ const tailwindCompatibleTheme = {
   },
   colors: {
     ...paletteTokensV3.colors,
-    'black50': '#999'
+    black50: "#999",
+    green5: "hsl(100,50%,97%)",
+    red5: "hsl(0,50%,97%)",
   },
 }
-
-console.log(tailwindCompatibleTheme)
 
 module.exports = {
   content: ["./{pages,components}/**/*.{js,ts,jsx,tsx}"],

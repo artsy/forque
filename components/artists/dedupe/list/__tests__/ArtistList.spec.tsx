@@ -1,8 +1,7 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
-import "@testing-library/jest-dom"
 
-import { ArtistList } from "./ArtistList"
+import { ArtistList } from "../ArtistList"
 
 it("renders artists, links and info", () => {
   const artists = [
