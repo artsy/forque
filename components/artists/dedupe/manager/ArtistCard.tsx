@@ -22,7 +22,7 @@ interface Props {
   dispatch?: Dispatch<Action>
 }
 
-/** The different affordances the card can offer: select whole record, or select invidual fields.  */
+/** The different affordances the card can offer: select whole record, or select individual fields.  */
 export type ArtistCardMode = "select records" | "select fields"
 
 /**

@@ -6,6 +6,8 @@ import { State } from "./state"
 
 /**
  * Lil helper for examining the app's current state as well as its original incoming data (the artist prop)
+ *
+ * Can be activated by appending ?debug to the url
  */
 export const Debug = ({ artist, state }: { artist: Artist; state: State }) => {
   const router = useRouter()

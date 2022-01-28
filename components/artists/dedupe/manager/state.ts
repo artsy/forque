@@ -7,7 +7,7 @@ export type State = {
   /** The current step in the wizard-style dedupe process */
   currentStep: Step
 
-  /** The Artist record for which are managing dupes */
+  /** The Artist record for which we are managing dupes */
   artist: Artist | null
 
   /** The cluster of dupes for this Artist (may include the Artist record itself) */
