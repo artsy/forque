@@ -19,6 +19,10 @@ export type Artist = {
   deathday: string
   hometown: string
   location: string
+  counts: {
+    artworks: number
+    follows: number
+  }
 }
 
 /** An Artist record that also contains a list of potential dupes for that record. */

@@ -1,8 +1,8 @@
 import { useRouter } from "next/router"
 
-import { ArtistDupesManager } from "../../../components/artists/dedupe/manager/ArtistDupesManager"
 import { useMetaphysics } from "../../../lib/artsy-next-auth"
 import type { ArtistWithDupes } from "../../../components/artists/dedupe/types"
+import { ArtistDupesManager } from "../../../components/artists/dedupe/manager/ArtistDupesManager"
 
 export default function Page() {
   const router = useRouter()
@@ -29,7 +29,11 @@ export default function Page() {
         deathday
         hometown
         location
-    }
+        counts {
+          artworks
+          follows
+        }
+      }
     `,
     {
       id: slug,
