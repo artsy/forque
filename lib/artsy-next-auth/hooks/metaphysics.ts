@@ -24,6 +24,9 @@ const metaphysicsFetcher = async (
   const json = await response.json()
   const { data, _errors } = json // TODO: errors
 
+  // uncomment to simulate delay
+  // await new Promise<void>((resolve) => setTimeout(() => resolve(), 1000))
+
   return data
 }
 

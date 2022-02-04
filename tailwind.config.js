@@ -15,9 +15,11 @@ function getTailwindFontSizes(textVariants) {
 const tailwindCompatibleTheme = {
   fontFamily: {
     ...paletteTokensV3.fonts,
+    mono: "monospace",
   },
   fontSize: {
     ...getTailwindFontSizes(paletteTokensV3.textVariants),
+    std: ["20px", { lineHeight: "1.33" }],
   },
   spacing: {
     0: "0px",
@@ -25,6 +27,9 @@ const tailwindCompatibleTheme = {
   },
   colors: {
     ...paletteTokensV3.colors,
+    black50: "#999",
+    green5: "hsl(100,50%,97%)",
+    red5: "hsl(0,50%,97%)",
   },
 }
 
