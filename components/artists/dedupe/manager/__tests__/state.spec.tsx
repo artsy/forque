@@ -112,6 +112,42 @@ describe("actions", () => {
       expect(state.overrides.nationality).toEqual("foobar")
     })
   })
+
+  describe("add value", () => {
+    it("marks a record as adding to the given field", () => {
+      const previousState: State = initialState
+      const action: Action = {
+        type: "add value",
+        fieldName: "follows",
+        recordId: "foobar",
+      }
+
+      const state = reducer(previousState, action)
+
+      expect(state.additions.follows).toContain("foobar")
+    })
+  })
+
+  describe("remove value", () => {
+    it("unmarks a record as adding to the given field", () => {
+      const previousState: State = {
+        ...initialState,
+        additions: {
+          ...initialState.additions,
+          follows: ["foobar"],
+        },
+      }
+      const action: Action = {
+        type: "remove value",
+        fieldName: "follows",
+        recordId: "foobar",
+      }
+
+      const state = reducer(previousState, action)
+
+      expect(state.additions.follows).not.toContain("foobar")
+    })
+  })
 })
 
 describe(getRecordStatus, () => {

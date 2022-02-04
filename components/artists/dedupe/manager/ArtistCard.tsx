@@ -2,7 +2,7 @@ import React, { Dispatch } from "react"
 
 import { Artist } from "../types"
 import { Action, RecordStatus, State } from "./state"
-import { ArtistCardField } from "./ArtistCardField"
+import { ArtistCardField, FieldType } from "./ArtistCardField"
 import { ArtistCardHeader } from "./ArtistCardHeader"
 
 interface Props {
@@ -17,6 +17,9 @@ interface Props {
 
   /** Overrides to values in the good record */
   overrides?: State["overrides"]
+
+  /** Addditions to values in the good record */
+  additions?: State["additions"]
 
   /** Top-level dispatch function. */
   dispatch?: Dispatch<Action>
@@ -36,7 +39,7 @@ export type ArtistCardMode = "select records" | "select fields"
  */
 
 export const ArtistCard: React.FC<Props> = (props) => {
-  const { artist, recordStatus, mode, overrides, dispatch } = props
+  const { artist, recordStatus, mode, overrides, additions, dispatch } = props
 
   return (
     <div className="[min-width:15em]">
@@ -48,6 +51,7 @@ export const ArtistCard: React.FC<Props> = (props) => {
       <ArtistCardField
         fieldName="gender"
         fieldValue={artist.gender}
+        fieldType={FieldType.SINGLE}
         mode={mode}
         overrides={overrides}
         recordId={artist.internalID}
@@ -58,6 +62,7 @@ export const ArtistCard: React.FC<Props> = (props) => {
       <ArtistCardField
         fieldName="nationality"
         fieldValue={artist.nationality}
+        fieldType={FieldType.SINGLE}
         mode={mode}
         overrides={overrides}
         recordId={artist.internalID}
@@ -68,6 +73,7 @@ export const ArtistCard: React.FC<Props> = (props) => {
       <ArtistCardField
         fieldName="birthday"
         fieldValue={artist.birthday}
+        fieldType={FieldType.SINGLE}
         mode={mode}
         overrides={overrides}
         recordId={artist.internalID}
@@ -78,6 +84,7 @@ export const ArtistCard: React.FC<Props> = (props) => {
       <ArtistCardField
         fieldName="deathday"
         fieldValue={artist.deathday}
+        fieldType={FieldType.SINGLE}
         mode={mode}
         overrides={overrides}
         recordId={artist.internalID}
@@ -88,6 +95,7 @@ export const ArtistCard: React.FC<Props> = (props) => {
       <ArtistCardField
         fieldName="hometown"
         fieldValue={artist.hometown}
+        fieldType={FieldType.SINGLE}
         mode={mode}
         overrides={overrides}
         recordId={artist.internalID}
@@ -98,8 +106,33 @@ export const ArtistCard: React.FC<Props> = (props) => {
       <ArtistCardField
         fieldName="location"
         fieldValue={artist.location}
+        fieldType={FieldType.SINGLE}
         mode={mode}
         overrides={overrides}
+        recordId={artist.internalID}
+        recordStatus={recordStatus || RecordStatus.UNKNOWN}
+        dispatch={dispatch}
+      />
+
+      <div className={`p-0.5 border border-black30 bg-black30`} />
+
+      <ArtistCardField
+        fieldName="artworks"
+        fieldValue={artist.counts.artworks}
+        fieldType={FieldType.MULTIPLE}
+        mode={mode}
+        additions={additions}
+        recordId={artist.internalID}
+        recordStatus={recordStatus || RecordStatus.UNKNOWN}
+        dispatch={dispatch}
+      />
+
+      <ArtistCardField
+        fieldName="follows"
+        fieldValue={artist.counts.follows}
+        fieldType={FieldType.MULTIPLE}
+        mode={mode}
+        additions={additions}
         recordId={artist.internalID}
         recordStatus={recordStatus || RecordStatus.UNKNOWN}
         dispatch={dispatch}

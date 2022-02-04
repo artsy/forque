@@ -25,6 +25,12 @@ it("displays labels and values", () => {
 
   expect(screen.getByText("deathday")).toBeInTheDocument()
   expect(screen.getByText("1978")).toBeInTheDocument()
+
+  expect(screen.getByText("artworks")).toBeInTheDocument()
+  expect(screen.getByText("42")).toBeInTheDocument()
+
+  expect(screen.getByText("follows")).toBeInTheDocument()
+  expect(screen.getByText("420")).toBeInTheDocument()
 })
 
 it("displays label even when value is not present", () => {

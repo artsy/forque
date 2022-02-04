@@ -68,6 +68,10 @@ const defaultState: State = {
     hometown: null,
     location: null,
   },
+  additions: {
+    artworks: [],
+    follows: [],
+  },
   artist: artistAttrs,
   dupes: duplicates,
 }
