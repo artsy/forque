@@ -58,7 +58,7 @@ describe("when mode is 'select fields'", () => {
   })
 
   describe("when the field is multi-valued", () => {
-    it("displays the field name and value as a clickable element", () => {
+    xit("displays the field name and value as a clickable element", () => {
       render(
         <ArtistCardField
           fieldName="artworks"

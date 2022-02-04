@@ -12,8 +12,7 @@ interface Props {
 }
 
 export const ArtistCardFieldMultiSelect: React.FC<Props> = (props) => {
-  const { fieldName, fieldValue, additions, recordId, recordStatus, dispatch } =
-    props
+  const { fieldName, fieldValue, additions, recordId, recordStatus } = props
 
   const { bgColor, isIncluded } = getVisualState({
     fieldName,
@@ -23,35 +22,40 @@ export const ArtistCardFieldMultiSelect: React.FC<Props> = (props) => {
   })
 
   return (
-    <button
-      className="block group text-left w-full hover:shadow-lg focus:shadow-lg"
-      onClick={() => {
-        if (additions[fieldName].includes(recordId)) {
-          // a previous addition is being undone
-          dispatch({
-            type: "remove value",
-            fieldName: fieldName as MultiValuedField,
-            recordId,
-          })
-        } else if (recordStatus === RecordStatus.BAD) {
-          // a field from a "bad" record is being added
-          dispatch({
-            type: "add value",
-            fieldName: fieldName as MultiValuedField,
-            recordId,
-          })
-        }
-      }}
+    /**
+     * after discussing with stakeholder, disabling this toggle functionality for now, since it might just produced orphaned data
+     */
+
+    // <button
+    //   className="block group text-left w-full hover:shadow-lg focus:shadow-lg"
+    //   onClick={() => {
+    //     if (additions[fieldName].includes(recordId)) {
+    //       // a previous addition is being undone
+    //       dispatch({
+    //         type: "remove value",
+    //         fieldName: fieldName as MultiValuedField,
+    //         recordId,
+    //       })
+    //     } else if (recordStatus === RecordStatus.BAD) {
+    //       // a field from a "bad" record is being added
+    //       dispatch({
+    //         type: "add value",
+    //         fieldName: fieldName as MultiValuedField,
+    //         recordId,
+    //       })
+    //     }
+    //     */
+    //   }}
+    // >
+    <div
+      className={`p-2 border border-t-0 group-last:rounded-b-lg border-black30 ${bgColor} hover:bg-green5`}
     >
-      <div
-        className={`p-2 border border-t-0 group-last:rounded-b-lg border-black30 ${bgColor} hover:bg-green5`}
-      >
-        <div className="text-xs text-black50">{fieldName}</div>
-        <div className="[min-height:2em]">
-          {isIncluded ? <strong>{fieldValue}</strong> : fieldValue}
-        </div>
+      <div className="text-xs text-black50">{fieldName}</div>
+      <div className="[min-height:2em]">
+        {isIncluded ? <strong>{fieldValue}</strong> : fieldValue}
       </div>
-    </button>
+    </div>
+    // </button>
   )
 }
 
