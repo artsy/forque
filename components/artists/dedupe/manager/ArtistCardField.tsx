@@ -1,15 +1,26 @@
 import React, { Dispatch } from "react"
 
 import { BsonID } from "../types"
-import { Action, RecordStatus, SimpleField, State } from "./state"
+import {
+  Action,
+  RecordStatus,
+  MultiValuedField,
+  SingleValuedField,
+  State,
+} from "./state"
 import { ArtistCardMode } from "./ArtistCard"
+import { ArtistCardFieldMultiSelect } from "./ArtistCardFieldMultiSelect"
+import { ArtistCardFieldSingleSelect } from "./ArtistCardFieldSingleSelect"
 
 interface Props {
   /** The name of the field on the Artist record */
-  fieldName: SimpleField
+  fieldName: SingleValuedField | MultiValuedField
 
-  /** The value of the field on the Artist record, probably a string */
-  fieldValue: string
+  /** The value of the field on the Artist record, a string for SimpleFields or a number for RelatedEntities */
+  fieldValue: string | number
+
+  /** Is this field single- or multi-valued? */
+  fieldType: FieldType
 
   /** The record being renderer */
   recordId: BsonID
@@ -20,6 +31,9 @@ interface Props {
   /** Overrides to values in the good record */
   overrides?: State["overrides"]
 
+  /** Additions to values in the good record */
+  additions?: State["additions"]
+
   /** Has the record been selected as a good (keep) or bad (discard) record yet? */
   recordStatus: RecordStatus
 
@@ -27,12 +41,23 @@ interface Props {
   dispatch?: Dispatch<Action>
 }
 
+/**
+ * Whether the merger can handle exactly one preferred value (e.g birthday, hometown),
+ * or can accumulate multiple additive values (e.g alternate names; follows)
+ */
+export enum FieldType {
+  SINGLE = "single",
+  MULTIPLE = "multiple",
+}
+
 export const ArtistCardField: React.FC<Props> = (props) => {
   const {
     fieldName,
     fieldValue,
+    fieldType,
     mode,
     overrides,
+    additions,
     recordId,
     recordStatus,
     dispatch,
@@ -52,89 +77,35 @@ export const ArtistCardField: React.FC<Props> = (props) => {
     // render a clickable field that also reflects
     // whether this field is preferred, overridden, or neither
 
-    if (!overrides || !dispatch)
-      throw new Error(
-        `Current overrides and dispatch method are required in "${mode}" mode`
+    if (!dispatch) throw new Error(`Current dispatch method required`)
+
+    if (fieldType == FieldType.SINGLE) {
+      if (!overrides) throw new Error(`Current overrides are required`)
+
+      return (
+        <ArtistCardFieldSingleSelect
+          fieldName={fieldName as SingleValuedField}
+          fieldValue={fieldValue}
+          overrides={overrides}
+          recordId={recordId}
+          recordStatus={recordStatus}
+          dispatch={dispatch}
+        />
       )
-
-    const { bgColor, isOverridenValue, isPreferredValue } = getVisualState({
-      fieldName,
-      overrides,
-      recordId,
-      recordStatus,
-    })
-
-    return (
-      <button
-        className="block group text-left w-full hover:shadow-lg focus:shadow-lg"
-        onClick={() => {
-          if (recordStatus == RecordStatus.GOOD) {
-            // a previous override is being undone
-            dispatch({ type: "prefer value", fieldName, recordId: null })
-          } else {
-            // a new override is being created
-            dispatch({ type: "prefer value", fieldName, recordId })
-          }
-        }}
-      >
-        <div
-          className={`p-2 border border-t-0 group-last:rounded-b-lg border-black30 ${bgColor} hover:bg-green5`}
-        >
-          <div className="text-xs text-black50">{fieldName}</div>
-          <div className="[min-height:2em]">
-            {isOverridenValue ? (
-              <del>{fieldValue}</del>
-            ) : isPreferredValue ? (
-              <strong>{fieldValue}</strong>
-            ) : (
-              fieldValue
-            )}
-          </div>
-        </div>
-      </button>
-    )
+    } /* FieldType.MULTIPLE */ else {
+      if (!additions) throw new Error(`Current additions are required`)
+      return (
+        <ArtistCardFieldMultiSelect
+          fieldName={fieldName as MultiValuedField}
+          fieldValue={fieldValue}
+          additions={additions}
+          recordId={recordId}
+          recordStatus={recordStatus}
+          dispatch={dispatch}
+        />
+      )
+    }
   } else {
     return <div>Hmm did not see that coming 🤔</div>
   }
-}
-
-/**
- * A field from a "bad" record can be preferred,
- * and thus override a field from a "good" record.
- *
- * The UI should reflect that.
- */
-
-function getVisualState(args: {
-  fieldName: SimpleField
-  overrides: State["overrides"]
-  recordId: BsonID
-  recordStatus: RecordStatus
-}): VisualState {
-  const { fieldName, overrides, recordId, recordStatus } = args
-
-  // does this field have an override in some record?
-  const isFieldOveridden = Boolean(overrides[fieldName])
-
-  // is this the "bad" record that is overriding this field's value?
-  const isPreferredValue = overrides[fieldName] === recordId
-
-  // is this the "good" record whose value in this field is getting overridden?
-  const isOverridenValue = Boolean(
-    recordStatus === RecordStatus.GOOD && isFieldOveridden
-  )
-
-  let bgColor = "bg-white100" // ignored
-  if (isOverridenValue) bgColor = "bg-red5" // overridden
-  if (isPreferredValue) bgColor = "bg-green5" // preferred
-  if (recordStatus === RecordStatus.GOOD && !isFieldOveridden)
-    bgColor = "bg-green5" // still good
-
-  return { bgColor, isOverridenValue, isPreferredValue }
-}
-
-interface VisualState {
-  bgColor: string
-  isOverridenValue: boolean
-  isPreferredValue: boolean
 }

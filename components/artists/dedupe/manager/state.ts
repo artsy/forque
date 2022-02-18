@@ -7,7 +7,7 @@ export type State = {
   /** The current step in the wizard-style dedupe process */
   currentStep: Step
 
-  /** The Artist record for which are managing dupes */
+  /** The Artist record for which we are managing dupes */
   artist: Artist | null
 
   /** The cluster of dupes for this Artist (may include the Artist record itself) */
@@ -20,7 +20,10 @@ export type State = {
   badIds: BsonID[]
 
   /** A map indicating if any of the bad records’ values should be used to override the corresponding value in the good record */
-  overrides: Record<SimpleField, BsonID | null>
+  overrides: Record<SingleValuedField, BsonID | null>
+
+  /** A map indicating if any of the bad records’ values should be additively merged into the corresponding values in the good record */
+  additions: Record<MultiValuedField, BsonID[]>
 }
 
 /**
@@ -44,13 +47,23 @@ export enum Step {
 /**
  * A list of simple attributes that can be kept or overriden
  */
-export type SimpleField =
+export type SingleValuedField =
   | "gender"
   | "nationality"
   | "birthday"
   | "deathday"
   | "hometown"
   | "location"
+
+/**
+ * A list of related attributes or entities that can be merged, cumulatively,
+ * from "bad" records into the "good" record.
+ *
+ * (At the datasbase level these may ultimately be different instances, as in artworks.
+ * Or they may just be different values in an array or delimited field, as in alternate names.
+ * The de-duping tool need not know which.)
+ */
+export type MultiValuedField = "artworks" | "follows"
 
 /**
  * Used for initializing or resetting the app's state
@@ -69,6 +82,10 @@ export const initialState: State = {
     hometown: null,
     location: null,
   },
+  additions: {
+    artworks: [],
+    follows: [],
+  },
 }
 
 /**
@@ -77,7 +94,13 @@ export const initialState: State = {
 export type Action =
   | { type: "keep artist"; id: BsonID }
   | { type: "discard artist"; id: BsonID }
-  | { type: "prefer value"; fieldName: string; recordId: BsonID | null }
+  | {
+      type: "prefer value"
+      fieldName: SingleValuedField
+      recordId: BsonID | null
+    }
+  | { type: "add value"; fieldName: MultiValuedField; recordId: BsonID }
+  | { type: "remove value"; fieldName: MultiValuedField; recordId: BsonID }
   | { type: "reset" }
   | { type: "continue to step"; step: Step }
 
@@ -110,6 +133,27 @@ export const reducer = (state: State, action: Action): State => {
       return {
         ...state,
         overrides: { ...state.overrides, [action.fieldName]: action.recordId },
+      }
+    case "add value":
+      return {
+        ...state,
+        additions: {
+          ...state.additions,
+          [action.fieldName]: [
+            ...state.additions[action.fieldName as MultiValuedField],
+            action.recordId,
+          ],
+        },
+      }
+    case "remove value":
+      return {
+        ...state,
+        additions: {
+          ...state.additions,
+          [action.fieldName]: state.additions[
+            action.fieldName as MultiValuedField
+          ].filter((id) => id !== action.recordId),
+        },
       }
     default:
       return state
