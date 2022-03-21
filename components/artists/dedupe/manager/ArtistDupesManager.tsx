@@ -5,6 +5,7 @@ import { initialState, reducer, Step } from "./state"
 import { SelectGoodRecord } from "./SelectGoodRecord"
 import { SelectBadRecords } from "./SelectBadRecords"
 import { SelectFields } from "./SelectFields"
+import { Confirm } from "./Confirm"
 import { Debug } from "./Debug"
 
 interface Props {
@@ -39,6 +40,9 @@ export const ArtistDupesManager: React.FC<Props> = ({ artist }) => {
       break
     case Step.SELECT_FIELDS:
       currentStepUI = <SelectFields state={state} dispatch={dispatch} />
+      break
+    case Step.CONFIRM:
+      currentStepUI = <Confirm state={state} dispatch={dispatch} />
       break
     default:
       currentStepUI = <span>Hmm did not see that coming 🤔</span>

@@ -42,6 +42,7 @@ export enum Step {
   SELECT_GOOD_RECORD,
   SELECT_BAD_RECORD,
   SELECT_FIELDS,
+  CONFIRM,
 }
 
 /**
