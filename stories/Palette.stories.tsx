@@ -1,12 +1,12 @@
 import React from "react"
-import PalettePage from "../pages/palette"
+import PalettePage from "../pages/palette/tailwind"
 
 export default {
   component: PalettePage,
-  title: "Palette Reference",
+  title: "Palette Token Reference",
 }
 
-export const PaletteReference = () => (
+export const PaletteTokenReference = () => (
   <div className="container mx-auto">
     <PalettePage />
   </div>
