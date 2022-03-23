@@ -126,12 +126,10 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: {{ project_name }}
-  annotations:
-    nginx.ingress.kubernetes.io/whitelist-source-range: "{{ externalIngressAllowSourceIP|join(',') }}"
 spec:
-  ingressClassName: nginx
+  ingressClassName: nginx-internal
   rules:
-    - host: {{ project_name }}.artsy.net
+    - host: {{ project_name }}.prd.artsy.systems
       http:
         paths:
           - path: /
@@ -139,38 +137,3 @@ spec:
             backend:
               serviceName: {{ project_name }}-web-internal
               servicePort: http
-
----
-apiVersion: batch/v1beta1
-kind: CronJob
-metadata:
-  name: {{ project_name }}-cron-example
-spec:
-  schedule: "11 11 * * *"
-  concurrencyPolicy: Forbid
-  jobTemplate:
-    spec:
-      backoffLimit: 0 # do not retry if pod fails.
-      template:
-        metadata:
-          annotations:
-            "cluster-autoscaler.kubernetes.io/safe-to-evict": "false"
-        spec:
-          containers:
-            - name: {{ project_name }}-cron-example
-              image: {{ project_repo }}:production
-              imagePullPolicy: Always
-              envFrom:
-                - configMapRef:
-                    name: {{ project_name }}-environment
-              args: ["echo", "i am just an example"]
-          restartPolicy: Never
-          affinity:
-            nodeAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-                nodeSelectorTerms:
-                  - matchExpressions:
-                      - key: tier
-                        operator: In
-                        values:
-                          - background

@@ -126,12 +126,10 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   name: {{ project_name }}
-  annotations:
-    nginx.ingress.kubernetes.io/whitelist-source-range: "{{ externalIngressAllowSourceIP|join(',') }}"
 spec:
-  ingressClassName: nginx
+  ingressClassName: nginx-internal
   rules:
-    - host: {{ project_name }}-staging.artsy.net
+    - host: {{ project_name }}.stg.artsy.systems
       http:
         paths:
           - path: /
