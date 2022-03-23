@@ -2,14 +2,15 @@
   "name": "nextbookwind",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint --fix",
-    "format": "prettier --write \"{pages,components,lib}/**/*.ts{,x}\"",
-    "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "prepare": "husky install"
+    "build": "next build",
+    "dev": "next dev",
+    "format": "prettier --write \"{pages,components,lib}/**/*.ts{,x}\"",
+    "lint": "next lint --fix",
+    "prepare": "husky install",
+    "start": "next start",
+    "storybook": "start-storybook -p 6006",
+    "type-check": "tsc"
   },
   "dependencies": {
     "@artsy/palette": "^19.1.3",

@@ -1,8 +1,8 @@
 import { useRouter } from "next/router"
 
 import { useMetaphysics } from "lib/artsy-next-auth"
-import type { ArtistWithDupes } from "components/artists/dedupe/types"
-import { ArtistDupesManager } from "components/artists/dedupe/manager/ArtistDupesManager"
+import { ArtistWithDupes } from "./components/types"
+import { ArtistDupesManager } from "./components/manager/ArtistDupesManager"
 
 export default function Page() {
   const router = useRouter()
