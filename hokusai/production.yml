@@ -1,0 +1,176 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ project_name }}-web
+  namespace: default
+  labels:
+    app: {{ project_name }}
+    component: web
+    layer: application
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: {{ project_name }}
+      component: web
+      layer: application
+  template:
+    metadata:
+      labels:
+        app: {{ project_name }}
+        component: web
+        layer: application
+      name: {{ project_name }}-web
+    spec:
+      containers:
+        - name: {{ project_name }}-web
+          env:
+            - name: PORT
+              value: "8080"
+            - name: NODE_ENV
+              value: production
+            - name: DATADOG_TRACE_AGENT_HOSTNAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: NODE_OPTIONS
+              value: "--max_old_space_size=256"
+          envFrom:
+            - configMapRef:
+                name: {{ project_name }}-environment
+          image: {{ project_repo }}:production
+          imagePullPolicy: Always
+          ports:
+            # k8s limits a port name to 15 characters
+            - name: {{ project_name }}-http
+              containerPort: 8080
+          resources:
+            requests:
+              cpu: 200m
+              memory: 256Mi
+            limits:
+              memory: 1Gi
+          readinessProbe:
+            httpGet:
+              port: {{ project_name }}-http
+              path: /api/status
+              httpHeaders:
+                - name: X-Forwarded-Proto
+                  value: https
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+          lifecycle:
+            preStop:
+              exec:
+                command: ["sh", "-c", "sleep 5"]
+      dnsPolicy: ClusterFirst
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                - key: tier
+                  operator: In
+                  values:
+                    - foreground
+
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ project_name }}-web
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ project_name }}-web
+  minReplicas: 2
+  maxReplicas: 6
+  targetCPUUtilizationPercentage: 70
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ project_name }}
+    component: web
+    layer: application
+  name: {{ project_name }}-web-internal
+  namespace: default
+spec:
+  ports:
+    - port: 8080
+      protocol: TCP
+      name: http
+      targetPort: {{ project_name }}-http
+  selector:
+    app: {{ project_name }}
+    layer: application
+    component: web
+  type: ClusterIP
+
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ project_name }}
+  annotations:
+    nginx.ingress.kubernetes.io/whitelist-source-range: "{{ externalIngressAllowSourceIP|join(',') }}"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: {{ project_name }}.artsy.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              serviceName: {{ project_name }}-web-internal
+              servicePort: http
+
+---
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ project_name }}-cron-example
+spec:
+  schedule: "11 11 * * *"
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 0 # do not retry if pod fails.
+      template:
+        metadata:
+          annotations:
+            "cluster-autoscaler.kubernetes.io/safe-to-evict": "false"
+        spec:
+          containers:
+            - name: {{ project_name }}-cron-example
+              image: {{ project_repo }}:production
+              imagePullPolicy: Always
+              envFrom:
+                - configMapRef:
+                    name: {{ project_name }}-environment
+              args: ["echo", "i am just an example"]
+          restartPolicy: Never
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: tier
+                        operator: In
+                        values:
+                          - background

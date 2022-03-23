@@ -1,0 +1,12 @@
+---
+version: '2'
+services:
+  {{ project_name }}:
+    env_file:
+      - ../.env.shared
+      - ../.env
+    build:
+      context: ../
+    ports:
+      - 3000:3000
+    command: ["yarn", "dev"]
