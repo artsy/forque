@@ -34,7 +34,7 @@ const tailwindCompatibleTheme = {
 }
 
 module.exports = {
-  content: ["./{pages,components}/**/*.{js,ts,jsx,tsx}"],
+  content: ["./src/{pages,components}/**/*.{js,ts,jsx,tsx}"],
   theme: {
     ...tailwindCompatibleTheme,
     extend: {},

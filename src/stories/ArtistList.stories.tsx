@@ -1,6 +1,6 @@
 import React from "react"
 
-import { ArtistList, Skeleton } from "../components/artists/dedupe/list/ArtistList"
+import { ArtistList, Skeleton } from "components/artists/dedupe/list/ArtistList"
 
 export default {
   component: ArtistList,

@@ -1,7 +1,7 @@
-import { useUser } from "../lib/artsy-next-auth"
+import { useUser } from "lib/artsy-next-auth"
 import { GlobalNav } from "./GlobalNav"
 
-import { LoginForm } from "../lib/artsy-next-auth"
+import { LoginForm } from "lib/artsy-next-auth"
 
 export const Layout: React.FC = ({ children }) => {
   const user = useUser()

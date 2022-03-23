@@ -1,5 +1,5 @@
 import React from "react"
-import PalettePage from "../pages/palette/tailwind"
+import PalettePage from "pages/palette/tailwind"
 
 export default {
   component: PalettePage,

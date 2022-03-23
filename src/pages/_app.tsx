@@ -1,7 +1,7 @@
 import "../styles/globals.css"
 import type { AppProps } from "next/app"
 import { Theme, injectGlobalStyles } from "@artsy/palette"
-import { Layout } from "../components/Layout"
+import { Layout } from "components/Layout"
 
 const { GlobalStyles } = injectGlobalStyles(`
   /* overrides and additions */
