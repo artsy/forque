@@ -42,7 +42,7 @@ workflows:
 
       - hokusai/deploy-staging:
           <<: *only_main
-          project-name: admin-next
+          project-name: forque
           requires:
             - push-staging-image
 

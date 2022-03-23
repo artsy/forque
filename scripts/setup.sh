@@ -19,15 +19,8 @@ fi
 echo "Installing dependencies..."
 yarn install || (npm install --global yarn@latest && yarn install)
 
-if [ -e ".env" ]; then
-  echo '.env file already exists, so skipping initialization...'
-else
-  echo 'Initializing .env from .env.example (for any custom configuration)...'
-  cp .env.example .env
-fi
-
 echo 'Updating .env.shared file (for shared configuration)...'
-aws s3 cp s3://artsy-citadel/dev/.env.admin-next .env.shared || 'Unable to download shared configuration, ensure you have S3 access!'
+aws s3 cp s3://artsy-citadel/dev/.env.forque .env.local || 'Unable to download shared configuration, ensure you have S3 access!'
 
 echo 'Setup complete! To start the server, run:
   yarn dev'
