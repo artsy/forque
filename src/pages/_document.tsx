@@ -29,13 +29,13 @@ export default class AppDocument extends Document {
 
   static async getInitialProps(ctx: DocumentContext) {
     const sheet = new ServerStyleSheet()
-    const originalRenderPage = ctx.renderPage as any
+    const originalRenderPage = ctx.renderPage
 
     // Setup styled-components SSR
     try {
       ctx.renderPage = () =>
         originalRenderPage({
-          enhanceApp: (App: any) => (props: any) =>
+          enhanceApp: (App) => (props) =>
             sheet.collectStyles(<App {...props} />),
         })
 
