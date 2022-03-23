@@ -4,6 +4,7 @@ import { ArtistList, Skeleton } from "../ArtistList"
 
 export default {
   component: ArtistList,
+  title: "Pages/Artists/Dedupe/ArtistList",
 }
 
 export const SkeletonPlacholder = () => <Skeleton length={artists.length} />
