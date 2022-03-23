@@ -20,5 +20,7 @@ COPY --chown=deploy:deploy . /app
 # Switch to less-privileged user
 USER deploy
 
+RUN yarn build
+
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["yarn", "start"]
