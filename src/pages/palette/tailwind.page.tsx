@@ -1,4 +1,4 @@
-import tailwind from "../../tailwind.config"
+import tailwind from "../../../tailwind.config"
 
 export default function Palette() {
   return (

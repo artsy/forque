@@ -1,5 +1,5 @@
 import React from "react"
-import { GlobalNav } from "../components/GlobalNav"
+import { GlobalNav } from "../GlobalNav"
 
 export default {
   component: GlobalNav,

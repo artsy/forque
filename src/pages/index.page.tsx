@@ -2,7 +2,7 @@ import type { NextPage } from "next"
 import Head from "next/head"
 import Image from "next/image"
 
-import { useUser } from "../lib/artsy-next-auth"
+import { useUser } from "lib/artsy-next-auth"
 
 const Home: NextPage = () => {
   const user = useUser()

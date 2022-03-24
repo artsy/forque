@@ -1,7 +1,7 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
 
-import { GlobalNav } from "./GlobalNav"
+import { GlobalNav } from "../GlobalNav"
 
 describe("logged-out user", () => {
   it("renders a login option ", () => {

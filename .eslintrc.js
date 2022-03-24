@@ -18,5 +18,6 @@ module.exports = {
       "error",
       { vars: "all", varsIgnorePattern: "^_" },
     ],
+    "testing-library/render-result-naming-convention": "off",
   },
 }
