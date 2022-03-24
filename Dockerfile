@@ -17,10 +17,11 @@ RUN yarn install --frozen-lockfile && yarn cache clean
 # Copy application code
 COPY --chown=deploy:deploy . /app
 
+RUN yarn build && \
+  chown -R deploy:deploy ./
+
 # Switch to less-privileged user
 USER deploy
-
-RUN yarn build
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["yarn", "start"]
