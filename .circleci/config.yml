@@ -1,0 +1,52 @@
+version: 2.1
+
+orbs:
+  hokusai: artsy/hokusai@0.7
+  horizon: artsy/release@0.0.1
+
+not_staging_or_release: &not_staging_or_release
+  filters:
+    branches:
+      ignore:
+        - staging
+        - release
+
+only_main: &only_main
+  context: hokusai
+  filters:
+    branches:
+      only: main
+
+only_release: &only_release
+  context: hokusai
+  filters:
+    branches:
+      only: release
+
+workflows:
+  build-deploy:
+    jobs:
+      - horizon/block:
+          <<: *only_release
+          context: horizon
+          project_id: REPLACE_ME
+
+      - hokusai/test:
+          <<: *not_staging_or_release
+
+      - hokusai/push:
+          name: push-staging-image
+          <<: *only_main
+          requires:
+            - hokusai/test
+
+      - hokusai/deploy-staging:
+          <<: *only_main
+          project-name: forque
+          requires:
+            - push-staging-image
+
+      - hokusai/deploy-production:
+          <<: *only_release
+          requires:
+            - horizon/block

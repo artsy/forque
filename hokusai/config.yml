@@ -1,0 +1,4 @@
+---
+project-name: forque
+template-config-files:
+  - s3://artsy-citadel/k8s/hokusai-vars.yml

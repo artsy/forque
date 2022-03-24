@@ -15,3 +15,20 @@ The app provides the following stack:
 - **Tailwind** for styling
 - **Palette tokens** for use with Tailwind: typography, color, space, breakpoints.
 - DevX: Typescript, ESLint, Prettier, lint-staged, commitlint
+
+
+## Setup
+
+Install dependencies and setup config values:
+
+```
+./scripts/setup.sh
+yarn dev
+```
+
+Visit your local development server at http://localhost:3000
+
+## Configuration
+
+Defaults are in `.env.development`. Sensitive overrides are copied from S3 to `.env.local`. Personal overrides can be provided in a `.env.development.local` file.
+
