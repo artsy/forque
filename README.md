@@ -17,12 +17,6 @@ A home for admin apps
 
 ## Setup
 
-Visit your local development server at http://localhost:3000
-
-## Configuration
-
-## Setup
-
 Clone the repo:
 
 ```sh
@@ -44,7 +38,7 @@ Run unit tests:
 yarn test
 ```
 
-Start a development server:
+Start a development server, and visit it at http://localhost:3000
 
 ```
 yarn dev
