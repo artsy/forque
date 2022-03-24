@@ -29,7 +29,7 @@ workflows:
       - horizon/block:
           <<: *only_release
           context: horizon
-          project_id: REPLACE_ME
+          project_id: 266
 
       - hokusai/test:
           <<: *not_staging_or_release
