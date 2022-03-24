@@ -6,7 +6,8 @@ WORKDIR /app
 # Add deploy user
 RUN apk --no-cache --quiet add \
   dumb-init && \
-  adduser -D -g '' deploy
+  adduser -D -g '' deploy && \
+  npm config set unsafe-perm true
 
 # Copy files required for installation of application dependencies
 COPY package.json yarn.lock ./
