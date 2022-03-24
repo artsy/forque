@@ -1,5 +1,5 @@
 {
-  "name": "nextbookwind",
+  "name": "forque",
   "private": true,
   "scripts": {
     "build-storybook": "build-storybook",
@@ -10,7 +10,8 @@
     "prepare": "husky install",
     "start": "next start",
     "storybook": "start-storybook -p 6006",
-    "type-check": "tsc"
+    "test": "jest",
+    "type-check": "tsc --noEmit"
   },
   "prettier": {
     "bracketSpacing": true,
