@@ -58,7 +58,7 @@ spec:
           readinessProbe:
             httpGet:
               port: {{ project_name }}-http
-              path: /api/status
+              path: /status.json
               httpHeaders:
                 - name: X-Forwarded-Proto
                   value: https
