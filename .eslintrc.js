@@ -14,6 +14,9 @@ module.exports = {
   rules: {
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-explicit-any": "off",
+    // When working with Metaphysics nullish data, this rule is pretty much
+    // impossible to enforce and will increase friction
+    "@typescript-eslint/no-non-null-assertion": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
       { vars: "all", varsIgnorePattern: "^_" },

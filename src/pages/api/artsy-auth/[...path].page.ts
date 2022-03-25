@@ -1,3 +1,3 @@
-import { handleAuth } from "lib/artsy-next-auth"
+import { handleAuth } from "system/artsy-next-auth"
 
 export default handleAuth
