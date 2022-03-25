@@ -4,6 +4,7 @@
   "scripts": {
     "build-storybook": "build-storybook",
     "build": "next build",
+    "clean": "rm -rf .next && yarn dev",
     "dev": "next dev",
     "format": "prettier --write \"{pages,components,lib}/**/*.ts{,x}\"",
     "lint": "next lint --fix",
