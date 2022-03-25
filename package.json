@@ -2,9 +2,11 @@
   "name": "forque",
   "private": true,
   "scripts": {
-    "build-storybook": "build-storybook",
     "build": "next build",
+    "build-storybook": "build-storybook",
     "clean": "rm -rf .next && yarn dev",
+    "cypress": "./node_modules/.bin/cypress open",
+    "cypress:run": "./node_modules/.bin/cypress run",
     "dev": "concurrently 'yarn relay --watch' 'next dev'",
     "format": "prettier --write \"{pages,components,lib}/**/*.ts{,x}\"",
     "lint": "next lint --fix",
