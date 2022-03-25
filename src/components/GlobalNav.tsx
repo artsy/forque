@@ -18,12 +18,12 @@ export const GlobalNav: React.FC<Props> = ({ user }) => {
 const LoggedOut = () => (
   <nav className="flex justify-end bg-black100">
     <Link href="/">
-      <a className="inline-block p-2 font-bold text-white100 hover:bg-black60">
+      <a className="no-underline inline-block p-2 font-bold text-white100 hover:bg-black60 hover:text-white100">
         Home
       </a>
     </Link>
     <Link href="/login">
-      <a className="inline-block p-2 font-bold text-white100 hover:bg-black60">
+      <a className="no-underline inline-block p-2 font-bold text-white100 hover:bg-black60 hover:text-white100">
         Login
       </a>
     </Link>
@@ -33,17 +33,17 @@ const LoggedOut = () => (
 const LoggedIn = () => (
   <nav className="flex justify-end bg-black100">
     <Link href="/">
-      <a className="inline-block p-2 font-bold text-white100 hover:bg-black60">
+      <a className="no-underline inline-block p-2 font-bold text-white100 hover:bg-black60 hover:text-white100">
         Home
       </a>
     </Link>
     <Link href="/artists/dedupe">
-      <a className="inline-block p-2 font-bold text-white100 hover:bg-black60">
+      <a className="no-underline inline-block p-2 font-bold text-white100 hover:bg-black60 hover:text-white100">
         Dedupe Artists
       </a>
     </Link>
     <Link href="/api/artsy-auth/logout">
-      <a className="inline-block p-2 font-bold text-white100 hover:bg-black60">
+      <a className="no-underline inline-block p-2 font-bold text-white100 hover:bg-black60 hover:text-white100">
         Logout
       </a>
     </Link>
