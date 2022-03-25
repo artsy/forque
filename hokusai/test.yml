@@ -2,6 +2,6 @@
 version: '2'
 services:
   {{ project_name }}:
-    command: ["yarn", "jest"]
+    command: ["yarn", "jest", "&&", "yarn", "cypress:run"]
     build:
       context: ../
