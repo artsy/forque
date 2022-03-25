@@ -6,9 +6,9 @@ A home for admin apps
 
 - **State:** development
 - **Staging:** [https://forque.stg.artsy.systems](https://forque.stg.artsy.systems)
-  - [Kubernetes](https://kubernetes.stg.artsy.systems/#/search?q=force&namespace=default)
+  - [Kubernetes](https://kubernetes.stg.artsy.systems/#/search?q=forque&namespace=default)
 - **Production:** [https://forque.prd.artsy.systems](https://forque.prd.artsy.systems)
-  - [Kubernetes](https://kubernetes.prd.artsy.systems/#/search?q=force&namespace=default)
+  - [Kubernetes](https://kubernetes.prd.artsy.systems/#/search?q=forque&namespace=default)
 - **GitHub:** [https://github.com/artsy/forque](https://github.com/artsy/forque)
 - **Deployment:**
   - PRs from feature branches → main will automatically deploy to staging

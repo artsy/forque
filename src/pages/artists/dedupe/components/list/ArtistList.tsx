@@ -28,7 +28,7 @@ const Artist: React.FC<{ artist: RecentArtist }> = ({ artist }) => {
 
   return hasDupes ? (
     <Link href={`/artists/dedupe/${artist.slug}`}>
-      <a className="group p-1 rounded-md">
+      <a className="no-underline group p-1 rounded-md">
         <div className="font-bold group-hover:underline">{artist.name}</div>
         <Count n={artist.counts.duplicates} />
         <div className="text-black30 text-md">{ago}</div>
@@ -36,7 +36,7 @@ const Artist: React.FC<{ artist: RecentArtist }> = ({ artist }) => {
     </Link>
   ) : (
     <Link href={`/artists/dedupe/${artist.slug}`}>
-      <a className="group p-1">
+      <a className="no-underline group p-1">
         <div className="text-black60 group-hover:underline">{artist.name}</div>
         <div className="text-black30 text-md">{ago}</div>
       </a>
