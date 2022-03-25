@@ -1,12 +1,15 @@
 import useSWR from "swr"
 import { useUser } from "./user"
+import getConfig from "next/config"
+
+const { publicRuntimeConfig } = getConfig()
 
 const metaphysicsFetcher = async (
   query: string,
   variables = {},
   accessToken: string
 ) => {
-  const url = `${process.env.NEXT_PUBLIC_METAPHYSICS_URL}/v2`
+  const url = `${publicRuntimeConfig.NEXT_PUBLIC_METAPHYSICS_URL}/v2`
 
   const response = await fetch(url, {
     method: "POST",
