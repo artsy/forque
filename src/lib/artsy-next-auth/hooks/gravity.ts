@@ -1,8 +1,11 @@
 import useSWR from "swr"
 import { useUser } from "./user"
+import getConfig from "next/config"
+
+const { publicRuntimeConfig } = getConfig()
 
 const gravityFetcher = async (path: string, accessToken: string) => {
-  const url = `${process.env.NEXT_PUBLIC_GRAVITY_URL}/api/v1/${path}`
+  const url = `${publicRuntimeConfig.NEXT_PUBLIC_GRAVITY_URL}/api/v1/${path}`
 
   const headers = {
     "Content-Type": "application/json",
