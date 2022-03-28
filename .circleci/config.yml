@@ -1,6 +1,7 @@
 version: 2.1
 
 orbs:
+  cypress: cypress-io/cypress@1
   hokusai: artsy/hokusai@0.7
   horizon: artsy/release@0.0.1
 
@@ -33,6 +34,13 @@ workflows:
 
       - hokusai/test:
           <<: *not_staging_or_release
+
+      - cypress/run:
+          yarn: true
+          start: 'yarn dev'
+          executor:
+            name: cypress/default
+            node: 14.19.0
 
       - hokusai/push:
           name: push-staging-image

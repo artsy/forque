@@ -4,6 +4,7 @@
   "scripts": {
     "build": "next build",
     "build-storybook": "build-storybook",
+    "ci": "jest && yarn cypress:run",
     "clean": "rm -rf .next && yarn dev",
     "cypress": "./node_modules/.bin/cypress open",
     "cypress:run": "./node_modules/.bin/cypress run --quiet",
