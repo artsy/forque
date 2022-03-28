@@ -1,7 +1,7 @@
 import React from "react"
 import Link from "next/link"
 
-import { UserSessionData } from "lib/artsy-next-auth/auth/user"
+import { UserSessionData } from "system/artsy-next-auth/auth/user"
 
 interface Props {
   user: Partial<UserSessionData> | null

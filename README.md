@@ -50,11 +50,19 @@ Start Storybook:
 yarn storybook
 ```
 
+Run Relay:
+
+```
+yarn relay --watch
+```
+
 ## Troubleshooting
 
-If you get a `Only absolute URLs are supported` upon login this may mean that you don't have a properly configured env file. Be sure to follow the setup steps above.
+- If you get a `Only absolute URLs are supported` upon login this may mean that you don't have a properly configured env file. Be sure to follow the setup steps above.
 
-If you get a `Unauthorized: invalid client_id` upon login this may mean that you haven't configured the correct app id and app secret in your env file. The appropriate ClientApplication credentials can be found in Gravity.
+- If you get a `Unauthorized: invalid client_id` upon login this may mean that you haven't configured the correct app id and app secret in your env file. The appropriate ClientApplication credentials can be found in Gravity.
+
+- If you've created a new page under `/pages` but don't see it appear in the browser, you're missing the `.page.tsx` prefix in the file name. See [here](https://nextjs.org/docs/api-reference/next.config.js/custom-page-extensions#including-non-page-files-in-the-pages-directory) and [here](https://github.com/artsy/forque/blob/6117beeeb96ea081eeb78a2a5c6d8f0a8c4ed6fd/next.config.js#L12) for more info.
 
 ## About
 
