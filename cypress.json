@@ -1,5 +1,6 @@
 {
-    "baseUrl": "http://localhost:3000",
-    "viewportWidth": 1200,
-    "viewportHeight": 900
+  "reporter": "dot",
+  "baseUrl": "http://localhost:3000",
+  "viewportWidth": 1200,
+  "viewportHeight": 900
 }
