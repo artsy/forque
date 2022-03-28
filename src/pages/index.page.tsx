@@ -34,4 +34,9 @@ const Home: NextPage = () => {
   )
 }
 
+export const getServerSideProps = async () => {
+  // force SSR
+  return { props: {} }
+}
+
 export default Home
