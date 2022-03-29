@@ -35,7 +35,8 @@
     "relay-runtime": "^13.2.0",
     "styled-components": "^5.3.3",
     "styled-system": "5.1.5",
-    "swr": "^1.1.2"
+    "swr": "^1.1.2",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@artsy/palette-tokens": "^2.6.0",
@@ -62,6 +63,7 @@
     "@types/relay-test-utils": "^6.0.5",
     "@types/styled-components": "4.0.3",
     "@types/styled-system": "5.1.15",
+    "@types/yup": "^0.29.13",
     "@typescript-eslint/eslint-plugin": "^5.9.0",
     "@typescript-eslint/parser": "^5.9.0",
     "autoprefixer": "^10.4.2",

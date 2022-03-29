@@ -1,3 +1,4 @@
+import * as Yup from "yup"
 import { useFormikContext } from "formik"
 
 export interface UserFormValues {
@@ -42,7 +43,11 @@ export interface UserFormValues {
   */
 }
 
-export const useFormContext = () => {
+export const userValidationSchema = Yup.object({
+  email: Yup.string().required("Email is required"),
+})
+
+export const useUserFormContext = () => {
   const context = useFormikContext<UserFormValues>()
   return context
 }

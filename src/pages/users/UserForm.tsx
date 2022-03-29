@@ -1,8 +1,9 @@
 import { Column, GridColumns, Input } from "@artsy/palette"
-import { useFormContext } from "./useFormContext"
+import { useUserFormContext } from "./useUserFormContext"
 
 export const UserForm: React.FC = () => {
-  const { handleChange, handleBlur, errors, values, touched } = useFormContext()
+  const { handleChange, handleBlur, errors, values, touched } =
+    useUserFormContext()
 
   return (
     <GridColumns>

@@ -4,17 +4,16 @@ import { graphql } from "relay-runtime"
 import { UserIdQuery } from "__generated__/UserIdQuery.graphql"
 import { Button, Join, Spacer } from "@artsy/palette"
 import { Form, Formik } from "formik"
-import { UserFormValues } from "./useFormContext"
+import { UserFormValues, userValidationSchema } from "./useUserFormContext"
 import { UserForm } from "./UserForm"
+import { useUpdateUser } from "./mutations/useUpdateUser"
 
 interface UserProps {
   user: UserIdQuery["response"]["user"]
 }
 
 const User: React.FC<UserProps> = ({ user }) => {
-  const handleSubmit = () => {
-    console.log("submitting")
-  }
+  const { submitMutation } = useUpdateUser()
 
   if (!user) {
     return null
@@ -26,15 +25,27 @@ const User: React.FC<UserProps> = ({ user }) => {
         name: user.name,
         email: user.email,
       }}
-      onSubmit={handleSubmit}
-      // TODO
-      // validationSchema={confirmRegistrationValidationSchema}
+      validationSchema={userValidationSchema}
+      onSubmit={async (values) => {
+        try {
+          await submitMutation({
+            variables: {
+              input: {
+                id: user.internalID,
+                email: values.email,
+              },
+            },
+          })
+        } catch (error) {
+          console.error("[forque] Error updating user:", error)
+        }
+      }}
     >
       {({ isSubmitting, isValid }) => {
         return (
           <Form>
             <Join separator={<Spacer my={2} />}>
-              <UserForm />
+              <UserForm key="user-form" />
 
               <Button loading={isSubmitting} disabled={!isValid} type="submit">
                 Update
@@ -51,10 +62,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const props = await fetchRelayData({
     query: graphql`
       query UserIdQuery($userId: String!) {
-        me {
-          name
-        }
         user(id: $userId) {
+          internalID
           email
           name
         }
