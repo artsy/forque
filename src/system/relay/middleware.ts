@@ -26,7 +26,8 @@ export const getRelayMiddleware = (
       headers: authenticatedHeaders,
     }),
     loggerMiddleware({
-      logger: () => null, // isClient ? console.log : undefined,
+      logger: (...args: any) =>
+        typeof window !== "undefined" ? console.log(...args) : undefined,
     }),
     cacheMiddleware({
       size: 100,

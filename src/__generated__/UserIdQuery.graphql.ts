@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0a8d9aa050f21b6b2d267cb55088cf8e>>
+ * @generated SignedSource<<1ce49d96bdb3d945afd73dc1823b3e0b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,10 +13,8 @@ export type UserIdQuery$variables = {
   userId: string;
 };
 export type UserIdQuery$data = {
-  readonly me: {
-    readonly name: string | null;
-  } | null;
   readonly user: {
+    readonly internalID: string;
     readonly email: string;
     readonly name: string;
   } | null;
@@ -34,20 +32,20 @@ var v0 = [
     "name": "userId"
   }
 ],
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v2 = [
+v1 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "userId"
   }
 ],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
 v3 = {
   "alias": null,
   "args": null,
@@ -59,7 +57,7 @@ v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "name",
   "storageKey": null
 };
 return {
@@ -71,26 +69,15 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": null,
-        "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
-        "plural": false,
-        "selections": [
-          (v1/*: any*/)
-        ],
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": (v2/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "User",
         "kind": "LinkedField",
         "name": "user",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           (v3/*: any*/),
-          (v1/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": null
       }
@@ -106,44 +93,38 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": null,
-        "concreteType": "Me",
-        "kind": "LinkedField",
-        "name": "me",
-        "plural": false,
-        "selections": [
-          (v1/*: any*/),
-          (v4/*: any*/)
-        ],
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": (v2/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "User",
         "kind": "LinkedField",
         "name": "user",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           (v3/*: any*/),
-          (v1/*: any*/),
-          (v4/*: any*/)
+          (v4/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "021429490fb6e0e02451f762ce91bfb1",
+    "cacheID": "3287b33d34e990acd84feb35370bb0c9",
     "id": null,
     "metadata": {},
     "name": "UserIdQuery",
     "operationKind": "query",
-    "text": "query UserIdQuery(\n  $userId: String!\n) {\n  me {\n    name\n    id\n  }\n  user(id: $userId) {\n    email\n    name\n    id\n  }\n}\n"
+    "text": "query UserIdQuery(\n  $userId: String!\n) {\n  user(id: $userId) {\n    internalID\n    email\n    name\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "e83e1ae043cbd0c6fade3577f8fb2a6c";
+(node as any).hash = "c507fa571b2f86c82341853ee5cd7b7a";
 
 export default node;
