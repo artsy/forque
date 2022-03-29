@@ -1,12 +1,15 @@
-import type { NextPage } from "next"
+import { GetServerSideProps } from "next"
 import Head from "next/head"
 import Image from "next/image"
+import { graphql } from "react-relay"
+import { fetchRelayData } from "system/relay"
+import { pagesQuery$data } from "__generated__/pagesQuery.graphql"
 
-import { useUser } from "system/artsy-next-auth"
+interface HomeProps {
+  me: pagesQuery$data["me"]
+}
 
-const Home: NextPage = () => {
-  const user = useUser()
-
+export default function Home({ me }: HomeProps) {
   return (
     <div>
       <Head>
@@ -18,7 +21,7 @@ const Home: NextPage = () => {
       <div className="flex flex-col items-center mt-4 sm:mt-12">
         <h1 className="mb-4 text-xxl">Welcome to Artsy</h1>
         <p className="mb-4">
-          Hi, <strong>{user.email}</strong>
+          Hi, <strong>{me?.email}</strong>
         </p>
         <div className="relative [width:20em] aspect-[196/129]">
           <Image
@@ -34,9 +37,20 @@ const Home: NextPage = () => {
   )
 }
 
-export const getServerSideProps = async () => {
-  // force SSR
-  return { props: {} }
-}
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const props = await fetchRelayData({
+    query: graphql`
+      query pagesQuery {
+        me {
+          email
+        }
+      }
+    `,
+    cache: true,
+    ctx,
+  })
 
-export default Home
+  return {
+    props,
+  }
+}
