@@ -8,35 +8,35 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { Fragment, ReaderFragment } from "relay-runtime"
-import { FragmentRefs } from "relay-runtime"
+import { Fragment, ReaderFragment } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type ArtistName_artist$data = {
-  readonly name: string | null
-  readonly " $fragmentType": "ArtistName_artist"
-}
+  readonly name: string | null;
+  readonly " $fragmentType": "ArtistName_artist";
+};
 export type ArtistName_artist$key = {
-  readonly " $data"?: ArtistName_artist$data
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistName_artist">
-}
+  readonly " $data"?: ArtistName_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistName_artist">;
+};
 
 const node: ReaderFragment = {
-  argumentDefinitions: [],
-  kind: "Fragment",
-  metadata: null,
-  name: "ArtistName_artist",
-  selections: [
+  "argumentDefinitions": [],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "ArtistName_artist",
+  "selections": [
     {
-      alias: null,
-      args: null,
-      kind: "ScalarField",
-      name: "name",
-      storageKey: null,
-    },
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    }
   ],
-  type: "Artist",
-  abstractKey: null,
-}
+  "type": "Artist",
+  "abstractKey": null
+};
 
-;(node as any).hash = "f9438582a740047df29c923c4bc09578"
+(node as any).hash = "f9438582a740047df29c923c4bc09578";
 
-export default node
+export default node;
