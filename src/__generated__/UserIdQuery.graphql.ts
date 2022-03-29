@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<138bee324ebdf2230a49e5731bf6dc16>>
+ * @generated SignedSource<<0a8d9aa050f21b6b2d267cb55088cf8e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,22 +9,21 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-import { FragmentRefs } from "relay-runtime";
-export type ArtistSlugQuery$variables = {
-  artistSlug: string;
+export type UserIdQuery$variables = {
+  userId: string;
 };
-export type ArtistSlugQuery$data = {
+export type UserIdQuery$data = {
   readonly me: {
     readonly name: string | null;
   } | null;
-  readonly artist: {
-    readonly bio: string | null;
-    readonly " $fragmentSpreads": FragmentRefs<"ArtistName_artist">;
+  readonly user: {
+    readonly email: string;
+    readonly name: string;
   } | null;
 };
-export type ArtistSlugQuery = {
-  variables: ArtistSlugQuery$variables;
-  response: ArtistSlugQuery$data;
+export type UserIdQuery = {
+  variables: UserIdQuery$variables;
+  response: UserIdQuery$data;
 };
 
 const node: ConcreteRequest = (function(){
@@ -32,7 +31,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "artistSlug"
+    "name": "userId"
   }
 ],
 v1 = {
@@ -46,14 +45,14 @@ v2 = [
   {
     "kind": "Variable",
     "name": "id",
-    "variableName": "artistSlug"
+    "variableName": "userId"
   }
 ],
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "bio",
+  "name": "email",
   "storageKey": null
 },
 v4 = {
@@ -68,7 +67,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtistSlugQuery",
+    "name": "UserIdQuery",
     "selections": [
       {
         "alias": null,
@@ -85,17 +84,13 @@ return {
       {
         "alias": null,
         "args": (v2/*: any*/),
-        "concreteType": "Artist",
+        "concreteType": "User",
         "kind": "LinkedField",
-        "name": "artist",
+        "name": "user",
         "plural": false,
         "selections": [
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "ArtistName_artist"
-          },
-          (v3/*: any*/)
+          (v3/*: any*/),
+          (v1/*: any*/)
         ],
         "storageKey": null
       }
@@ -107,7 +102,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ArtistSlugQuery",
+    "name": "UserIdQuery",
     "selections": [
       {
         "alias": null,
@@ -125,13 +120,13 @@ return {
       {
         "alias": null,
         "args": (v2/*: any*/),
-        "concreteType": "Artist",
+        "concreteType": "User",
         "kind": "LinkedField",
-        "name": "artist",
+        "name": "user",
         "plural": false,
         "selections": [
-          (v1/*: any*/),
           (v3/*: any*/),
+          (v1/*: any*/),
           (v4/*: any*/)
         ],
         "storageKey": null
@@ -139,16 +134,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d9e65a4a0a5092aa7bd1123b9a5bd3ef",
+    "cacheID": "021429490fb6e0e02451f762ce91bfb1",
     "id": null,
     "metadata": {},
-    "name": "ArtistSlugQuery",
+    "name": "UserIdQuery",
     "operationKind": "query",
-    "text": "query ArtistSlugQuery(\n  $artistSlug: String!\n) {\n  me {\n    name\n    id\n  }\n  artist(id: $artistSlug) {\n    ...ArtistName_artist\n    bio\n    id\n  }\n}\n\nfragment ArtistName_artist on Artist {\n  name\n}\n"
+    "text": "query UserIdQuery(\n  $userId: String!\n) {\n  me {\n    name\n    id\n  }\n  user(id: $userId) {\n    email\n    name\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "67ef23eb8e16001c5852c6861ab133ae";
+(node as any).hash = "e83e1ae043cbd0c6fade3577f8fb2a6c";
 
 export default node;
