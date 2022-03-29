@@ -24,10 +24,13 @@ const Artist: React.FC<ArtistProps> = ({ artist }) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const props = await fetchRelayData({
     query: graphql`
       query ArtistSlugQuery($artistSlug: String!) {
+        me {
+          name
+        }
         artist(id: $artistSlug) {
           ...ArtistName_artist
           bio
@@ -35,9 +38,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       }
     `,
     variables: {
-      artistSlug: context.query.artistSlug,
+      artistSlug: ctx.query.artistSlug,
     },
     cache: true,
+    ctx,
   })
 
   return {

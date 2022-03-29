@@ -1,20 +1,36 @@
 import getConfig from "next/config"
 import {
   cacheMiddleware,
+  Headers,
   loggerMiddleware,
+  Middleware,
   urlMiddleware,
 } from "react-relay-network-modern"
+import { UserSessionData } from "system/artsy-next-auth/auth/user"
 
 const { publicRuntimeConfig } = getConfig()
-const isClient = typeof window !== "undefined"
 
-export const middleware: Array<any> = [
-  urlMiddleware({
-    url: publicRuntimeConfig.NEXT_PUBLIC_METAPHYSICS_URL! + "/v2",
-  }),
-  isClient && loggerMiddleware(),
-  cacheMiddleware({
-    size: 100,
-    ttl: 60 * 1000,
-  }),
-]
+export const getRelayMiddleware = (
+  user?: UserSessionData | null
+): Middleware[] => {
+  const authenticatedHeaders: Headers = user
+    ? {
+        "X-USER-ID": user.id,
+        "X-ACCESS-TOKEN": user.accessToken,
+      }
+    : {}
+
+  return [
+    urlMiddleware({
+      url: publicRuntimeConfig.NEXT_PUBLIC_METAPHYSICS_URL! + "/v2",
+      headers: authenticatedHeaders,
+    }),
+    loggerMiddleware({
+      logger: () => null, // isClient ? console.log : undefined,
+    }),
+    cacheMiddleware({
+      size: 100,
+      ttl: 60 * 1000,
+    }),
+  ]
+}

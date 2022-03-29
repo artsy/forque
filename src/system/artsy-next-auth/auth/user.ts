@@ -1,4 +1,9 @@
+import { GetServerSidePropsContext, NextApiRequest } from "next"
+import { getTokenCookie } from "./cookies"
+import { decryptSession } from "./session-encryption"
+
 export interface UserSessionData {
+  id: string
   email: string
   roles: string[]
   labFeatures: string[]
@@ -66,12 +71,22 @@ const getUserProfile = async (accessToken: string) => {
   })
 
   const user = await response.json()
-  const { email, roles, lab_features, last_sign_in_at } = user
+  const { id, email, roles, lab_features, last_sign_in_at } = user
 
   return {
+    id,
     email,
     roles,
     labFeatures: lab_features,
     lastSignInAt: last_sign_in_at,
   }
+}
+
+export async function getUserFromCookie(req: GetServerSidePropsContext["req"]) {
+  const cookie = await getTokenCookie(req as NextApiRequest)
+  let user = null
+  if (cookie) {
+    user = await decryptSession(cookie)
+  }
+  return user
 }
