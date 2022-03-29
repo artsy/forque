@@ -9,6 +9,7 @@ import { useEnvironment } from "system/relay/setupEnvironment"
 import { RelayEnvironmentProvider } from "react-relay"
 import { getUserFromCookie } from "system/artsy-next-auth/auth/user"
 import { NextApiRequest } from "next"
+import { SystemContextProvider } from "system/SystemContext"
 
 const { GlobalStyles } = injectGlobalStyles(`
   /* overrides and additions */
@@ -17,26 +18,33 @@ const { GlobalStyles } = injectGlobalStyles(`
 export default function MyApp({ Component, pageProps }: AppProps) {
   const environment = useEnvironment({
     initialRecords: pageProps.relayData,
-    user: pageProps.user,
+    user: pageProps.systemUser,
   })
 
   return (
-    <Theme theme="v3">
+    <SystemContextProvider
+      relayEnvironment={environment}
+      user={pageProps.systemUser}
+    >
       <RelayEnvironmentProvider environment={environment!}>
-        <GlobalStyles />
-        <ErrorBoundary>
-          <Layout user={pageProps.user}>
-            <Component {...pageProps} />
-          </Layout>
-        </ErrorBoundary>
+        <Theme theme="v3">
+          <GlobalStyles />
+          <ErrorBoundary>
+            <Layout user={pageProps.systemUser}>
+              <Component {...pageProps} />
+            </Layout>
+          </ErrorBoundary>
+        </Theme>
       </RelayEnvironmentProvider>
-    </Theme>
+    </SystemContextProvider>
   )
 }
 
 MyApp.getInitialProps = async (appContext: AppContext) => {
   const appProps = await App.getInitialProps(appContext)
-  const user = await getUserFromCookie(appContext.ctx.req as NextApiRequest)
-  appProps.pageProps.user = user
-  return { ...appProps }
+  const systemUser = await getUserFromCookie(
+    appContext.ctx.req as NextApiRequest
+  )
+  appProps.pageProps.systemUser = systemUser
+  return appProps
 }
