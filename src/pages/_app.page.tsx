@@ -22,7 +22,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <Theme theme="v3">
-      <RelayEnvironmentProvider environment={environment}>
+      <RelayEnvironmentProvider environment={environment!}>
         <GlobalStyles />
         <ErrorBoundary>
           <Layout user={pageProps.user}>

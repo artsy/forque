@@ -40,10 +40,13 @@ function createEnvironment(user?: UserSessionData | null) {
 export function useEnvironment({
   initialRecords,
   user,
-}: SetupEnvironmentProps) {
-  const store = useMemo(
-    () => setupEnvironment({ initialRecords, user }),
-    [initialRecords, user]
-  )
+}: SetupEnvironmentProps = {}) {
+  const store = useMemo(() => {
+    if (relayEnvironment) {
+      return relayEnvironment
+    } else {
+      setupEnvironment({ initialRecords, user })
+    }
+  }, [initialRecords, user])
   return store
 }
