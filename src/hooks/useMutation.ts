@@ -3,7 +3,7 @@ import {
   GraphQLTaggedNode,
   MutationParameters,
 } from "relay-runtime"
-import { useEnvironment } from "system/relay"
+import { useSystemContext } from "system/SystemContext"
 
 /**
  * Helper hook for writing mutations.
@@ -51,7 +51,7 @@ export const useMutation = <T extends MutationParameters>({
 }: {
   mutation: GraphQLTaggedNode
 }) => {
-  const relayEnvironment = useEnvironment()
+  const { relayEnvironment } = useSystemContext()
 
   const submitMutation = (props: {
     variables: T["variables"]
@@ -60,7 +60,7 @@ export const useMutation = <T extends MutationParameters>({
     const { variables = {}, rejectIf } = props
 
     return new Promise((resolve, reject) => {
-      commitMutation<T>(relayEnvironment!, {
+      commitMutation<T>(relayEnvironment, {
         mutation,
         variables,
         onError: reject,

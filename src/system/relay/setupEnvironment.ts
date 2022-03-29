@@ -47,6 +47,6 @@ export function useEnvironment({
     } else {
       setupEnvironment({ initialRecords, user })
     }
-  }, [initialRecords, user])
+  }, [initialRecords, user]) as Environment
   return store
 }
