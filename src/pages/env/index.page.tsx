@@ -1,6 +1,7 @@
 import type { NextPage } from "next"
 import Head from "next/head"
 import getConfig from "next/config"
+import Link from "next/link"
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -29,6 +30,10 @@ const Home: NextPage = () => {
         <br />
         NEXT_PUBLIC_METAPHYSICS_URL:{" "}
         {publicRuntimeConfig.NEXT_PUBLIC_METAPHYSICS_URL}
+        <br />
+        <Link href="/env/server">
+          <a>See also: server</a>
+        </Link>
       </div>
     </div>
   )

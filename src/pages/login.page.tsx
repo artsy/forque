@@ -1,3 +1,3 @@
-import { LoginForm } from "lib/artsy-next-auth"
+import { LoginForm } from "system/artsy-next-auth"
 
 export default LoginForm
