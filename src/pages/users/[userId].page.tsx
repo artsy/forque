@@ -44,12 +44,15 @@ const User: React.FC<UserProps> = ({ user }) => {
       {({ isSubmitting, isValid }) => {
         return (
           <Form>
-            <UserForm key="user-form" />
+            <UserForm />
 
             <Spacer my={2} />
 
             <Button
-              loading={isSubmitting ? true : undefined}
+              loading={
+                // FIXME: Fix this in palette
+                isSubmitting ? ("true" as unknown as boolean) : undefined
+              }
               disabled={!isValid}
               type="submit"
             >
