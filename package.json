@@ -9,7 +9,7 @@
     "cypress": "./node_modules/.bin/cypress open",
     "cypress:run": "./node_modules/.bin/cypress run --quiet",
     "dev": "concurrently 'yarn relay --watch' 'next dev'",
-    "format": "prettier --write \"{pages,components,lib}/**/*.ts{,x}\"",
+    "format": "prettier --write \"src/{pages,components,lib}/**/*.ts{,x}\"",
     "lint": "next lint --fix",
     "prepare": "husky install",
     "relay": "relay-compiler",
