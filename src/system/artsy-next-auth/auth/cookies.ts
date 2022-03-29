@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next"
 import { parse, serialize } from "cookie"
 
 const TOKEN_NAME = "sessionToken"
-const MAX_AGE = 60 * 60 * 8 // 8 hours
+const MAX_AGE = 60 * 60 * 60 // 60 hours
 
 export function setTokenCookie(res: NextApiResponse, token: string) {
   const cookie = serialize(TOKEN_NAME, token, {
@@ -16,8 +16,8 @@ export function setTokenCookie(res: NextApiResponse, token: string) {
   res.setHeader("Set-Cookie", cookie)
 }
 
-export function getTokenCookie(req: NextApiRequest) {
-  const cookies = parseCookies(req)
+export async function getTokenCookie(req: NextApiRequest) {
+  const cookies = await parseCookies(req)
   return cookies[TOKEN_NAME]
 }
 

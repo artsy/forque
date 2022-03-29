@@ -1,3 +1,4 @@
+import { GetServerSidePropsContext } from "next"
 import {
   CacheConfig,
   fetchQuery,
@@ -5,6 +6,7 @@ import {
   GraphQLTaggedNode,
   OperationType,
 } from "relay-runtime"
+import { getUserFromCookie } from "system/artsy-next-auth/auth/user"
 import { setupEnvironment } from "system/relay/setupEnvironment"
 
 interface FetchRelayDataProps<T extends OperationType> {
@@ -15,6 +17,7 @@ interface FetchRelayDataProps<T extends OperationType> {
     networkCacheConfig?: CacheConfig | null | undefined
     fetchPolicy?: FetchQueryFetchPolicy | null | undefined
   } | null
+  ctx: GetServerSidePropsContext
 }
 
 export async function fetchRelayData<T extends OperationType>({
@@ -22,8 +25,10 @@ export async function fetchRelayData<T extends OperationType>({
   variables = {},
   cacheConfig = {},
   cache = false,
+  ctx,
 }: FetchRelayDataProps<T>) {
-  const environment = setupEnvironment()
+  const user = await getUserFromCookie(ctx.req)
+  const environment = setupEnvironment({ user })
 
   if (cache) {
     cacheConfig = {

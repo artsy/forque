@@ -1,19 +1,24 @@
-import { useUser } from "system/artsy-next-auth"
 import { GlobalNav } from "./GlobalNav"
-
 import { LoginForm } from "system/artsy-next-auth"
+import { UserSessionData } from "system/artsy-next-auth/auth/user"
 
-export const Layout: React.FC = ({ children }) => {
-  const user = useUser()
+interface LayoutProps {
+  user: UserSessionData
+}
 
-  return user ? (
+export const Layout: React.FC<LayoutProps> = ({ children, user }) => {
+  return (
     <>
-      <header>
-        <GlobalNav user={user} />
-      </header>
-      <main className="container mx-auto p-2 sm:py-4">{children}</main>
+      {user ? (
+        <>
+          <header>
+            <GlobalNav user={user} />
+          </header>
+          <main className="container mx-auto p-2 sm:py-4">{children}</main>
+        </>
+      ) : (
+        <LoginForm />
+      )}
     </>
-  ) : (
-    <LoginForm />
   )
 }

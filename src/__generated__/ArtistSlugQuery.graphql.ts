@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5fba2650691256d9359b80825a52e0fa>>
+ * @generated SignedSource<<138bee324ebdf2230a49e5731bf6dc16>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,9 @@ export type ArtistSlugQuery$variables = {
   artistSlug: string
 }
 export type ArtistSlugQuery$data = {
+  readonly me: {
+    readonly name: string | null
+  } | null
   readonly artist: {
     readonly bio: string | null
     readonly " $fragmentSpreads": FragmentRefs<"ArtistName_artist">
@@ -32,18 +35,32 @@ const node: ConcreteRequest = (function () {
         name: "artistSlug",
       },
     ],
-    v1 = [
+    v1 = {
+      alias: null,
+      args: null,
+      kind: "ScalarField",
+      name: "name",
+      storageKey: null,
+    },
+    v2 = [
       {
         kind: "Variable",
         name: "id",
         variableName: "artistSlug",
       },
     ],
-    v2 = {
+    v3 = {
       alias: null,
       args: null,
       kind: "ScalarField",
       name: "bio",
+      storageKey: null,
+    },
+    v4 = {
+      alias: null,
+      args: null,
+      kind: "ScalarField",
+      name: "id",
       storageKey: null,
     }
   return {
@@ -55,7 +72,17 @@ const node: ConcreteRequest = (function () {
       selections: [
         {
           alias: null,
-          args: v1 /*: any*/,
+          args: null,
+          concreteType: "Me",
+          kind: "LinkedField",
+          name: "me",
+          plural: false,
+          selections: [v1 /*: any*/],
+          storageKey: null,
+        },
+        {
+          alias: null,
+          args: v2 /*: any*/,
           concreteType: "Artist",
           kind: "LinkedField",
           name: "artist",
@@ -66,7 +93,7 @@ const node: ConcreteRequest = (function () {
               kind: "FragmentSpread",
               name: "ArtistName_artist",
             },
-            v2 /*: any*/,
+            v3 /*: any*/,
           ],
           storageKey: null,
         },
@@ -82,43 +109,37 @@ const node: ConcreteRequest = (function () {
       selections: [
         {
           alias: null,
-          args: v1 /*: any*/,
+          args: null,
+          concreteType: "Me",
+          kind: "LinkedField",
+          name: "me",
+          plural: false,
+          selections: [v1 /*: any*/, v4 /*: any*/],
+          storageKey: null,
+        },
+        {
+          alias: null,
+          args: v2 /*: any*/,
           concreteType: "Artist",
           kind: "LinkedField",
           name: "artist",
           plural: false,
-          selections: [
-            {
-              alias: null,
-              args: null,
-              kind: "ScalarField",
-              name: "name",
-              storageKey: null,
-            },
-            v2 /*: any*/,
-            {
-              alias: null,
-              args: null,
-              kind: "ScalarField",
-              name: "id",
-              storageKey: null,
-            },
-          ],
+          selections: [v1 /*: any*/, v3 /*: any*/, v4 /*: any*/],
           storageKey: null,
         },
       ],
     },
     params: {
-      cacheID: "40878bea346f36be2c9665ac818963d5",
+      cacheID: "d9e65a4a0a5092aa7bd1123b9a5bd3ef",
       id: null,
       metadata: {},
       name: "ArtistSlugQuery",
       operationKind: "query",
-      text: "query ArtistSlugQuery(\n  $artistSlug: String!\n) {\n  artist(id: $artistSlug) {\n    ...ArtistName_artist\n    bio\n    id\n  }\n}\n\nfragment ArtistName_artist on Artist {\n  name\n}\n",
+      text: "query ArtistSlugQuery(\n  $artistSlug: String!\n) {\n  me {\n    name\n    id\n  }\n  artist(id: $artistSlug) {\n    ...ArtistName_artist\n    bio\n    id\n  }\n}\n\nfragment ArtistName_artist on Artist {\n  name\n}\n",
     },
   }
 })()
 
-;(node as any).hash = "d74b95b9674b0fd09ef5ef4350eccde2"
+;(node as any).hash = "67ef23eb8e16001c5852c6861ab133ae"
 
 export default node
