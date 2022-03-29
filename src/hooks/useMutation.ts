@@ -3,7 +3,7 @@ import {
   GraphQLTaggedNode,
   MutationParameters,
 } from "relay-runtime"
-import { useSystemContext } from "system/SystemContext"
+import { useSystemContext } from "./useSystemContext"
 
 /**
  * Helper hook for writing mutations.
