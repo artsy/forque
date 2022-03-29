@@ -4,6 +4,7 @@ orbs:
   cypress: cypress-io/cypress@1
   hokusai: artsy/hokusai@0.7
   horizon: artsy/release@0.0.1
+  yarn: artsy/yarn@6.1.0
 
 not_staging_or_release: &not_staging_or_release
   filters:
@@ -32,12 +33,14 @@ workflows:
           context: horizon
           project_id: 266
 
-      - hokusai/test:
+      - yarn/run:
+          name: test-jest
           <<: *not_staging_or_release
+          script: "test"
 
       - cypress/run:
           yarn: true
-          start: 'yarn dev'
+          start: "yarn dev"
           executor:
             name: cypress/default
             node: 14.19.0
@@ -46,7 +49,7 @@ workflows:
           name: push-staging-image
           <<: *only_main
           requires:
-            - hokusai/test
+            - test-jest
 
       - hokusai/deploy-staging:
           <<: *only_main
