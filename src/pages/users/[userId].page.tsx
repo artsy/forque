@@ -2,7 +2,7 @@ import { GetServerSideProps } from "next"
 import { fetchRelayData } from "system/relay"
 import { graphql } from "relay-runtime"
 import { UserIdQuery } from "__generated__/UserIdQuery.graphql"
-import { Button, Join, Spacer } from "@artsy/palette"
+import { Button, Spacer } from "@artsy/palette"
 import { Form, Formik } from "formik"
 import { UserFormValues, userValidationSchema } from "./useUserFormContext"
 import { UserForm } from "./UserForm"
@@ -44,13 +44,17 @@ const User: React.FC<UserProps> = ({ user }) => {
       {({ isSubmitting, isValid }) => {
         return (
           <Form>
-            <Join separator={<Spacer my={2} />}>
-              <UserForm key="user-form" />
+            <UserForm key="user-form" />
 
-              <Button loading={isSubmitting} disabled={!isValid} type="submit">
-                Update
-              </Button>
-            </Join>
+            <Spacer my={2} />
+
+            <Button
+              loading={isSubmitting ? true : undefined}
+              disabled={!isValid}
+              type="submit"
+            >
+              Update
+            </Button>
           </Form>
         )
       }}
