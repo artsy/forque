@@ -2,10 +2,10 @@ import { GetServerSideProps } from "next"
 import { fetchRelayData } from "system/relay"
 import { graphql } from "relay-runtime"
 import { UserIdQuery } from "__generated__/UserIdQuery.graphql"
-import { Button, Spacer } from "@artsy/palette"
+import { Button, Flex, Spacer, Text } from "@artsy/palette"
 import { Form, Formik } from "formik"
 import { UserFormValues, userValidationSchema } from "./useUserFormContext"
-import { UserForm } from "./UserForm"
+import { UserForm } from "./components/form"
 import { useUpdateUser } from "./mutations/useUpdateUser"
 
 interface UserProps {
@@ -44,20 +44,23 @@ const User: React.FC<UserProps> = ({ user }) => {
       {({ isSubmitting, isValid }) => {
         return (
           <Form>
+            <Flex justifyContent="space-between" alignItems="center">
+              <Text variant="xl">Edit User</Text>
+              <Button
+                loading={
+                  // FIXME: Fix this in palette
+                  isSubmitting ? ("true" as unknown as boolean) : undefined
+                }
+                disabled={!isValid}
+                type="submit"
+              >
+                Update
+              </Button>
+            </Flex>
+
+            <Spacer my={4} />
+
             <UserForm />
-
-            <Spacer my={2} />
-
-            <Button
-              loading={
-                // FIXME: Fix this in palette
-                isSubmitting ? ("true" as unknown as boolean) : undefined
-              }
-              disabled={!isValid}
-              type="submit"
-            >
-              Update
-            </Button>
           </Form>
         )
       }}
