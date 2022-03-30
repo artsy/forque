@@ -36,7 +36,7 @@ workflows:
       - yarn/run:
           name: test-jest
           <<: *not_staging_or_release
-          script: "test"
+          script: "test:ci"
 
       - cypress/run:
           yarn: true

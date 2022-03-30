@@ -18,6 +18,7 @@
     "sync-schema": "scripts/sync-schema.sh",
     "sync-schema-local": "scripts/sync-schema-local.sh",
     "test": "jest",
+    "test:ci": "jest --runInBand",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
