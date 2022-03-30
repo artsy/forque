@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<394c140af8c4bf6cd880a1e56cebc516>>
+ * @generated SignedSource<<66e91e192e33a6b30b6ef25b96662693>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,35 +10,84 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type usersQuery$variables = {};
-export type usersQuery$data = {
+export type UsersTableQuery$variables = {
+  after?: string | null;
+  before?: string | null;
+  first?: number | null;
+  last?: number | null;
+};
+export type UsersTableQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"UsersTable_viewer">;
   } | null;
 };
-export type usersQuery = {
-  variables: usersQuery$variables;
-  response: usersQuery$data;
+export type UsersTableQuery = {
+  variables: UsersTableQuery$variables;
+  response: UsersTableQuery$data;
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = {
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "after"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "before"
+  },
+  {
+    "defaultValue": 10,
+    "kind": "LocalArgument",
+    "name": "first"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "last"
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "after",
+    "variableName": "after"
+  },
+  {
+    "kind": "Variable",
+    "name": "before",
+    "variableName": "before"
+  },
+  {
+    "kind": "Variable",
+    "name": "first",
+    "variableName": "first"
+  },
+  {
+    "kind": "Variable",
+    "name": "last",
+    "variableName": "last"
+  }
+],
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v1 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v2 = [
-  (v0/*: any*/),
-  (v1/*: any*/),
+v4 = [
+  (v2/*: any*/),
+  (v3/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -49,10 +98,10 @@ v2 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "usersQuery",
+    "name": "UsersTableQuery",
     "selections": [
       {
         "alias": null,
@@ -63,7 +112,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": null,
+            "args": (v1/*: any*/),
             "kind": "FragmentSpread",
             "name": "UsersTable_viewer"
           }
@@ -76,9 +125,9 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "usersQuery",
+    "name": "UsersTableQuery",
     "selections": [
       {
         "alias": null,
@@ -90,13 +139,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "first",
-                "value": 10
-              }
-            ],
+            "args": (v1/*: any*/),
             "concreteType": "UserConnection",
             "kind": "LinkedField",
             "name": "usersConnection",
@@ -142,7 +185,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v2/*: any*/),
+                    "selections": (v4/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -152,7 +195,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v2/*: any*/),
+                    "selections": (v4/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -162,7 +205,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v2/*: any*/),
+                    "selections": (v4/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -173,8 +216,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v0/*: any*/),
-                      (v1/*: any*/)
+                      (v2/*: any*/),
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -232,7 +275,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "usersConnection(first:10)"
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -240,16 +283,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6079515ad5d3257a6b857b1f54200036",
+    "cacheID": "82ebe7718741e2f27f59feb11e9fcc0f",
     "id": null,
     "metadata": {},
-    "name": "usersQuery",
+    "name": "UsersTableQuery",
     "operationKind": "query",
-    "text": "query usersQuery {\n  viewer {\n    ...UsersTable_viewer\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment UsersTable_viewer on Viewer {\n  usersConnection(first: 10) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        email\n        name\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query UsersTableQuery(\n  $after: String\n  $before: String\n  $first: Int = 10\n  $last: Int\n) {\n  viewer {\n    ...UsersTable_viewer_pbnwq\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment UsersTable_viewer_pbnwq on Viewer {\n  usersConnection(first: $first, last: $last, after: $after, before: $before) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        email\n        name\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "41314c0d63b02bbf0aef66ecd41981cd";
+(node as any).hash = "7bac26e9f047cf85ad283fc1fcdd9197";
 
 export default node;

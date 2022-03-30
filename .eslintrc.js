@@ -20,7 +20,7 @@ module.exports = {
     "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",
-      { vars: "all", varsIgnorePattern: "^_" },
+      { vars: "all", argsIgnorePattern: "^_" },
     ],
     "testing-library/render-result-naming-convention": "off",
   },
