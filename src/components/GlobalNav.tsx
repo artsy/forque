@@ -37,6 +37,11 @@ const LoggedIn = () => (
         Home
       </a>
     </Link>
+    <Link href="/users">
+      <a className="no-underline inline-block p-2 font-bold text-white100 hover:bg-black60 hover:text-white100">
+        Users
+      </a>
+    </Link>
     <Link href="/artists/dedupe">
       <a className="no-underline inline-block p-2 font-bold text-white100 hover:bg-black60 hover:text-white100">
         Dedupe Artists
