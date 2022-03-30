@@ -47,6 +47,11 @@ const LoggedIn = () => (
         Dedupe Artists
       </a>
     </Link>
+    <Link href="/uploads">
+      <a className="no-underline inline-block p-2 font-bold text-white100 hover:bg-black60 hover:text-white100">
+        Uploads
+      </a>
+    </Link>
     <Link href="/api/artsy-auth/logout">
       <a className="no-underline inline-block p-2 font-bold text-white100 hover:bg-black60 hover:text-white100">
         Logout
