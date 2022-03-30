@@ -83,6 +83,7 @@
     "lint-staged": "11",
     "postcss": "^8.4.5",
     "prettier": "2.5.1",
+    "pull-lock": "^1.0.0",
     "relay-compiler": "^13.2.0",
     "relay-test-utils": "^13.2.0",
     "tailwindcss": "^3.0.11",
@@ -91,5 +92,8 @@
   },
   "resolutions": {
     "webpack": "^5"
+  },
+  "pull-lock": {
+    "yarn.lock": "yarn install"
   }
 }
