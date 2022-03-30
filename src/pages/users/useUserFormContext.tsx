@@ -24,7 +24,7 @@ export interface UserFormValues {
   phoneNumber?: string
   country?: string
   gender?: string
-  mariatalStatus?: string
+  maritalStatus?: string
   birthYear?: string
   spouse?: string
   jobTitle?: string

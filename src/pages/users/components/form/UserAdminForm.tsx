@@ -17,7 +17,6 @@ export const UserAdminForm: React.FC = () => {
             name="name"
             title="Name"
             placeholder="Enter name"
-            autoFocus
             value={values.name}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -29,7 +28,6 @@ export const UserAdminForm: React.FC = () => {
             name="email"
             title="Email"
             placeholder="Enter email"
-            autoFocus
             value={values.email}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -41,7 +39,6 @@ export const UserAdminForm: React.FC = () => {
           <Input
             name="emailConfirmedAt"
             title="Email Confirmed At"
-            autoFocus
             value={values.emailConfirmedAt}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -53,7 +50,6 @@ export const UserAdminForm: React.FC = () => {
           <Input
             name="location"
             title="Location"
-            autoFocus
             value={values.location}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -76,6 +72,8 @@ export const UserAdminForm: React.FC = () => {
             Roles
           </Text>
 
+          {/* TODO: Figure out what the expected gravity values are for these;
+              here we only grabbed keys */}
           {[
             "Team",
             "Admin",

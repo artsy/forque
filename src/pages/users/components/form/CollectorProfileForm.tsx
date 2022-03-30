@@ -37,7 +37,6 @@ export const CollectorProfileForm: React.FC = () => {
             name="companyName"
             title="Company Name"
             placeholder="Enter Company Name"
-            autoFocus
             value={values.companyName}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -49,7 +48,6 @@ export const CollectorProfileForm: React.FC = () => {
             name="companyWebsite"
             title="Company Website"
             placeholder="Enter Company Website"
-            autoFocus
             value={values.companyWebsite}
             onChange={handleChange}
             onBlur={handleBlur}

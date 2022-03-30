@@ -42,6 +42,9 @@ const User: React.FC<UserProps> = ({ user }) => {
               },
             })
           } catch (error) {
+            // TODO: Since we'll eventually be submitting a few mutations we'll
+            // need to funnel gravity errors up to various sub-sections. (Think,
+            // auth errors related to levels.)
             console.error("[forque] Error updating user:", error)
           }
         }}

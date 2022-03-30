@@ -25,11 +25,11 @@ export const UserInfoForm: React.FC = () => {
             name="name"
             title="Name"
             placeholder="Enter name"
-            autoFocus
             value={values.name}
             onChange={handleChange}
             onBlur={handleBlur}
             error={touched.name && errors.name}
+            autoFocus
           />
         </Column>
         <Column span={12}>
@@ -37,7 +37,6 @@ export const UserInfoForm: React.FC = () => {
             name="email"
             title="Email"
             placeholder="Enter email"
-            autoFocus
             value={values.email}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -70,7 +69,6 @@ export const UserInfoForm: React.FC = () => {
             name="firstName"
             title="First Name"
             placeholder="Enter First Name"
-            autoFocus
             value={values.firstName}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -82,7 +80,6 @@ export const UserInfoForm: React.FC = () => {
             name="lastName"
             title="Last Name"
             placeholder="Enter Last Name"
-            autoFocus
             value={values.lastName}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -94,7 +91,6 @@ export const UserInfoForm: React.FC = () => {
             name="country"
             title="Country"
             placeholder="Enter Country"
-            autoFocus
             value={values.country}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -106,7 +102,6 @@ export const UserInfoForm: React.FC = () => {
             name="postalCode"
             title="Postal Code"
             placeholder="Enter Postal Code"
-            autoFocus
             value={values.postalCode}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -118,7 +113,6 @@ export const UserInfoForm: React.FC = () => {
             name="addressLine1"
             title="Address Line 1"
             placeholder="Enter Address Line 1"
-            autoFocus
             value={values.addressLine1}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -130,7 +124,6 @@ export const UserInfoForm: React.FC = () => {
             name="addressLine2"
             title="Address Line 2"
             placeholder="Enter Address Line 2"
-            autoFocus
             value={values.addressLine2}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -142,7 +135,6 @@ export const UserInfoForm: React.FC = () => {
             name="city"
             title="City"
             placeholder="Enter City"
-            autoFocus
             value={values.city}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -154,7 +146,6 @@ export const UserInfoForm: React.FC = () => {
             name="region"
             title="Region"
             placeholder="Enter Region"
-            autoFocus
             value={values.region}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -166,7 +157,6 @@ export const UserInfoForm: React.FC = () => {
             name="phoneNumber"
             title="Phone Number"
             placeholder="Enter Phone Number"
-            autoFocus
             value={values.phoneNumber}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -182,17 +172,17 @@ export const UserInfoForm: React.FC = () => {
             onBlur={handleBlur}
             error={touched.gender && errors.gender}
             mt={-0.5}
-            options={formatOptions(["Male", "Female", "Unspecified"])}
+            options={formatOptions(["Male", "Female", "Nonbinary", "n/a"])}
           />
         </Column>
         <Column span={12}>
           <Select
-            name="mariatalStatus"
-            title="Mariatal Status"
-            selected={values.mariatalStatus}
+            name="maritalStatus"
+            title="Marital Status"
+            selected={values.maritalStatus}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.mariatalStatus && errors.mariatalStatus}
+            error={touched.maritalStatus && errors.maritalStatus}
             mt={-0.5}
             options={formatOptions([
               "Married",
@@ -209,7 +199,6 @@ export const UserInfoForm: React.FC = () => {
             name="birthYear"
             title="Birth Year"
             placeholder="Enter Birth Year"
-            autoFocus
             value={values.birthYear}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -221,7 +210,6 @@ export const UserInfoForm: React.FC = () => {
             name="spouse"
             title="Spouse"
             placeholder="Enter Spouse"
-            autoFocus
             value={values.spouse}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -233,7 +221,6 @@ export const UserInfoForm: React.FC = () => {
             name="jobTitle"
             title="Job Title"
             placeholder="Enter Job Title"
-            autoFocus
             value={values.jobTitle}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -245,7 +232,6 @@ export const UserInfoForm: React.FC = () => {
             name="employer"
             title="Employer"
             placeholder="Enter Employer"
-            autoFocus
             value={values.employer}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -257,7 +243,6 @@ export const UserInfoForm: React.FC = () => {
             name="profession"
             title="Profession"
             placeholder="Enter Profession"
-            autoFocus
             value={values.profession}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -269,19 +254,6 @@ export const UserInfoForm: React.FC = () => {
             name="salary"
             title="Salary"
             placeholder="Enter Salary"
-            autoFocus
-            value={values.salary}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            error={touched.salary && errors.salary}
-          />
-        </Column>
-        <Column span={12}>
-          <Input
-            name="salary"
-            title="Salary"
-            placeholder="Enter Salary"
-            autoFocus
             value={values.salary}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -341,12 +313,12 @@ export const UserInfoForm: React.FC = () => {
         </Column>
         <Column span={12}>
           <Select
-            name="industry"
-            title="Industry"
-            selected={values.industry}
+            name="buyerStatus"
+            title="Buyer Status"
+            selected={values.buyerStatus}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.industry && errors.industry}
+            error={touched.buyerStatus && errors.buyerStatus}
             mt={-0.5}
             options={[
               {
@@ -396,7 +368,6 @@ export const UserInfoForm: React.FC = () => {
             name="workPhone"
             title="Work Phone"
             placeholder="Enter Work Phone"
-            autoFocus
             value={values.workPhone}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -408,7 +379,6 @@ export const UserInfoForm: React.FC = () => {
             name="mobilePhone"
             title="Mobile Phone"
             placeholder="Enter Mobile Phone"
-            autoFocus
             value={values.mobilePhone}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -420,7 +390,6 @@ export const UserInfoForm: React.FC = () => {
             name="fax"
             title="Fax"
             placeholder="Enter Fax"
-            autoFocus
             value={values.fax}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -432,7 +401,6 @@ export const UserInfoForm: React.FC = () => {
             name="alternativeEmail"
             title="Alternative Email"
             placeholder="Enter Alternative Email"
-            autoFocus
             value={values.alternativeEmail}
             onChange={handleChange}
             onBlur={handleBlur}
@@ -453,7 +421,6 @@ export const UserInfoForm: React.FC = () => {
           <TextArea
             name="notes"
             placeholder="Enter Notes"
-            autoFocus
             value={values.notes}
             onChange={handleChange}
             onBlur={handleBlur}
