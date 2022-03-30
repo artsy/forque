@@ -7,6 +7,7 @@ import { Form, Formik } from "formik"
 import { UserFormValues, userValidationSchema } from "./useUserFormContext"
 import { UserForm } from "./components/form"
 import { useUpdateUser } from "./mutations/useUpdateUser"
+import Head from "next/head"
 
 interface UserProps {
   user: UserIdQuery["response"]["user"]
@@ -20,51 +21,56 @@ const User: React.FC<UserProps> = ({ user }) => {
   }
 
   return (
-    <Formik<UserFormValues>
-      initialValues={{
-        name: user.name,
-        email: user.email,
-      }}
-      validationSchema={userValidationSchema}
-      onSubmit={async (values) => {
-        try {
-          await submitMutation({
-            variables: {
-              input: {
-                id: user.internalID,
-                email: values.email,
+    <>
+      <Head>
+        <title>Update User</title>
+      </Head>
+      <Formik<UserFormValues>
+        initialValues={{
+          name: user.name,
+          email: user.email,
+        }}
+        validationSchema={userValidationSchema}
+        onSubmit={async (values) => {
+          try {
+            await submitMutation({
+              variables: {
+                input: {
+                  id: user.internalID,
+                  email: values.email,
+                },
               },
-            },
-          })
-        } catch (error) {
-          console.error("[forque] Error updating user:", error)
-        }
-      }}
-    >
-      {({ isSubmitting, isValid }) => {
-        return (
-          <Form>
-            <Flex justifyContent="space-between" alignItems="center">
-              <Text variant="xl">Edit User</Text>
-              <Button
-                loading={
-                  // FIXME: Fix this in palette
-                  isSubmitting ? ("true" as unknown as boolean) : undefined
-                }
-                disabled={!isValid}
-                type="submit"
-              >
-                Update
-              </Button>
-            </Flex>
+            })
+          } catch (error) {
+            console.error("[forque] Error updating user:", error)
+          }
+        }}
+      >
+        {({ isSubmitting, isValid }) => {
+          return (
+            <Form>
+              <Flex justifyContent="space-between" alignItems="center">
+                <Text variant="xl">Edit User</Text>
+                <Button
+                  loading={
+                    // FIXME: Fix this in palette
+                    isSubmitting ? ("true" as unknown as boolean) : undefined
+                  }
+                  disabled={!isValid}
+                  type="submit"
+                >
+                  Update
+                </Button>
+              </Flex>
 
-            <Spacer my={4} />
+              <Spacer my={4} />
 
-            <UserForm />
-          </Form>
-        )
-      }}
-    </Formik>
+              <UserForm />
+            </Form>
+          )
+        }}
+      </Formik>
+    </>
   )
 }
 
