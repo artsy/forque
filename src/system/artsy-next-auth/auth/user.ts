@@ -82,11 +82,8 @@ const getUserProfile = async (accessToken: string) => {
   }
 }
 
-export async function getUserFromCookie(req: GetServerSidePropsContext["req"]) {
-  const cookie = await getTokenCookie(req as NextApiRequest)
-  let user = null
-  if (cookie) {
-    user = await decryptSession(cookie)
-  }
-  return user
+export function getUserFromCookie(req: GetServerSidePropsContext["req"]) {
+  const cookie = getTokenCookie(req as NextApiRequest)
+  if (!cookie) return null
+  return decryptSession(cookie)
 }
