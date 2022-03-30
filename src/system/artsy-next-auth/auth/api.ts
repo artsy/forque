@@ -49,7 +49,7 @@ async function handleLogout(req: NextApiRequest, res: NextApiResponse) {
 
 async function handleUser(req: NextApiRequest, res: NextApiResponse) {
   let session: UserSessionData | null = null
-  const cookie = await getTokenCookie(req)
+  const cookie = getTokenCookie(req)
   if (cookie) {
     session = await decryptSession(cookie)
   }
