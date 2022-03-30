@@ -9,7 +9,7 @@ import {
 } from "@artsy/palette"
 import { HeadObjectOutput } from "aws-sdk/clients/s3"
 import { useClipboard } from "hooks/useClipboard"
-import { filesize } from "./lib/filesize"
+import { filesize } from "./utils/filesize"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { FC } from "react"

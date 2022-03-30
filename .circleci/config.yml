@@ -38,6 +38,11 @@ workflows:
           <<: *not_staging_or_release
           script: "test:ci"
 
+      - yarn/run:
+          name: type-check
+          <<: *not_staging_or_release
+          script: "type-check"
+
       - cypress/run:
           yarn: true
           start: "yarn dev"
