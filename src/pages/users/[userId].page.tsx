@@ -29,6 +29,7 @@ const User: React.FC<UserProps> = ({ user }) => {
         initialValues={{
           name: user.name,
           email: user.email,
+          phoneNumber: user.phone || undefined,
         }}
         validationSchema={userValidationSchema}
         onSubmit={async (values) => {
@@ -38,6 +39,8 @@ const User: React.FC<UserProps> = ({ user }) => {
                 input: {
                   id: user.internalID,
                   email: values.email,
+                  name: values.name,
+                  phone: values.phoneNumber!,
                 },
               },
             })
@@ -85,6 +88,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           internalID
           email
           name
+          phone
         }
       }
     `,

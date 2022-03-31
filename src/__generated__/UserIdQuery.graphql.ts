@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1ce49d96bdb3d945afd73dc1823b3e0b>>
+ * @generated SignedSource<<8caf0e149afec46ab3e134d75b91867a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,7 @@ export type UserIdQuery$data = {
     readonly internalID: string;
     readonly email: string;
     readonly name: string;
+    readonly phone: string | null;
   } | null;
 };
 export type UserIdQuery = {
@@ -59,6 +60,13 @@ v4 = {
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "phone",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -77,7 +85,8 @@ return {
         "selections": [
           (v2/*: any*/),
           (v3/*: any*/),
-          (v4/*: any*/)
+          (v4/*: any*/),
+          (v5/*: any*/)
         ],
         "storageKey": null
       }
@@ -102,6 +111,7 @@ return {
           (v2/*: any*/),
           (v3/*: any*/),
           (v4/*: any*/),
+          (v5/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -115,16 +125,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3287b33d34e990acd84feb35370bb0c9",
+    "cacheID": "d6d83ddf682c75e38d40104d5170a44c",
     "id": null,
     "metadata": {},
     "name": "UserIdQuery",
     "operationKind": "query",
-    "text": "query UserIdQuery(\n  $userId: String!\n) {\n  user(id: $userId) {\n    internalID\n    email\n    name\n    id\n  }\n}\n"
+    "text": "query UserIdQuery(\n  $userId: String!\n) {\n  user(id: $userId) {\n    internalID\n    email\n    name\n    phone\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c507fa571b2f86c82341853ee5cd7b7a";
+(node as any).hash = "5c577cfff7e36a791e0f9b1d2131ce80";
 
 export default node;
