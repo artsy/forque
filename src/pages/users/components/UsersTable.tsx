@@ -1,7 +1,8 @@
-import { Box, Spacer, Text } from "@artsy/palette"
+import { Spacer, Text } from "@artsy/palette"
 import { ListPagination } from "components/ListPagination"
+import { Table } from "components/Table"
 import { useExtractNodes } from "hooks/useExtractNodes"
-import Link from "next/link"
+import { useRouter } from "next/router"
 import { Suspense } from "react"
 import { graphql, useRefetchableFragment } from "react-relay"
 import { UsersTable_viewer$key } from "__generated__/UsersTable_viewer.graphql"
@@ -11,7 +12,9 @@ interface UsersTableProps {
 }
 
 export const UsersTable: React.FC<UsersTableProps> = ({ viewer }) => {
-  const [data, refetch] = useRefetchableFragment(
+  const router = useRouter()
+
+  const [viewerData, refetch] = useRefetchableFragment(
     graphql`
       fragment UsersTable_viewer on Viewer
       @refetchable(queryName: "UsersTableQuery")
@@ -47,13 +50,13 @@ export const UsersTable: React.FC<UsersTableProps> = ({ viewer }) => {
     viewer
   )
 
-  const users = useExtractNodes(data.usersConnection)
+  const users = useExtractNodes(viewerData.usersConnection)
 
   if (!users.length) {
     return null
   }
 
-  const showPagination = !!data.usersConnection?.pageCursors
+  const showPagination = !!viewerData.usersConnection?.pageCursors
 
   return (
     <>
@@ -62,13 +65,26 @@ export const UsersTable: React.FC<UsersTableProps> = ({ viewer }) => {
       </Text>
 
       <Suspense fallback={null}>
-        {users.map((user) => {
-          return (
-            <Box key={user.internalID}>
-              <Link href={`/users/${user.internalID}`}>{user.name}</Link>
-            </Box>
-          )
-        })}
+        <Table
+          columns={[
+            {
+              Header: "Name",
+              accessor: "name", // accessor is the "key" in the data
+            },
+            {
+              Header: "Email",
+              accessor: "email",
+            },
+            {
+              Header: "ID",
+              accessor: "internalID",
+            },
+          ]}
+          data={users}
+          onRowClick={(row) => {
+            router.push(`/users/${row.values.internalID}`)
+          }}
+        />
       </Suspense>
 
       {showPagination && (
@@ -76,8 +92,8 @@ export const UsersTable: React.FC<UsersTableProps> = ({ viewer }) => {
           <Spacer my={2} />
 
           <ListPagination
-            pageCursors={data.usersConnection.pageCursors}
-            pageInfo={data.usersConnection.pageInfo}
+            pageCursors={viewerData.usersConnection.pageCursors}
+            pageInfo={viewerData.usersConnection.pageInfo}
             relayRefetch={refetch}
           />
         </>
