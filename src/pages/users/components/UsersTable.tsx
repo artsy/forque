@@ -2,6 +2,7 @@ import { Box, Text } from "@artsy/palette"
 import { ListPagination } from "components/ListPagination"
 import { useExtractNodes } from "hooks/useExtractNodes"
 import Link from "next/link"
+import { Suspense } from "react"
 import { graphql, useRefetchableFragment } from "react-relay"
 import { UsersTable_viewer$key } from "__generated__/UsersTable_viewer.graphql"
 
@@ -60,13 +61,15 @@ export const UsersTable: React.FC<UsersTableProps> = ({ viewer }) => {
         Users
       </Text>
 
-      {users.map((user) => {
-        return (
-          <Box key={user.internalID}>
-            <Link href={`/users/${user.internalID}`}>{user.name}</Link>
-          </Box>
-        )
-      })}
+      <Suspense fallback={<Box>Loading...</Box>}>
+        {users.map((user) => {
+          return (
+            <Box key={user.internalID}>
+              <Link href={`/users/${user.internalID}`}>{user.name}</Link>
+            </Box>
+          )
+        })}
+      </Suspense>
 
       {showPagination && (
         <ListPagination

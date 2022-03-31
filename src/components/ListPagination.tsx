@@ -1,6 +1,7 @@
 import { graphql, RefetchFnDynamic, useFragment } from "react-relay"
 import { Pagination } from "@artsy/palette"
 import { ListPagination_pageCursors$key } from "__generated__/ListPagination_pageCursors.graphql"
+import { startTransition } from "react"
 
 const REFETCH_PAGE_SIZE = 25
 
@@ -48,31 +49,43 @@ export const ListPagination: React.FC<PaginationProps> = ({
     return null
   }
 
-  const handleNext = () => {
-    const { hasNextPage, endCursor } = pageInfo
+  const handleNext = (event: React.MouseEvent<any>) => {
+    startTransition(() => {
+      event.preventDefault()
 
-    if (hasNextPage && endCursor) {
-      loadAfter(endCursor)
-    }
+      const { hasNextPage, endCursor } = pageInfo
+
+      if (hasNextPage && endCursor) {
+        loadAfter(endCursor)
+      }
+    })
   }
 
-  const loadAfter = (cursor: string, _page?: number) => {
-    relayRefetch(
-      {
-        first: REFETCH_PAGE_SIZE,
-        after: cursor,
-        // before: null,
-        // last: null,
-        ...additionalRefetchArgs,
-      },
-      {
-        onComplete: (error) => {
-          if (error) {
-            console.error("[ListPagination] Error:", error)
-          }
+  const loadAfter = (
+    cursor: string,
+    _page?: number,
+    event?: React.MouseEvent<any>
+  ) => {
+    startTransition(() => {
+      event?.preventDefault()
+
+      relayRefetch(
+        {
+          first: REFETCH_PAGE_SIZE,
+          after: cursor,
+          // before: null,
+          // last: null,
+          ...additionalRefetchArgs,
         },
-      }
-    )
+        {
+          onComplete: (error) => {
+            if (error) {
+              console.error("[ListPagination] Error:", error)
+            }
+          },
+        }
+      )
+    })
   }
 
   return (
