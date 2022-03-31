@@ -3,7 +3,7 @@ import { Pagination } from "@artsy/palette"
 import { ListPagination_pageCursors$key } from "__generated__/ListPagination_pageCursors.graphql"
 import { startTransition } from "react"
 
-const REFETCH_PAGE_SIZE = 25
+const REFETCH_PAGE_SIZE = 20
 
 interface PaginationProps {
   pageCursors: ListPagination_pageCursors$key
@@ -73,8 +73,6 @@ export const ListPagination: React.FC<PaginationProps> = ({
         {
           first: REFETCH_PAGE_SIZE,
           after: cursor,
-          // before: null,
-          // last: null,
           ...additionalRefetchArgs,
         },
         {

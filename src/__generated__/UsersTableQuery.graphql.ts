@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<66e91e192e33a6b30b6ef25b96662693>>
+ * @generated SignedSource<<f1c1fd17adc4958fbacd98104abe3522>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -39,7 +39,7 @@ var v0 = [
     "name": "before"
   },
   {
-    "defaultValue": 10,
+    "defaultValue": 20,
     "kind": "LocalArgument",
     "name": "first"
   },
@@ -283,16 +283,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "82ebe7718741e2f27f59feb11e9fcc0f",
+    "cacheID": "b3435aab7ea8797ec80b6fc658f8d82e",
     "id": null,
     "metadata": {},
     "name": "UsersTableQuery",
     "operationKind": "query",
-    "text": "query UsersTableQuery(\n  $after: String\n  $before: String\n  $first: Int = 10\n  $last: Int\n) {\n  viewer {\n    ...UsersTable_viewer_pbnwq\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment UsersTable_viewer_pbnwq on Viewer {\n  usersConnection(first: $first, last: $last, after: $after, before: $before) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        email\n        name\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query UsersTableQuery(\n  $after: String\n  $before: String\n  $first: Int = 20\n  $last: Int\n) {\n  viewer {\n    ...UsersTable_viewer_pbnwq\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment UsersTable_viewer_pbnwq on Viewer {\n  usersConnection(first: $first, last: $last, after: $after, before: $before) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        email\n        name\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "7bac26e9f047cf85ad283fc1fcdd9197";
+(node as any).hash = "6c712810b0e592b6dc5f83c93d55bf7a";
 
 export default node;

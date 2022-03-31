@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<394c140af8c4bf6cd880a1e56cebc516>>
+ * @generated SignedSource<<459eade6e2668045fde99075dc6d3556>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -94,7 +94,7 @@ return {
               {
                 "kind": "Literal",
                 "name": "first",
-                "value": 10
+                "value": 20
               }
             ],
             "concreteType": "UserConnection",
@@ -232,7 +232,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "usersConnection(first:10)"
+            "storageKey": "usersConnection(first:20)"
           }
         ],
         "storageKey": null
@@ -240,12 +240,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6079515ad5d3257a6b857b1f54200036",
+    "cacheID": "37ae68ff6eea5323a18abb81f77b928e",
     "id": null,
     "metadata": {},
     "name": "usersQuery",
     "operationKind": "query",
-    "text": "query usersQuery {\n  viewer {\n    ...UsersTable_viewer\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment UsersTable_viewer on Viewer {\n  usersConnection(first: 10) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        email\n        name\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query usersQuery {\n  viewer {\n    ...UsersTable_viewer\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment UsersTable_viewer on Viewer {\n  usersConnection(first: 20) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        email\n        name\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

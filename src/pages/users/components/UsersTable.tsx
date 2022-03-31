@@ -1,4 +1,4 @@
-import { Box, Text } from "@artsy/palette"
+import { Box, Spacer, Text } from "@artsy/palette"
 import { ListPagination } from "components/ListPagination"
 import { useExtractNodes } from "hooks/useExtractNodes"
 import Link from "next/link"
@@ -16,7 +16,7 @@ export const UsersTable: React.FC<UsersTableProps> = ({ viewer }) => {
       fragment UsersTable_viewer on Viewer
       @refetchable(queryName: "UsersTableQuery")
       @argumentDefinitions(
-        first: { type: "Int", defaultValue: 10 }
+        first: { type: "Int", defaultValue: 20 }
         last: { type: "Int" }
         after: { type: "String" }
         before: { type: "String" }
@@ -72,11 +72,15 @@ export const UsersTable: React.FC<UsersTableProps> = ({ viewer }) => {
       </Suspense>
 
       {showPagination && (
-        <ListPagination
-          pageCursors={data.usersConnection.pageCursors}
-          pageInfo={data.usersConnection.pageInfo}
-          relayRefetch={refetch}
-        />
+        <>
+          <Spacer my={2} />
+
+          <ListPagination
+            pageCursors={data.usersConnection.pageCursors}
+            pageInfo={data.usersConnection.pageInfo}
+            relayRefetch={refetch}
+          />
+        </>
       )}
     </>
   )
