@@ -16,12 +16,14 @@ export function setTokenCookie(res: NextApiResponse, token: string) {
   res.setHeader("Set-Cookie", cookie)
 }
 
-export async function getTokenCookie(req: NextApiRequest) {
-  const cookies = await parseCookies(req)
+export function getTokenCookie(req: NextApiRequest) {
+  const cookies = parseCookies(req)
   return cookies[TOKEN_NAME]
 }
 
 export function parseCookies(req: NextApiRequest) {
+  if (!req) return parse(document.cookie)
+
   // For API Routes we don't need to parse the cookies.
   if (req.cookies) return req.cookies
 

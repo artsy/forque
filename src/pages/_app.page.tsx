@@ -10,6 +10,7 @@ import { RelayEnvironmentProvider } from "react-relay"
 import { getUserFromCookie } from "system/artsy-next-auth/auth/user"
 import { NextApiRequest } from "next"
 import { SystemContextProvider } from "system/SystemContext"
+import { RouteLoadingBar } from "system/RouteLoadingBar"
 
 const { GlobalStyles } = injectGlobalStyles(`
   /* overrides and additions */
@@ -31,6 +32,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
           <GlobalStyles />
           <ErrorBoundary>
             <Layout user={pageProps.systemUser}>
+              <RouteLoadingBar />
               <Component {...pageProps} />
             </Layout>
           </ErrorBoundary>

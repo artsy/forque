@@ -42,11 +42,7 @@ export function useEnvironment({
   user,
 }: SetupEnvironmentProps = {}) {
   const store = useMemo(() => {
-    if (relayEnvironment) {
-      return relayEnvironment
-    } else {
-      setupEnvironment({ initialRecords, user })
-    }
+    return setupEnvironment({ initialRecords, user })
   }, [initialRecords, user]) as Environment
   return store
 }

@@ -4,8 +4,6 @@ import { useFormikContext } from "formik"
 export interface UserFormValues {
   /*
   artworksPerYear: number
-  // auctionDenyList: boolean // TODO
-  // buyerStatus: string // TODO: select
   collectorSince: string
   dataTransferOptOut: boolean
   displayFavoritesDialog: boolean
@@ -15,19 +13,54 @@ export interface UserFormValues {
   */
   email: string
   name: string
+  namePrefix?: string
+  firstName?: string
+  lastName?: string
+  postalCode?: string
+  addressLine1?: string
+  addressLine2?: string
+  city?: string
+  region?: string
+  phoneNumber?: string
+  country?: string
+  gender?: string
+  maritalStatus?: string
+  birthYear?: string
+  spouse?: string
+  jobTitle?: string
+  employer?: string
+  profession?: string
+  salary?: string
+  industry?: string
+  buyerStatus?: string
+  priceRange?: string // TODO: format to priceRangeMin / max
+  workPhone?: string
+  mobilePhone?: string
+  fax?: string
+  alternativeEmail?: string
+  auctionDenyList?: boolean
+
+  // Collector Profile
+  confirmedBuyer?: boolean
+  professionalBuyer?: boolean
+  companyName?: string
+  companyWebsite?: string
+
+  // Other stuff
+  notes?: string
+
+  // Admin
+  emailConfirmedAt?: string
+  location?: string
+  twoFactorAuthentication?: boolean
+
   /*
   emailFrequency: string
-  gender: string // TODO: select
   industry: string // TODO: select
   isAvailableRepresentative: string
   isCollector: boolean
   isRepresentative: boolean
-  location: string
-  // namePrefix: string // TODO: select
-  // mariatalStatus: string // TODO: select
-  notes: string
   phone: string
-  // priceRange: string // TODO: select
   priceRangeMax: string
   priceRangeMin: string
   profession: string

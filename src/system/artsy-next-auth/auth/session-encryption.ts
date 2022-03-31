@@ -9,9 +9,9 @@ export async function encryptSession(session: UserSessionData) {
 }
 
 // TODO: for extra security replace with actual decryption e.g. Iron
-export async function decryptSession(cookie: string) {
+export function decryptSession(cookie: string) {
   const buff = Buffer.from(cookie, "base64")
   const decoded = buff.toString("ascii")
   const session: UserSessionData = JSON.parse(decoded)
-  return Promise.resolve(session)
+  return session
 }
