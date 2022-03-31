@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8caf0e149afec46ab3e134d75b91867a>>
+ * @generated SignedSource<<85ecf19de897d02d0db11b9efd7f89a4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type UserIdQuery$variables = {
 export type UserIdQuery$data = {
   readonly user: {
     readonly internalID: string;
+    readonly dataTransferOptOut: boolean | null;
     readonly email: string;
     readonly name: string;
     readonly phone: string | null;
@@ -51,17 +52,24 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "email",
+  "name": "dataTransferOptOut",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "email",
   "storageKey": null
 },
 v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -86,7 +94,8 @@ return {
           (v2/*: any*/),
           (v3/*: any*/),
           (v4/*: any*/),
-          (v5/*: any*/)
+          (v5/*: any*/),
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
@@ -112,6 +121,7 @@ return {
           (v3/*: any*/),
           (v4/*: any*/),
           (v5/*: any*/),
+          (v6/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -125,16 +135,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d6d83ddf682c75e38d40104d5170a44c",
+    "cacheID": "d66b5aae66a0bada093f595ec3607439",
     "id": null,
     "metadata": {},
     "name": "UserIdQuery",
     "operationKind": "query",
-    "text": "query UserIdQuery(\n  $userId: String!\n) {\n  user(id: $userId) {\n    internalID\n    email\n    name\n    phone\n    id\n  }\n}\n"
+    "text": "query UserIdQuery(\n  $userId: String!\n) {\n  user(id: $userId) {\n    internalID\n    dataTransferOptOut\n    email\n    name\n    phone\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "5c577cfff7e36a791e0f9b1d2131ce80";
+(node as any).hash = "749804829e281db09acec5fb87f9d2b3";
 
 export default node;

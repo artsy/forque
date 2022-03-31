@@ -27,8 +27,9 @@ const User: React.FC<UserProps> = ({ user }) => {
       </Head>
       <Formik<UserFormValues>
         initialValues={{
-          name: user.name,
+          dataTransferOptOut: user.dataTransferOptOut!,
           email: user.email,
+          name: user.name,
           phoneNumber: user.phone || undefined,
         }}
         validationSchema={userValidationSchema}
@@ -38,6 +39,7 @@ const User: React.FC<UserProps> = ({ user }) => {
               variables: {
                 input: {
                   id: user.internalID,
+                  dataTransferOptOut: values.dataTransferOptOut,
                   email: values.email,
                   name: values.name,
                   phone: values.phoneNumber!,
@@ -86,6 +88,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       query UserIdQuery($userId: String!) {
         user(id: $userId) {
           internalID
+          dataTransferOptOut
           email
           name
           phone

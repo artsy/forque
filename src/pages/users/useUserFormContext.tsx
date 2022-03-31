@@ -5,13 +5,13 @@ export interface UserFormValues {
   /*
   artworksPerYear: number
   collectorSince: string
-  dataTransferOptOut: boolean
   displayFavoritesDialog: boolean
   displayFilterTooltip: boolean
   displayFollowTooltip: boolean
   displayInquiryTooltip: boolean
   */
   email: string
+  dataTransferOptOut: boolean
   name: string
   namePrefix?: string
   firstName?: string
