@@ -12,8 +12,9 @@ import { useClipboard } from "hooks/useClipboard"
 import { filesize } from "./utils/filesize"
 import Head from "next/head"
 import { useRouter } from "next/router"
-import { FC } from "react"
+import { FC, SyntheticEvent, useState } from "react"
 import useSWR from "swr"
+import { Optimizer } from "./components/Optimizer"
 
 const UploadPage: FC = () => {
   const router = useRouter()
@@ -25,7 +26,23 @@ const UploadPage: FC = () => {
 
   const url = `https://files.artsy.net/${router.query.key}`
 
-  const { copied, handleCopy } = useClipboard({ text: url })
+  const [[width, height], setDimensions] = useState([0, 0])
+
+  const handleLoad = ({
+    currentTarget: { naturalWidth, naturalHeight },
+  }: SyntheticEvent<HTMLImageElement, Event>) => {
+    setDimensions([naturalWidth, naturalHeight])
+  }
+
+  const [optimize, setOptimize] = useState(false)
+
+  const [optimizedUrl, setOptimizedUrl] = useState(url)
+
+  const { copied, handleCopy } = useClipboard({ text: optimizedUrl })
+
+  const handleClick = () => {
+    setOptimize(true)
+  }
 
   if (!data) {
     return (
@@ -73,25 +90,39 @@ const UploadPage: FC = () => {
         <>
           <Spacer mt={4} />
 
-          <Text variant="xs" textTransform="uppercase" mb={0.5}>
-            Preview
-          </Text>
+          {optimize ? (
+            <Optimizer
+              src={url}
+              width={width}
+              height={height}
+              onUpdate={(url) => setOptimizedUrl(url)}
+            />
+          ) : (
+            <>
+              <Text variant="xs" textTransform="uppercase" mb={0.5}>
+                Preview
+                {width && height && ` (${width} × ${height})`}
+              </Text>
 
-          <img src={url} alt="" style={{ maxWidth: "75%" }} />
+              <img src={url} alt="" onLoad={handleLoad} />
 
-          <Button
-            mt={1}
-            variant="secondaryOutline"
-            onClick={() => alert("TODO")}
-          >
-            Optimize / Resize
-          </Button>
+              <Button
+                mt={1}
+                variant="secondaryOutline"
+                disabled={width === 0 || height === 0}
+                onClick={handleClick}
+                size="small"
+              >
+                Optimize / Resize
+              </Button>
+            </>
+          )}
         </>
       )}
 
       <Spacer mt={4} />
 
-      <Input title="Shareable URL" value={url} readOnly />
+      <Input title="Shareable URL" value={optimizedUrl} readOnly />
 
       <Button
         mt={1}
@@ -102,16 +133,18 @@ const UploadPage: FC = () => {
         {copied ? "Copied to Clipboard" : "Copy to Clipboard"}
       </Button>
 
-      <Button
-        // @ts-ignore
-        as="a"
-        href={url}
-        target="_blank"
-        ml={1}
-        variant="secondaryGray"
-      >
-        Open in New Tab
-      </Button>
+      {!optimize && (
+        <Button
+          // @ts-ignore
+          as="a"
+          href={url}
+          target="_blank"
+          ml={1}
+          variant="secondaryGray"
+        >
+          Open in New Tab
+        </Button>
+      )}
     </>
   )
 }
