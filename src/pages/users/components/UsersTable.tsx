@@ -61,7 +61,7 @@ export const UsersTable: React.FC<UsersTableProps> = ({ viewer }) => {
         Users
       </Text>
 
-      <Suspense fallback={<Box>Loading...</Box>}>
+      <Suspense fallback={null}>
         {users.map((user) => {
           return (
             <Box key={user.internalID}>
