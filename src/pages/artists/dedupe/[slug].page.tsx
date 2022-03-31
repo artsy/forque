@@ -59,3 +59,6 @@ export default function Page() {
     )
   }
 }
+
+// HACK: force ssr
+export const getServerSideProps = () => ({ props: {} })
