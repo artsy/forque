@@ -64,6 +64,26 @@ yarn relay --watch
 
 - If you've created a new page under `/pages` but don't see it appear in the browser, you're missing the `.page.tsx` prefix in the file name. See [here](https://nextjs.org/docs/api-reference/next.config.js/custom-page-extensions#including-non-page-files-in-the-pages-directory) and [here](https://github.com/artsy/forque/blob/6117beeeb96ea081eeb78a2a5c6d8f0a8c4ed6fd/next.config.js#L12) for more info.
 
+- If you're trying to refetch data with Relay and its not working, have you:
+
+1. Wrapped the part of the React tree with a suspense component?
+
+```tsx
+<Suspense fallback={<div>loading</div>}>
+```
+
+2. Wrapped your click handler which triggered the refetch in `startTransition` helper?
+
+```tsx
+const handleClick = () => {
+  startTransition(() => {
+    refetch({ ... })
+  })
+}
+```
+
+We're using React 18 now, so all of the new [concurrency features](https://17.reactjs.org/docs/concurrent-mode-patterns.html) now apply.
+
 ## About
 
 Forque originally began as a Hackathon project in January 2022. It aims to
