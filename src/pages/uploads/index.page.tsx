@@ -1,9 +1,10 @@
-import { AutocompleteInput } from "@artsy/palette"
+import { AutocompleteInput, Column, GridColumns, Text } from "@artsy/palette"
 import { ListObjectsV2Output } from "aws-sdk/clients/s3"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { FC, useState } from "react"
 import useSWR from "swr"
+import { UploadButton } from "./components/UploadButton"
 
 const UploadsPage: FC = () => {
   const router = useRouter()
@@ -35,18 +36,30 @@ const UploadsPage: FC = () => {
         <title>Uploads | Artsy</title>
       </Head>
 
-      <AutocompleteInput
-        title="Uploads"
-        onSelect={handleSelect}
-        onChange={handleChange}
-        onSubmit={handleSubmit}
-        placeholder="Find by prefix or paste URL"
-        loading={!data && prefix.length > 0}
-        options={(data?.Contents || []).map((item) => ({
-          text: item.Key!,
-          value: item.Key!,
-        }))}
-      />
+      <GridColumns>
+        <Column span={6}>
+          <Text variant="xs" textTransform="uppercase" mb={0.5}>
+            Add a New Upload
+          </Text>
+
+          <UploadButton />
+        </Column>
+
+        <Column span={6}>
+          <AutocompleteInput
+            title="Find an Existing Upload"
+            onSelect={handleSelect}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
+            placeholder="Find by prefix or paste URL"
+            loading={!data && prefix.length > 0}
+            options={(data?.Contents || []).map((item) => ({
+              text: item.Key!,
+              value: item.Key!,
+            }))}
+          />
+        </Column>
+      </GridColumns>
     </>
   )
 }

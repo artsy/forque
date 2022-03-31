@@ -2,7 +2,7 @@ import "../styles/globals.css"
 import "regenerator-runtime" // relay network requirement
 import App from "next/app"
 import type { AppContext, AppProps } from "next/app"
-import { Theme, injectGlobalStyles } from "@artsy/palette"
+import { Theme, injectGlobalStyles, ToastsProvider } from "@artsy/palette"
 import { Layout } from "components/Layout"
 import { ErrorBoundary } from "system/ErrorBoundary"
 import { useEnvironment } from "system/relay/setupEnvironment"
@@ -29,13 +29,15 @@ export default function MyApp({ Component, pageProps }: AppProps) {
     >
       <RelayEnvironmentProvider environment={environment!}>
         <Theme theme="v3">
-          <GlobalStyles />
-          <ErrorBoundary>
-            <Layout user={pageProps.systemUser}>
-              <RouteLoadingBar />
-              <Component {...pageProps} />
-            </Layout>
-          </ErrorBoundary>
+          <ToastsProvider>
+            <GlobalStyles />
+            <ErrorBoundary>
+              <Layout user={pageProps.systemUser}>
+                <RouteLoadingBar />
+                <Component {...pageProps} />
+              </Layout>
+            </ErrorBoundary>
+          </ToastsProvider>
         </Theme>
       </RelayEnvironmentProvider>
     </SystemContextProvider>
