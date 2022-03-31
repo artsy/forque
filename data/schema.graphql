@@ -14140,6 +14140,8 @@ input UpdateUserMutationInput {
   clientMutationId: String
   email: String!
   id: String!
+  name: String!
+  phone: String!
 }
 
 type UpdateUserMutationPayload {

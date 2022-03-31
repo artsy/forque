@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d3966236ab28f421034ea3a74639947c>>
+ * @generated SignedSource<<743dd832cab099591c615478094a760f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,8 @@ export type UpdateUserMutationInput = {
   clientMutationId?: string | null;
   email: string;
   id: string;
+  name: string;
+  phone: string;
 };
 export type useUpdateUserMutation$variables = {
   input: UpdateUserMutationInput;
