@@ -418,6 +418,16 @@ export const UserInfoForm: React.FC = () => {
           </Checkbox>
         </Column>
         <Column span={12}>
+          <Checkbox
+            onSelect={(selected) => {
+              setFieldValue("dataTransferOptOut", selected)
+            }}
+            selected={values.dataTransferOptOut}
+          >
+            Opt-out of data transfer
+          </Checkbox>
+        </Column>
+        <Column span={12}>
           <TextArea
             name="notes"
             placeholder="Enter Notes"

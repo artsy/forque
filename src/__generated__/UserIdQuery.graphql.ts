@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1ce49d96bdb3d945afd73dc1823b3e0b>>
+ * @generated SignedSource<<85ecf19de897d02d0db11b9efd7f89a4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,8 +15,10 @@ export type UserIdQuery$variables = {
 export type UserIdQuery$data = {
   readonly user: {
     readonly internalID: string;
+    readonly dataTransferOptOut: boolean | null;
     readonly email: string;
     readonly name: string;
+    readonly phone: string | null;
   } | null;
 };
 export type UserIdQuery = {
@@ -50,14 +52,28 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "email",
+  "name": "dataTransferOptOut",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "email",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "name",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "phone",
   "storageKey": null
 };
 return {
@@ -77,7 +93,9 @@ return {
         "selections": [
           (v2/*: any*/),
           (v3/*: any*/),
-          (v4/*: any*/)
+          (v4/*: any*/),
+          (v5/*: any*/),
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
@@ -102,6 +120,8 @@ return {
           (v2/*: any*/),
           (v3/*: any*/),
           (v4/*: any*/),
+          (v5/*: any*/),
+          (v6/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -115,16 +135,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3287b33d34e990acd84feb35370bb0c9",
+    "cacheID": "d66b5aae66a0bada093f595ec3607439",
     "id": null,
     "metadata": {},
     "name": "UserIdQuery",
     "operationKind": "query",
-    "text": "query UserIdQuery(\n  $userId: String!\n) {\n  user(id: $userId) {\n    internalID\n    email\n    name\n    id\n  }\n}\n"
+    "text": "query UserIdQuery(\n  $userId: String!\n) {\n  user(id: $userId) {\n    internalID\n    dataTransferOptOut\n    email\n    name\n    phone\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c507fa571b2f86c82341853ee5cd7b7a";
+(node as any).hash = "749804829e281db09acec5fb87f9d2b3";
 
 export default node;
