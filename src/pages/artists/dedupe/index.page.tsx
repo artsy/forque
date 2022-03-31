@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { useMetaphysics } from "system/artsy-next-auth"
 import { ArtistList, Skeleton } from "./components/list/ArtistList"
-import type { GetServerSideProps } from "next"
 
 const PER_PAGE = 36
 
@@ -92,7 +91,5 @@ export default function Page() {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  // force SSR
-  return { props: {} }
-}
+// HACK: force ssr
+export const getServerSideProps = () => ({ props: {} })
