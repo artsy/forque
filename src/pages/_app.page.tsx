@@ -11,23 +11,28 @@ import { getUserFromCookie } from "system/artsy-next-auth/auth/user"
 import { NextApiRequest } from "next"
 import { SystemContextProvider } from "system/SystemContext"
 import { RouteLoadingBar } from "system/RouteLoadingBar"
+import { SessionProvider } from "next-auth/react"
 
 const { GlobalStyles } = injectGlobalStyles(`
   /* overrides and additions */
 `)
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+export default function MyApp({
+    Component,
+    pageProps: { session, ...pageProps }
+  }: AppProps) {
   const environment = useEnvironment({
     initialRecords: pageProps.relayData,
     user: pageProps.systemUser,
   })
 
   return (
-    <SystemContextProvider
-      relayEnvironment={environment}
-      user={pageProps.systemUser}
-    >
-      <RelayEnvironmentProvider environment={environment!}>
+    // <SystemContextProvider
+    //   relayEnvironment={environment}
+    //   user={pageProps.systemUser}
+    // >
+    //   <RelayEnvironmentProvider environment={environment!}>
+    <SessionProvider session={session}>
         <Theme theme="v3">
           <GlobalStyles />
           <ErrorBoundary>
@@ -37,8 +42,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
             </Layout>
           </ErrorBoundary>
         </Theme>
-      </RelayEnvironmentProvider>
-    </SystemContextProvider>
+    </SessionProvider>
+    //   </RelayEnvironmentProvider>
+    // </SystemContextProvider>
   )
 }
 
