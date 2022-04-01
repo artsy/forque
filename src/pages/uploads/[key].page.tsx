@@ -16,10 +16,10 @@ import { FC, SyntheticEvent, useState } from "react"
 import useSWR from "swr"
 import { Optimizer } from "./components/Optimizer"
 
-// Production
-const FILES_ROOT = "https://files.artsy.net"
-// Staging
-// const FILES_ROOT = "https://s3.amazonaws.com/artsy-vanity-files-staging"
+const filesRoot =
+  process.env.NODE_ENV === "production"
+    ? "https://files.artsy.net"
+    : "https://s3.amazonaws.com/artsy-vanity-files-staging"
 
 const UploadPage: FC = () => {
   const router = useRouter()
@@ -29,7 +29,7 @@ const UploadPage: FC = () => {
     fetcher
   )
 
-  const url = `${FILES_ROOT}/${router.query.key}`
+  const url = `${filesRoot}/${router.query.key}`
 
   const [[width, height], setDimensions] = useState([0, 0])
 
