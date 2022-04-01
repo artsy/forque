@@ -106,7 +106,7 @@ const UploadPage: FC = () => {
             <>
               <Text variant="xs" textTransform="uppercase" mb={0.5}>
                 Preview
-                {width && height && ` (${width} × ${height})`}
+                {width !== 0 && height !== 0 && ` (${width} × ${height})`}
               </Text>
 
               <img src={url} alt="" onLoad={handleLoad} />
