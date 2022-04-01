@@ -11,10 +11,8 @@ export default NextAuth({
       type: "oauth",
       authorization: `${process.env.GRAVITY_URL}/oauth2/authorize`,
       token: {
-        url: `${process.env.GRAVITY_URL}/oauth2/access_token`,
-        params: {
-          on_success: 200
-        }
+        url: `${process.env.GRAVITY_URL}/oauth2/access_token?on_success=200`,
+        params: { on_success: 200 }
       },
       client: {
         token_endpoint_auth_method: "client_secret_post",

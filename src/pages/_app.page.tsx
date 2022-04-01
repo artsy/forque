@@ -21,10 +21,10 @@ export default function MyApp({
     Component,
     pageProps: { session, ...pageProps }
   }: AppProps) {
-  const environment = useEnvironment({
-    initialRecords: pageProps.relayData,
-    user: pageProps.systemUser,
-  })
+  // const environment = useEnvironment({
+  //   initialRecords: pageProps.relayData,
+  //   user: pageProps.systemUser,
+  // })
 
   return (
     // <SystemContextProvider
@@ -33,15 +33,15 @@ export default function MyApp({
     // >
     //   <RelayEnvironmentProvider environment={environment!}>
     <SessionProvider session={session}>
-        <Theme theme="v3">
-          <GlobalStyles />
-          <ErrorBoundary>
-            <Layout user={pageProps.systemUser}>
-              <RouteLoadingBar />
-              <Component {...pageProps} />
-            </Layout>
-          </ErrorBoundary>
-        </Theme>
+      <Theme theme="v3">
+        <GlobalStyles />
+        <ErrorBoundary>
+          <Layout user={pageProps.systemUser}>
+            <RouteLoadingBar />
+            <Component {...pageProps} />
+          </Layout>
+        </ErrorBoundary>
+      </Theme>
     </SessionProvider>
     //   </RelayEnvironmentProvider>
     // </SystemContextProvider>
@@ -50,9 +50,9 @@ export default function MyApp({
 
 MyApp.getInitialProps = async (appContext: AppContext) => {
   const appProps = await App.getInitialProps(appContext)
-  const systemUser = await getUserFromCookie(
-    appContext.ctx.req as NextApiRequest
-  )
-  appProps.pageProps.systemUser = systemUser
+  // const systemUser = await getUserFromCookie(
+  //   appContext.ctx.req as NextApiRequest
+  // )
+  // appProps.pageProps.systemUser = systemUser
   return appProps
 }
