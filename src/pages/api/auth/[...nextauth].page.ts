@@ -3,10 +3,15 @@ import { UserinfoEndpointHandler } from "next-auth/providers"
 
 export default NextAuth({
   callbacks: {
-    async session({ session, token, user }) {
-      console.log({ session, token, user })
+    async jwt({ token, account }) {
+      if (account) {
+        token.access_token = account.access_token
+      }
+      return token
+    },
+    async session({ session, token }) {
       // Send properties to the client, like an access_token from a provider.
-      session.accessToken = token.accessToken
+      session.accessToken = token.access_token
       return session
     },
   },
@@ -35,17 +40,14 @@ export default NextAuth({
               "X-Access-Token": context.tokens.access_token,
             } as HeadersInit, // override default of Authorization: Bearer ... token
           })
-          const actualResponse = await response.json()
-          return { ...actualResponse, accessToken: context.tokens.access_token }
+          return await response.json()
         },
       },
       profile(profile) {
         return {
-          id: profile?.id,
-          name: profile?.name,
-          email: profile?.email,
-          foo: "bar",
-          accessToken: profile.accessToken,
+          id: profile.id,
+          name: profile.name,
+          email: profile.email,
         }
       },
     },

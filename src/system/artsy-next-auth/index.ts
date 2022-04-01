@@ -5,4 +5,4 @@ export { useUser } from "./hooks/user"
 
 // data fetching
 export { useGravity } from "./hooks/gravity"
-export { useMetaphysics } from "./hooks/metaphysics"
+export { useMetaphysics, useMetaphysicsWithSession } from "./hooks/metaphysics"
