@@ -38,7 +38,7 @@ export const Uploader: FC<UploaderProps> = ({ file }) => {
       file,
       presignedPost: data,
       onFileDone: () => {
-        router.push(`/uploads/${encodeURIComponent(key)}`)
+        router.push(`/uploads/${encodeURIComponent(data.fields.key)}`)
 
         sendToast({ variant: "success", message: "File uploaded" })
       },
@@ -53,7 +53,7 @@ export const Uploader: FC<UploaderProps> = ({ file }) => {
         setProgress(progress)
       },
     })
-  }, [data, file, key, router, sendToast])
+  }, [data, file, router, sendToast])
 
   if (!data)
     return (
