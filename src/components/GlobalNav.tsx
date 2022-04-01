@@ -2,6 +2,7 @@ import React from "react"
 import Link from "next/link"
 
 import { UserSessionData } from "system/artsy-next-auth/auth/user"
+import { signIn, signOut } from "next-auth/react"
 
 interface Props {
   user: Partial<UserSessionData> | null
@@ -27,6 +28,9 @@ const LoggedOut = () => (
         Login
       </a>
     </Link>
+    <button style={{ color: "white" }} onClick={() => signIn()}>
+      Sign in
+    </button>
   </nav>
 )
 
@@ -57,5 +61,8 @@ const LoggedIn = () => (
         Logout
       </a>
     </Link>
+    <button style={{ color: "white" }} onClick={() => signOut()}>
+      Sign out
+    </button>
   </nav>
 )

@@ -9,7 +9,9 @@ export const Layout: React.FC<LayoutProps> = ({ children, user }) => {
   return (
     <>
       <header>
-        <GlobalNav user={{email: "joey@example.com"}} />
+        <GlobalNav user={user} />
+        <hr />
+        {JSON.stringify(user)}
       </header>
       <main className="container mx-auto p-2 sm:py-4">{children}</main>
     </>
