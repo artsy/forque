@@ -1,20 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
-import {
-  Button,
-  Input,
-  Skeleton,
-  SkeletonText,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Button, Skeleton, SkeletonText, Spacer, Text } from "@artsy/palette"
 import { HeadObjectOutput } from "aws-sdk/clients/s3"
-import { useClipboard } from "hooks/useClipboard"
 import { filesize } from "./utils/filesize"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { FC, SyntheticEvent, useState } from "react"
 import useSWR from "swr"
 import { Optimizer } from "./components/Optimizer"
+import { CopyToClipboard } from "./components/CopyToClipboard"
 
 const filesRoot =
   process.env.NODE_ENV === "production"
@@ -40,10 +33,6 @@ const UploadPage: FC = () => {
   }
 
   const [optimize, setOptimize] = useState(false)
-
-  const [optimizedUrl, setOptimizedUrl] = useState(url)
-
-  const { copied, handleCopy } = useClipboard({ text: optimizedUrl })
 
   const handleClick = () => {
     setOptimize(true)
@@ -71,7 +60,12 @@ const UploadPage: FC = () => {
         <title>{router.query.key} | Uploads | Artsy</title>
       </Head>
 
-      <Text variant="lg">Editing {router.query.key}</Text>
+      <Text variant="lg">
+        Editing{" "}
+        <a href={url} target="_blank" rel="noreferrer">
+          {router.query.key}
+        </a>
+      </Text>
 
       {data.LastModified && (
         <Text variant="lg" color="black60">
@@ -96,12 +90,7 @@ const UploadPage: FC = () => {
           <Spacer mt={4} />
 
           {optimize ? (
-            <Optimizer
-              src={url}
-              width={width}
-              height={height}
-              onUpdate={(url) => setOptimizedUrl(url)}
-            />
+            <Optimizer src={url} width={width} height={height} />
           ) : (
             <>
               <Text variant="xs" textTransform="uppercase" mb={0.5}>
@@ -120,35 +109,13 @@ const UploadPage: FC = () => {
               >
                 Optimize / Resize
               </Button>
+
+              <Spacer mt={4} />
+
+              <CopyToClipboard value={url} title="Shareable URL" />
             </>
           )}
         </>
-      )}
-
-      <Spacer mt={4} />
-
-      <Input title="Shareable URL" value={optimizedUrl} readOnly />
-
-      <Button
-        mt={1}
-        onClick={handleCopy}
-        disabled={copied}
-        variant="secondaryOutline"
-      >
-        {copied ? "Copied to Clipboard" : "Copy to Clipboard"}
-      </Button>
-
-      {!optimize && (
-        <Button
-          // @ts-ignore
-          as="a"
-          href={url}
-          target="_blank"
-          ml={1}
-          variant="secondaryGray"
-        >
-          Open in New Tab
-        </Button>
       )}
     </>
   )

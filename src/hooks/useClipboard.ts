@@ -1,16 +1,21 @@
+import { useToasts } from "@artsy/palette"
 import { useState } from "react"
 
 interface UseClipboard {
-  text: string
+  value: string
 }
 
-export const useClipboard = ({ text }: UseClipboard) => {
+export const useClipboard = ({ value }: UseClipboard) => {
   const [copied, setCopied] = useState(false)
 
+  const { sendToast } = useToasts()
+
   const handleCopy = () => {
-    navigator.clipboard.writeText(text)
+    navigator.clipboard.writeText(value)
 
     setCopied(true)
+
+    sendToast({ message: "Copied to clipboard", variant: "alert" })
 
     setTimeout(() => {
       setCopied(false)
