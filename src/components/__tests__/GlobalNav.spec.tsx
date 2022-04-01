@@ -3,6 +3,8 @@ import { render, screen } from "@testing-library/react"
 
 import { GlobalNav } from "../GlobalNav"
 
+jest.mock("next/router", () => ({ useRouter: () => ({ pathname: "/" }) }))
+
 describe("logged-out user", () => {
   it("renders a login option ", () => {
     const user = null
