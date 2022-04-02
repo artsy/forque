@@ -1,61 +1,82 @@
-import React from "react"
+import { FC } from "react"
 import Link from "next/link"
-
 import { UserSessionData } from "system/artsy-next-auth/auth/user"
+import { ArtsyMarkIcon, Flex, Join, Spacer, Text } from "@artsy/palette"
+import styled, { css } from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
+import { useRouter } from "next/router"
 
-interface Props {
+interface GlobalNavProps {
   user: Partial<UserSessionData> | null
 }
 
-export const GlobalNav: React.FC<Props> = ({ user }) => {
-  if (!user) {
-    return <LoggedOut />
-  }
+export const GlobalNav: FC<GlobalNavProps> = ({ user }) => {
+  return (
+    <Flex bg="black100" justifyContent="space-between" py={1} px={2}>
+      <Link href="/" passHref>
+        <Flex alignItems="center" as="a">
+          <ArtsyMarkIcon fill="white100" width={40} height={40} />
+        </Flex>
+      </Link>
 
-  return <LoggedIn />
+      <Flex>
+        <Join separator={<Spacer ml={1} />}>
+          {user ? (
+            // Logged in
+            <>
+              <Item href="/">Home</Item>
+              <Item href="/users">Users</Item>
+              <Item href="/artists/dedupe">Dedupe Artists</Item>
+              <Item href="/uploads">Uploads</Item>
+              <Item href="/api/artsy-auth/logout">Logout</Item>
+            </>
+          ) : (
+            // Logged out
+            <>
+              <Item href="/">Home</Item>
+              <Item href="/login">Login</Item>
+            </>
+          )}
+        </Join>
+      </Flex>
+    </Flex>
+  )
 }
 
-const LoggedOut = () => (
-  <nav className="flex justify-end bg-black100">
-    <Link href="/">
-      <a className="no-underline inline-block p-2 font-bold text-white100 hover:bg-black60 hover:text-white100">
-        Home
-      </a>
-    </Link>
-    <Link href="/login">
-      <a className="no-underline inline-block p-2 font-bold text-white100 hover:bg-black60 hover:text-white100">
-        Login
-      </a>
-    </Link>
-  </nav>
-)
+const Anchor = styled(Text).attrs<{ active: boolean }>({
+  as: "a",
+  variant: "sm",
+  px: 1,
+  py: 0.5,
+})`
+  color: ${themeGet("colors.white100")};
+  text-decoration: none;
+  transition: color 250ms;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
 
-const LoggedIn = () => (
-  <nav className="flex justify-end bg-black100">
-    <Link href="/">
-      <a className="no-underline inline-block p-2 font-bold text-white100 hover:bg-black60 hover:text-white100">
-        Home
-      </a>
+  &:hover {
+    background-color: ${themeGet("colors.black60")};
+    color: ${themeGet("colors.white100")};
+  }
+
+  ${({ active }) =>
+    active &&
+    css`
+      background-color: ${themeGet("colors.black60")};
+      color: ${themeGet("colors.white100")};
+    `}
+`
+
+const Item: FC<{ href: string }> = ({ children, href }) => {
+  const router = useRouter()
+  const active =
+    href === "/" ? router.pathname === "/" : router.pathname.startsWith(href)
+
+  return (
+    <Link href={href} passHref>
+      <Anchor active={active}>{children}</Anchor>
     </Link>
-    <Link href="/users">
-      <a className="no-underline inline-block p-2 font-bold text-white100 hover:bg-black60 hover:text-white100">
-        Users
-      </a>
-    </Link>
-    <Link href="/artists/dedupe">
-      <a className="no-underline inline-block p-2 font-bold text-white100 hover:bg-black60 hover:text-white100">
-        Dedupe Artists
-      </a>
-    </Link>
-    <Link href="/uploads">
-      <a className="no-underline inline-block p-2 font-bold text-white100 hover:bg-black60 hover:text-white100">
-        Uploads
-      </a>
-    </Link>
-    <Link href="/api/artsy-auth/logout">
-      <a className="no-underline inline-block p-2 font-bold text-white100 hover:bg-black60 hover:text-white100">
-        Logout
-      </a>
-    </Link>
-  </nav>
-)
+  )
+}

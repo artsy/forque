@@ -14,20 +14,15 @@ import { Formik } from "formik"
 import { gemini, ResizeTo } from "../utils/gemini"
 import { FC } from "react"
 import { scale } from "proportional-scale"
+import { CopyToClipboard } from "./CopyToClipboard"
 
 interface OptimizerProps {
   src: string
   width: number
   height: number
-  onUpdate: (src: string) => void
 }
 
-export const Optimizer: FC<OptimizerProps> = ({
-  src,
-  width,
-  height,
-  onUpdate,
-}) => {
+export const Optimizer: FC<OptimizerProps> = ({ src, width, height }) => {
   return (
     <Formik
       initialValues={{ mode: "fit", width, height, quality: 80 }}
@@ -45,14 +40,21 @@ export const Optimizer: FC<OptimizerProps> = ({
 
         const dimensions = values.mode === "fit" ? scaled : values
 
-        const geminiUrl = gemini(src, {
+        const _1x = gemini(src, {
           resizeTo: values.mode as ResizeTo,
           width: values.width,
           height: values.height,
           quality: values.quality,
         })
 
-        onUpdate(geminiUrl)
+        const _2x = gemini(src, {
+          resizeTo: values.mode as ResizeTo,
+          width: values.width * 2,
+          height: values.height * 2,
+          quality: values.quality,
+        })
+
+        const srcSet = `${_1x} 1x, ${_2x} 2x`
 
         return (
           <Box>
@@ -118,13 +120,29 @@ export const Optimizer: FC<OptimizerProps> = ({
               bg="black10"
             >
               <img
-                key={geminiUrl}
-                src={geminiUrl}
+                key={_1x}
+                src={_1x}
+                srcSet={srcSet}
                 alt="Optimized image"
                 width="100%"
                 height="100%"
               />
             </ResponsiveBox>
+
+            <Spacer mt={4} />
+
+            <CopyToClipboard
+              title="Image Embed"
+              value={`<img src="${_1x}" srcset="${srcSet}" alt="" width="${dimensions.width}" height="${dimensions.height}" />`}
+            />
+
+            <Spacer mt={4} />
+
+            <CopyToClipboard title="1x URL" value={_1x} />
+
+            <Spacer mt={4} />
+
+            <CopyToClipboard title="2x URL" value={_2x} />
           </Box>
         )
       }}
