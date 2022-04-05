@@ -1,6 +1,6 @@
 import { useSession } from "next-auth/react"
 import { useState } from "react"
-import { useMetaphysicsWithSession } from "system/artsy-next-auth"
+import { useMetaphysics } from "system/artsy-next-auth"
 import { ArtistList, Skeleton } from "./components/list/ArtistList"
 
 const PER_PAGE = 36
@@ -16,9 +16,9 @@ export type RecentArtist = {
 
 export default function Page() {
   const [page, setPage] = useState<number>(1)
-  const { data: session } = useSession()
+  // const { data: session } = useSession()
 
-  const { data, error, isLoading } = useMetaphysicsWithSession(
+  const { data, error, isLoading } = useMetaphysics(
     `
     query RecentArtists($size: Int, $page: Int) {
       artistsConnection(size: $size, page: $page, sort: CREATED_AT_DESC) {
@@ -35,8 +35,7 @@ export default function Page() {
       }
     }
   `,
-    { size: PER_PAGE, page },
-    session!
+    { size: PER_PAGE, page }
   )
 
   let recentArtists: RecentArtist[] = []

@@ -2,6 +2,7 @@ import useSWR from "swr"
 import { useUser } from "./user"
 import getConfig from "next/config"
 import { Session } from "next-auth"
+import { useSession } from "next-auth/react"
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -39,8 +40,11 @@ export const useMetaphysics = (
   variables: Record<string, unknown> = {}
 ) => {
   const user = useUser()
+  const { data: session } = useSession()
+
   const { data, error } = useSWR(
-    user ? [query, JSON.stringify(variables), user.accessToken] : null,
+    // @ts-ignore
+    session?.user ? [query, JSON.stringify(variables), session.user.accessToken] : null,
     metaphysicsFetcher
   )
 

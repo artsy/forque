@@ -36,22 +36,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
               <Layout user={pageProps.systemUser}>
                 <RouteLoadingBar />
                 <Component {...pageProps} />
-
-                <Box
-                  bg="black10"
-                  p={2}
-                  position="absolute"
-                  right={2}
-                  bottom={2}
-                  maxHeight="50vh"
-                >
-                  <Text as="h2" variant="lg" my={2}>
-                    pageProps
-                  </Text>
-                  <pre style={{ whiteSpace: "pre-wrap" }}>
-                    {JSON.stringify(pageProps, null, 2)}
-                  </pre>
-                </Box>
               </Layout>
             </ErrorBoundary>
           </Theme>
