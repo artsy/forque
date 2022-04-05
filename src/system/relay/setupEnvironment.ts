@@ -3,12 +3,13 @@ import { RelayNetworkLayer } from "react-relay-network-modern"
 import { Environment, RecordSource, Store } from "relay-runtime"
 import { UserSessionData } from "system/artsy-next-auth/auth/user"
 import { getRelayMiddleware } from "./middleware"
+import { User } from "next-auth"
 
 let relayEnvironment: Environment
 
 interface SetupEnvironmentProps {
   initialRecords?: any
-  user?: UserSessionData | null
+  user?: User | null
 }
 
 export function setupEnvironment({

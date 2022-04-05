@@ -1,5 +1,4 @@
 import useSWR from "swr"
-import { useUser } from "./user"
 import getConfig from "next/config"
 import { Session } from "next-auth"
 import { useSession } from "next-auth/react"
@@ -39,7 +38,6 @@ export const useMetaphysics = (
   query: string,
   variables: Record<string, unknown> = {}
 ) => {
-  const user = useUser()
   const { data: session } = useSession()
 
   const { data, error } = useSWR(

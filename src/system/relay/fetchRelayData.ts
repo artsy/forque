@@ -8,6 +8,7 @@ import {
 } from "relay-runtime"
 import { getUserFromCookie } from "system/artsy-next-auth/auth/user"
 import { setupEnvironment } from "system/relay/setupEnvironment"
+import { getSession } from "next-auth/react"
 
 interface FetchRelayDataProps<T extends OperationType> {
   query: GraphQLTaggedNode
@@ -27,8 +28,10 @@ export async function fetchRelayData<T extends OperationType>({
   cache = false,
   ctx,
 }: FetchRelayDataProps<T>) {
-  const user = await getUserFromCookie(ctx.req)
-  const environment = setupEnvironment({ user })
+  const session = await getSession()
+
+  // const user = await getUserFromCookie(ctx.req)
+  const environment = setupEnvironment({ user: session?.user })
 
   if (cache) {
     cacheConfig = {
