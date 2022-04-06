@@ -30,6 +30,7 @@
     "formik": "^2.2.9",
     "lodash": "^4.17.21",
     "next": "^12.1.4",
+    "next-auth": "^4.3.1",
     "nextjs-progressbar": "^0.0.14",
     "proportional-scale": "^4.0.0",
     "react": "^18.0.0",
