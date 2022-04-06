@@ -6,7 +6,7 @@ import {
   GraphQLTaggedNode,
   OperationType,
 } from "relay-runtime"
-import { getUserFromCookie } from "system/artsy-next-auth/auth/user"
+import { getUserFromCookie } from "system/artsy-next-auth"
 import { setupEnvironment } from "system/relay/setupEnvironment"
 
 interface FetchRelayDataProps<T extends OperationType> {

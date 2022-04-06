@@ -7,8 +7,6 @@ import { Layout } from "components/Layout"
 import { ErrorBoundary } from "system/ErrorBoundary"
 import { useEnvironment } from "system/relay/setupEnvironment"
 import { RelayEnvironmentProvider } from "react-relay"
-import { getUserFromCookie } from "system/artsy-next-auth/auth/user"
-import { NextApiRequest } from "next"
 import { SystemContextProvider } from "system/SystemContext"
 import { RouteLoadingBar } from "system/RouteLoadingBar"
 
@@ -46,9 +44,10 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
 MyApp.getInitialProps = async (appContext: AppContext) => {
   const appProps = await App.getInitialProps(appContext)
-  const systemUser = await getUserFromCookie(
-    appContext.ctx.req as NextApiRequest
-  )
+  const systemUser = {
+    email: "test@example.com",
+    accessToken: "omglmfao",
+  }
   appProps.pageProps.systemUser = systemUser
   return appProps
 }

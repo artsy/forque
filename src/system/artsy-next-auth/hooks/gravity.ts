@@ -1,5 +1,4 @@
 import useSWR from "swr"
-import { useUser } from "./user"
 import getConfig from "next/config"
 
 const { publicRuntimeConfig } = getConfig()
@@ -23,7 +22,10 @@ const gravityFetcher = async (path: string, accessToken: string) => {
 }
 
 export const useGravity = (url: string) => {
-  const user = useUser()
+  const user = {
+    email: "test@example.com",
+    accessToken: "omglmfao",
+  }
   const { data, error } = useSWR(
     user ? [url, user.accessToken] : null,
     gravityFetcher

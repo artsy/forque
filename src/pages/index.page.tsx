@@ -1,12 +1,15 @@
 import { GetServerSideProps } from "next"
 import Head from "next/head"
 import Image from "next/image"
-import { graphql } from "react-relay"
-import { fetchRelayData } from "system/relay"
-import { pagesQuery$data } from "__generated__/pagesQuery.graphql"
+// import { graphql } from "react-relay"
+// import { fetchRelayData } from "system/relay"
+// import { pagesQuery$data } from "__generated__/pagesQuery.graphql"
 
 interface HomeProps {
-  me: pagesQuery$data["me"]
+  // me: pagesQuery$data["me"]
+  me: {
+    email: string
+  }
 }
 
 export default function Home({ me }: HomeProps) {
@@ -37,18 +40,25 @@ export default function Home({ me }: HomeProps) {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const props = await fetchRelayData({
-    query: graphql`
-      query pagesQuery {
-        me {
-          email
-        }
-      }
-    `,
-    cache: true,
-    ctx,
-  })
+export const getServerSideProps: GetServerSideProps = async (_ctx) => {
+  // const props = await fetchRelayData({
+  //   query: graphql`
+  //     query pagesQuery {
+  //       me {
+  //         email
+  //       }
+  //     }
+  //   `,
+  //   cache: true,
+  //   ctx,
+  // })
+
+  const props = {
+    me: {
+      email: "test@example.com",
+      accessToken: "omglmfao",
+    },
+  }
 
   return {
     props,

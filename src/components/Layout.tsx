@@ -1,16 +1,14 @@
 import { GlobalNav } from "./GlobalNav"
-import { LoginForm } from "system/artsy-next-auth"
-import { UserSessionData } from "system/artsy-next-auth/auth/user"
 import { Box, Toasts } from "@artsy/palette"
 
 interface LayoutProps {
-  user: UserSessionData
+  user: unknown
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children, user }) => {
   return (
     <>
-      {user ? (
+      {user && (
         <>
           <header>
             <GlobalNav user={user} />
@@ -24,8 +22,6 @@ export const Layout: React.FC<LayoutProps> = ({ children, user }) => {
             </Box>
           </main>
         </>
-      ) : (
-        <LoginForm />
       )}
     </>
   )

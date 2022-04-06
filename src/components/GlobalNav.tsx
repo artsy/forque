@@ -1,13 +1,12 @@
 import { FC } from "react"
 import Link from "next/link"
-import { UserSessionData } from "system/artsy-next-auth/auth/user"
 import { ArtsyMarkIcon, Flex, Join, Spacer, Text } from "@artsy/palette"
 import styled, { css } from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { useRouter } from "next/router"
 
 interface GlobalNavProps {
-  user: Partial<UserSessionData> | null
+  user: unknown | null
 }
 
 export const GlobalNav: FC<GlobalNavProps> = ({ user }) => {
@@ -28,13 +27,17 @@ export const GlobalNav: FC<GlobalNavProps> = ({ user }) => {
               <Item href="/users">Users</Item>
               <Item href="/artists/dedupe">Dedupe Artists</Item>
               <Item href="/uploads">Uploads</Item>
-              <Item href="/api/artsy-auth/logout">Logout</Item>
+              <Item href="/api/artsy-auth/logout">
+                <s>Logout</s>
+              </Item>
             </>
           ) : (
             // Logged out
             <>
               <Item href="/">Home</Item>
-              <Item href="/login">Login</Item>
+              <Item href="/login">
+                <s>Login</s>
+              </Item>
             </>
           )}
         </Join>

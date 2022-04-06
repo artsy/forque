@@ -1,10 +1,9 @@
 import { createContext } from "react"
 import { Environment } from "relay-runtime"
-import { UserSessionData } from "./artsy-next-auth/auth/user"
 
 interface SystemContextProps {
   relayEnvironment: Environment
-  user: UserSessionData | null
+  user: unknown | null
 }
 
 export const SystemContext = createContext<SystemContextProps>({

@@ -1,7 +1,7 @@
 import { S3 } from "aws-sdk"
 import type { NextApiRequest, NextApiResponse } from "next"
 import { extname } from "path"
-import { getUserFromCookie } from "system/artsy-next-auth/auth/user"
+import { getUserFromCookie } from "system/artsy-next-auth"
 
 const s3 = new S3()
 const BUCKET = `${process.env.AWS_S3_FILES_BUCKET}`

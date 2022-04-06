@@ -1,5 +1,4 @@
 import useSWR from "swr"
-import { useUser } from "./user"
 import getConfig from "next/config"
 
 const { publicRuntimeConfig } = getConfig()
@@ -25,7 +24,7 @@ const metaphysicsFetcher = async (
   }
 
   const json = await response.json()
-  const { data, _errors } = json // TODO: errors
+  const { data } = json // TODO: errors
 
   // uncomment to simulate delay
   // await new Promise<void>((resolve) => setTimeout(() => resolve(), 1000))
@@ -37,7 +36,10 @@ export const useMetaphysics = (
   query: string,
   variables: Record<string, unknown> = {}
 ) => {
-  const user = useUser()
+  const user = {
+    email: "test@example.com",
+    accessToken: "omglmfao",
+  }
   const { data, error } = useSWR(
     user ? [query, JSON.stringify(variables), user.accessToken] : null,
     metaphysicsFetcher

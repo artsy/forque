@@ -1,6 +1,6 @@
 import { S3 } from "aws-sdk"
 import type { NextApiRequest, NextApiResponse } from "next"
-import { getUserFromCookie } from "system/artsy-next-auth/auth/user"
+import { getUserFromCookie } from "system/artsy-next-auth"
 
 const s3 = new S3()
 

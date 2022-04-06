@@ -6,16 +6,15 @@ import {
   Middleware,
   urlMiddleware,
 } from "react-relay-network-modern"
-import { UserSessionData } from "system/artsy-next-auth/auth/user"
 
 const { publicRuntimeConfig } = getConfig()
 
-export const getRelayMiddleware = (
-  user?: UserSessionData | null
-): Middleware[] => {
+export const getRelayMiddleware = (user?: unknown | null): Middleware[] => {
   const authenticatedHeaders: Headers = user
     ? {
+        // @ts-ignore
         "X-USER-ID": user.id,
+        // @ts-ignore
         "X-ACCESS-TOKEN": user.accessToken,
       }
     : {}
