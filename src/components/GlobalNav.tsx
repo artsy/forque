@@ -29,13 +29,17 @@ export const GlobalNav: FC<GlobalNavProps> = ({ user }) => {
               <Item href="/users">Users</Item>
               <Item href="/artists/dedupe">Dedupe Artists</Item>
               <Item href="/uploads">Uploads</Item>
-              <Anchor onClick={() => signOut()}>Logout</Anchor>
+              <Anchor role="auth" onClick={() => signOut()}>
+                Logout
+              </Anchor>
             </>
           ) : (
             // Logged out
             <>
               <Item href="/">Home</Item>
-              <Anchor onClick={() => signIn()}>Login</Anchor>
+              <Anchor role="auth" onClick={() => signIn()}>
+                Login
+              </Anchor>
             </>
           )}
         </Join>
