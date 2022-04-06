@@ -9,6 +9,7 @@ import { useEnvironment } from "system/relay/setupEnvironment"
 import { RelayEnvironmentProvider } from "react-relay"
 import { SystemContextProvider } from "system/SystemContext"
 import { RouteLoadingBar } from "system/RouteLoadingBar"
+import { getSession, SessionProvider } from "next-auth/react"
 
 const { GlobalStyles } = injectGlobalStyles(`
   /* overrides and additions */
@@ -21,33 +22,33 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   })
 
   return (
-    <SystemContextProvider
-      relayEnvironment={environment}
-      user={pageProps.systemUser}
-    >
-      <RelayEnvironmentProvider environment={environment!}>
-        <Theme theme="v3">
-          <ToastsProvider>
-            <GlobalStyles />
-            <ErrorBoundary>
-              <Layout user={pageProps.systemUser}>
-                <RouteLoadingBar />
-                <Component {...pageProps} />
-              </Layout>
-            </ErrorBoundary>
-          </ToastsProvider>
-        </Theme>
-      </RelayEnvironmentProvider>
-    </SystemContextProvider>
+    <SessionProvider session={pageProps.session}>
+      <SystemContextProvider
+        relayEnvironment={environment}
+        user={pageProps.systemUser}
+      >
+        <RelayEnvironmentProvider environment={environment!}>
+          <Theme theme="v3">
+            <ToastsProvider>
+              <GlobalStyles />
+              <ErrorBoundary>
+                <Layout user={pageProps.systemUser}>
+                  <RouteLoadingBar />
+                  <Component {...pageProps} />
+                </Layout>
+              </ErrorBoundary>
+            </ToastsProvider>
+          </Theme>
+        </RelayEnvironmentProvider>
+      </SystemContextProvider>
+    </SessionProvider>
   )
 }
 
 MyApp.getInitialProps = async (appContext: AppContext) => {
+  const session = await getSession(appContext.ctx)
   const appProps = await App.getInitialProps(appContext)
-  const systemUser = {
-    email: "test@example.com",
-    accessToken: "omglmfao",
-  }
-  appProps.pageProps.systemUser = systemUser
+  appProps.pageProps.session = session
+  appProps.pageProps.systemUser = session?.user
   return appProps
 }
