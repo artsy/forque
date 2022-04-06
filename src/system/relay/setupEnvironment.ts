@@ -1,7 +1,6 @@
 import { useMemo } from "react"
 import { RelayNetworkLayer } from "react-relay-network-modern"
 import { Environment, RecordSource, Store } from "relay-runtime"
-import { UserSessionData } from "system/artsy-next-auth/auth/user"
 import { getRelayMiddleware } from "./middleware"
 import { User } from "next-auth"
 
@@ -31,7 +30,7 @@ export function setupEnvironment({
   return relayEnvironment
 }
 
-function createEnvironment(user?: UserSessionData | null) {
+function createEnvironment(user?: User | null) {
   return new Environment({
     network: new RelayNetworkLayer(getRelayMiddleware(user)),
     store: new Store(new RecordSource()),

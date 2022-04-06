@@ -28,9 +28,8 @@ export async function fetchRelayData<T extends OperationType>({
   cache = false,
   ctx,
 }: FetchRelayDataProps<T>) {
-  const session = await getSession()
+  const session = await getSession(ctx)
 
-  // const user = await getUserFromCookie(ctx.req)
   const environment = setupEnvironment({ user: session?.user })
 
   if (cache) {
