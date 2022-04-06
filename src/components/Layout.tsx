@@ -1,10 +1,10 @@
 import { GlobalNav } from "./GlobalNav"
 import { Box, Toasts } from "@artsy/palette"
 import { signIn } from "next-auth/react"
-import { User } from "next-auth"
+import type { UserWithAccessToken } from "system/artsy-next-auth"
 
 interface LayoutProps {
-  user: User
+  user: UserWithAccessToken
 }
 
 export const Layout: React.FC<LayoutProps> = ({ children, user }) => {
@@ -15,7 +15,10 @@ export const Layout: React.FC<LayoutProps> = ({ children, user }) => {
   )
 }
 
-const AuthorizedLayout: React.FC<{ user: User }> = ({ children, user }) => {
+const AuthorizedLayout: React.FC<{ user: UserWithAccessToken }> = ({
+  children,
+  user,
+}) => {
   return (
     <>
       <header>

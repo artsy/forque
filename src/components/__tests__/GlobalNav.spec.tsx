@@ -7,7 +7,7 @@ jest.mock("next/router", () => ({ useRouter: () => ({ pathname: "/" }) }))
 
 describe("logged-out user", () => {
   it("renders a login option ", () => {
-    const user = null
+    const user = undefined
 
     render(<GlobalNav user={user} />)
 
@@ -17,7 +17,11 @@ describe("logged-out user", () => {
 
 describe("logged-in user", () => {
   it("renders a logout option ", () => {
-    const user = { email: "fake@artsymail.com" }
+    const user = {
+      id: "fake",
+      email: "fake@artsymail.com",
+      accessToken: "fake",
+    }
 
     render(<GlobalNav user={user} />)
 

@@ -5,9 +5,10 @@ import styled, { css } from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { useRouter } from "next/router"
 import { signIn, signOut } from "next-auth/react"
+import { UserWithAccessToken } from "system/artsy-next-auth"
 
 interface GlobalNavProps {
-  user: unknown | null
+  user?: UserWithAccessToken
 }
 
 export const GlobalNav: FC<GlobalNavProps> = ({ user }) => {
