@@ -1,4 +1,5 @@
 import type { GetServerSidePropsContext } from "next"
+import type { User } from "next-auth"
 
 // data fetching
 export { useGravity } from "./hooks/gravity"
@@ -11,3 +12,5 @@ export function getUserFromCookie(_req: GetServerSidePropsContext["req"]) {
     accessToken: "omglmfao",
   }
 }
+
+export type UserWithAccessToken = User & { accessToken: string }

@@ -1,5 +1,7 @@
 import useSWR from "swr"
 import getConfig from "next/config"
+import { useSession } from "next-auth/react"
+import type { UserWithAccessToken } from "system/artsy-next-auth"
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -22,12 +24,15 @@ const gravityFetcher = async (path: string, accessToken: string) => {
 }
 
 export const useGravity = (url: string) => {
-  const user = {
-    email: "test@example.com",
-    accessToken: "omglmfao",
-  }
+  const session = useSession()
+  const user = session.data?.user as UserWithAccessToken
+  const { accessToken } = user
+
+  if (!accessToken)
+    throw new Error("useGravity requires a user with an access token")
+
   const { data, error } = useSWR(
-    user ? [url, user.accessToken] : null,
+    user ? [url, accessToken] : null,
     gravityFetcher
   )
 
