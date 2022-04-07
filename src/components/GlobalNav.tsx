@@ -35,7 +35,7 @@ export const GlobalNav: FC<GlobalNavProps> = ({ user }) => {
             // Logged out
             <>
               <Item href="/">Home</Item>
-              <Anchor onClick={() => signIn()}>Login</Anchor>
+              <Anchor onClick={() => signIn("artsy")}>Login</Anchor>
             </>
           )}
         </Join>

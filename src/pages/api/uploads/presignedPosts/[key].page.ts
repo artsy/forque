@@ -12,7 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const user = session?.user as UserWithAccessToken
 
   if (!user) {
-    return res.status(401).json({ error: "Unauthorized. Please login." })
+    return res.status(401).json({ error: "Unauthorized. Please log in." })
   }
 
   s3.headObject({ Bucket: BUCKET, Key: `${req.query.key}` }, (err, data) => {

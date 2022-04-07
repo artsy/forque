@@ -44,7 +44,7 @@ const UnauthorizedLayout: React.FC = () => {
       </header>
 
       <main className="container mx-auto p-2 sm:py-4">
-        <a onClick={() => signIn()}>Please log in</a>
+        <a onClick={() => signIn("artsy")}>Please log in</a>
       </main>
     </>
   )
