@@ -11,7 +11,7 @@ describe("logged-out user", () => {
 
     render(<GlobalNav user={user} />)
 
-    expect(screen.getByRole("link", { name: "Login" })).toBeVisible()
+    expect(screen.getByText("Login")).toBeVisible()
   })
 })
 
@@ -25,6 +25,6 @@ describe("logged-in user", () => {
 
     render(<GlobalNav user={user} />)
 
-    expect(screen.getByRole("link", { name: "Logout" })).toBeVisible()
+    expect(screen.getByText("Logout")).toBeVisible()
   })
 })
