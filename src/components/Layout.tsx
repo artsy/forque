@@ -1,5 +1,5 @@
 import { GlobalNav } from "./GlobalNav"
-import { Box, Toasts } from "@artsy/palette"
+import { Box, Button, Toasts } from "@artsy/palette"
 import { signIn } from "next-auth/react"
 import type { UserWithAccessToken } from "system/artsy-next-auth"
 
@@ -43,8 +43,8 @@ const UnauthorizedLayout: React.FC = () => {
         <GlobalNav />
       </header>
 
-      <main className="container mx-auto p-2 sm:py-4">
-        <a onClick={() => signIn("artsy")}>Please log in</a>
+      <main className="container mx-auto p-2 sm:py-4 text-center">
+        <Button onClick={() => signIn("artsy")}>Please log in</Button>
       </main>
     </>
   )
