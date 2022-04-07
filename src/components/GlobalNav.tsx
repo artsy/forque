@@ -26,9 +26,16 @@ export const GlobalNav: FC<GlobalNavProps> = ({ user }) => {
             // Logged in
             <>
               <Item href="/">Home</Item>
-              <Item href="/users">Users</Item>
-              <Item href="/artists/dedupe">Dedupe Artists</Item>
-              <Item href="/uploads">Uploads</Item>
+              {(user.roles.includes("admin") ||
+                user.roles.includes("customer_support")) && (
+                <Item href="/users">Users</Item>
+              )}
+              {user.roles.includes("admin") && (
+                <Item href="/artists/dedupe">Dedupe Artists</Item>
+              )}
+              {user.roles.includes("team") && (
+                <Item href="/uploads">Uploads</Item>
+              )}
               <Anchor role="auth" onClick={() => signOut()}>
                 Logout
               </Anchor>
