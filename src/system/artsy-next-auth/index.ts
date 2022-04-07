@@ -4,4 +4,7 @@ import type { User } from "next-auth"
 export { useGravity } from "./hooks/gravity"
 export { useMetaphysics } from "./hooks/metaphysics"
 
-export type UserWithAccessToken = User & { accessToken: string }
+export type UserWithAccessToken = User & {
+  accessToken: string
+  roles: string[]
+}

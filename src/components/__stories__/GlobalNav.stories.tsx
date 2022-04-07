@@ -8,6 +8,11 @@ export default {
 export const LoggedOut = () => <GlobalNav />
 export const LoggedIn = () => (
   <GlobalNav
-    user={{ id: "fake", email: "fake@artsy.net", accessToken: "fake" }}
+    user={{
+      id: "fake",
+      email: "fake@artsy.net",
+      accessToken: "fake",
+      roles: ["admin"],
+    }}
   />
 )
