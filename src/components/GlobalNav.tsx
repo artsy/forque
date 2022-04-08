@@ -1,10 +1,10 @@
-import { FC } from "react"
-import Link from "next/link"
 import { ArtsyMarkIcon, Box, Flex, Text } from "@artsy/palette"
-import styled, { css } from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
-import { useRouter } from "next/router"
 import { signIn, signOut } from "next-auth/react"
+import Link from "next/link"
+import { useRouter } from "next/router"
+import { FC } from "react"
+import styled, { css } from "styled-components"
 import type { UserWithAccessToken } from "system"
 
 interface GlobalNavProps {
@@ -34,8 +34,12 @@ export const GlobalNav: FC<GlobalNavProps> = ({ user }) => {
             {(user.roles.includes("admin") ||
               user.roles.includes("customer_support")) && (
               <Item href="/users">Users</Item>
+<<<<<<< HEAD
             )}
             {user.roles.includes("admin") && (
+=======
+              <Item href="/my-collection">My Collection</Item>
+>>>>>>> 24ac884 (feat: introduce My Collection artwork transfer)
               <Item href="/artists/dedupe">Dedupe Artists</Item>
             )}
             {user.roles.includes("team") && (
