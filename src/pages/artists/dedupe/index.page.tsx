@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useMetaphysics } from "system/artsy-next-auth"
+import { useMetaphysics } from "hooks"
 import { ArtistList, Skeleton } from "./components/list/ArtistList"
 
 const PER_PAGE = 36

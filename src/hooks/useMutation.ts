@@ -10,7 +10,7 @@ import { useSystemContext } from "./useSystemContext"
  *
  * @example
 
-  import { useMutation } from "hooks/useMutation"
+  import { useMutation } from "hooks"
   import { graphql } from "react-relay"
   import { useUpdateUserMutation } from "__generated__/useUpdateUserMutation.graphql"
 

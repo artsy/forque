@@ -1,4 +1,5 @@
 import { GetServerSidePropsContext } from "next"
+import { getSession } from "next-auth/react"
 import {
   CacheConfig,
   fetchQuery,
@@ -6,7 +7,7 @@ import {
   GraphQLTaggedNode,
   OperationType,
 } from "relay-runtime"
-import { getUserFromCookie } from "system/artsy-next-auth/auth/user"
+import type { UserWithAccessToken } from "system"
 import { setupEnvironment } from "system/relay/setupEnvironment"
 
 interface FetchRelayDataProps<T extends OperationType> {
@@ -27,7 +28,9 @@ export async function fetchRelayData<T extends OperationType>({
   cache = false,
   ctx,
 }: FetchRelayDataProps<T>) {
-  const user = await getUserFromCookie(ctx.req)
+  const session = await getSession(ctx)
+  const user = session?.user as UserWithAccessToken
+
   const environment = setupEnvironment({ user })
 
   if (cache) {

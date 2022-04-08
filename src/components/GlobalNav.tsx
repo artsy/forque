@@ -1,13 +1,14 @@
 import { FC } from "react"
 import Link from "next/link"
-import { UserSessionData } from "system/artsy-next-auth/auth/user"
 import { ArtsyMarkIcon, Flex, Join, Spacer, Text } from "@artsy/palette"
 import styled, { css } from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { useRouter } from "next/router"
+import { signIn, signOut } from "next-auth/react"
+import type { UserWithAccessToken } from "system"
 
 interface GlobalNavProps {
-  user: Partial<UserSessionData> | null
+  user?: UserWithAccessToken
 }
 
 export const GlobalNav: FC<GlobalNavProps> = ({ user }) => {
@@ -28,13 +29,13 @@ export const GlobalNav: FC<GlobalNavProps> = ({ user }) => {
               <Item href="/users">Users</Item>
               <Item href="/artists/dedupe">Dedupe Artists</Item>
               <Item href="/uploads">Uploads</Item>
-              <Item href="/api/artsy-auth/logout">Logout</Item>
+              <Anchor onClick={() => signOut()}>Logout</Anchor>
             </>
           ) : (
             // Logged out
             <>
               <Item href="/">Home</Item>
-              <Item href="/login">Login</Item>
+              <Anchor onClick={() => signIn("artsy")}>Login</Anchor>
             </>
           )}
         </Join>
@@ -43,7 +44,7 @@ export const GlobalNav: FC<GlobalNavProps> = ({ user }) => {
   )
 }
 
-const Anchor = styled(Text).attrs<{ active: boolean }>({
+const Anchor = styled(Text).attrs<{ active?: boolean }>({
   as: "a",
   variant: "sm",
   px: 1,

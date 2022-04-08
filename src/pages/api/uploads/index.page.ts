@@ -1,12 +1,16 @@
 import { S3 } from "aws-sdk"
 import type { NextApiRequest, NextApiResponse } from "next"
-import { getUserFromCookie } from "system/artsy-next-auth/auth/user"
+import { getSession } from "next-auth/react"
+import type { UserWithAccessToken } from "system"
 
 const s3 = new S3()
 
-const handler = (req: NextApiRequest, res: NextApiResponse) => {
-  if (!getUserFromCookie(req)) {
-    return res.status(401).json({ error: "Unauthorized. Please login." })
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+  const session = await getSession({ req })
+  const user = session?.user as UserWithAccessToken
+
+  if (!user) {
+    return res.status(401).json({ error: "Unauthorized. Please log in." })
   }
 
   s3.listObjectsV2(
