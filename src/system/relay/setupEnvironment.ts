@@ -1,7 +1,7 @@
 import { useMemo } from "react"
 import { RelayNetworkLayer } from "react-relay-network-modern"
 import { Environment, RecordSource, Store } from "relay-runtime"
-import { UserWithAccessToken } from "system/artsy-next-auth"
+import type { UserWithAccessToken } from "system"
 import { getRelayMiddleware } from "./middleware"
 
 let relayEnvironment: Environment

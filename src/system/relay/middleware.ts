@@ -6,7 +6,7 @@ import {
   Middleware,
   urlMiddleware,
 } from "react-relay-network-modern"
-import { UserWithAccessToken } from "system/artsy-next-auth"
+import type { UserWithAccessToken } from "system"
 
 const { publicRuntimeConfig } = getConfig()
 

@@ -1,7 +1,7 @@
 import useSWR from "swr"
 import getConfig from "next/config"
 import { useSession } from "next-auth/react"
-import type { UserWithAccessToken } from "system/artsy-next-auth"
+import type { UserWithAccessToken } from "system"
 
 const { publicRuntimeConfig } = getConfig()
 

@@ -5,7 +5,7 @@ import styled, { css } from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { useRouter } from "next/router"
 import { signIn, signOut } from "next-auth/react"
-import { UserWithAccessToken } from "system/artsy-next-auth"
+import type { UserWithAccessToken } from "system"
 
 interface GlobalNavProps {
   user?: UserWithAccessToken

@@ -2,7 +2,7 @@ import { S3 } from "aws-sdk"
 import type { NextApiRequest, NextApiResponse } from "next"
 import { extname } from "path"
 import { getSession } from "next-auth/react"
-import type { UserWithAccessToken } from "system/artsy-next-auth"
+import type { UserWithAccessToken } from "system"
 
 const s3 = new S3()
 const BUCKET = `${process.env.AWS_S3_FILES_BUCKET}`

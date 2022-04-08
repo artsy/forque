@@ -1,7 +1,7 @@
 import { GlobalNav } from "./GlobalNav"
 import { Box, Button, Toasts } from "@artsy/palette"
 import { signIn } from "next-auth/react"
-import type { UserWithAccessToken } from "system/artsy-next-auth"
+import type { UserWithAccessToken } from "system"
 
 interface LayoutProps {
   user: UserWithAccessToken

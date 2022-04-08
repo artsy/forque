@@ -7,7 +7,7 @@ import {
   GraphQLTaggedNode,
   OperationType,
 } from "relay-runtime"
-import { UserWithAccessToken } from "system/artsy-next-auth"
+import type { UserWithAccessToken } from "system"
 import { setupEnvironment } from "system/relay/setupEnvironment"
 
 interface FetchRelayDataProps<T extends OperationType> {

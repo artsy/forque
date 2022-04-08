@@ -1,7 +1,7 @@
 import { S3 } from "aws-sdk"
 import type { NextApiRequest, NextApiResponse } from "next"
 import { getSession } from "next-auth/react"
-import type { UserWithAccessToken } from "system/artsy-next-auth"
+import type { UserWithAccessToken } from "system"
 
 const s3 = new S3()
 
