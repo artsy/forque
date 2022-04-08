@@ -1,6 +1,7 @@
 import getConfig from "next/config"
 import {
   cacheMiddleware,
+  errorMiddleware,
   Headers,
   loggerMiddleware,
   Middleware,
@@ -9,6 +10,9 @@ import {
 import type { UserWithAccessToken } from "system"
 
 const { publicRuntimeConfig } = getConfig()
+
+const enableLogging =
+  process.env.NODE_ENV === "development" && typeof window !== "undefined"
 
 export const getRelayMiddleware = (
   user?: UserWithAccessToken
@@ -20,18 +24,18 @@ export const getRelayMiddleware = (
       }
     : {}
 
-  return [
+  const middleware = [
     urlMiddleware({
       url: publicRuntimeConfig.NEXT_PUBLIC_METAPHYSICS_URL! + "/v2",
       headers: authenticatedHeaders,
     }),
-    loggerMiddleware({
-      logger: (...args: any) =>
-        typeof window !== "undefined" ? console.log(...args) : undefined,
-    }),
+    enableLogging && loggerMiddleware(),
+    enableLogging && errorMiddleware({ disableServerMiddlewareTip: true }),
     cacheMiddleware({
       size: 100,
       ttl: 60 * 1000,
     }),
-  ]
+  ] as Middleware[]
+
+  return middleware
 }
