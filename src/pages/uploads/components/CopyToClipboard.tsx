@@ -1,5 +1,5 @@
 import { Button, Input, TextArea } from "@artsy/palette"
-import { useClipboard } from "hooks/useClipboard"
+import { useClipboard } from "hooks"
 import { FC } from "react"
 
 interface CopyToClipboardProps {
