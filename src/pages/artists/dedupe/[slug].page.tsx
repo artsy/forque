@@ -1,6 +1,6 @@
 import { useRouter } from "next/router"
 
-import { useMetaphysics } from "system/artsy-next-auth"
+import { useMetaphysics } from "hooks"
 import { ArtistWithDupes } from "./components/types"
 import { ArtistDupesManager } from "./components/manager/ArtistDupesManager"
 
