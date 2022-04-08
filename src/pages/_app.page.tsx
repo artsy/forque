@@ -23,10 +23,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <SessionProvider session={pageProps.session}>
-      <SystemContextProvider
-        relayEnvironment={environment}
-        user={pageProps.session?.user}
-      >
+      <SystemContextProvider relayEnvironment={environment}>
         <RelayEnvironmentProvider environment={environment!}>
           <Theme theme="v3">
             <ToastsProvider>
