@@ -9,11 +9,6 @@ import useSWR from "swr"
 import { Optimizer } from "./components/Optimizer"
 import { CopyToClipboard } from "./components/CopyToClipboard"
 
-const filesRoot =
-  process.env.NODE_ENV === "production"
-    ? "https://files.artsy.net"
-    : "https://s3.amazonaws.com/artsy-vanity-files-staging"
-
 const UploadPage: FC = () => {
   const router = useRouter()
 
@@ -22,7 +17,7 @@ const UploadPage: FC = () => {
     fetcher
   )
 
-  const url = `${filesRoot}/${router.query.key}`
+  const url = `${process.env.NEXT_PUBLIC_FILES_ENDPOINT_URL}/${router.query.key}`
 
   const [[width, height], setDimensions] = useState([0, 0])
 
