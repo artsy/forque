@@ -21,6 +21,7 @@ describe("logged-in user", () => {
       id: "fake",
       email: "fake@artsymail.com",
       accessToken: "fake",
+      roles: ["admin"],
     }
 
     render(<GlobalNav user={user} />)
