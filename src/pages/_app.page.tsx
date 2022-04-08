@@ -18,21 +18,21 @@ const { GlobalStyles } = injectGlobalStyles(`
 export default function MyApp({ Component, pageProps }: AppProps) {
   const environment = useEnvironment({
     initialRecords: pageProps.relayData,
-    user: pageProps.systemUser,
+    user: pageProps.session?.user,
   })
 
   return (
     <SessionProvider session={pageProps.session}>
       <SystemContextProvider
         relayEnvironment={environment}
-        user={pageProps.systemUser}
+        user={pageProps.session?.user}
       >
         <RelayEnvironmentProvider environment={environment!}>
           <Theme theme="v3">
             <ToastsProvider>
               <GlobalStyles />
               <ErrorBoundary>
-                <Layout user={pageProps.systemUser}>
+                <Layout user={pageProps.session?.user}>
                   <RouteLoadingBar />
                   <Component {...pageProps} />
                 </Layout>
@@ -49,6 +49,5 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
   const session = await getSession(appContext.ctx)
   const appProps = await App.getInitialProps(appContext)
   appProps.pageProps.session = session
-  appProps.pageProps.systemUser = session?.user
   return appProps
 }
