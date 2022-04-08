@@ -9,6 +9,7 @@ import { useEnvironment } from "system/relay/setupEnvironment"
 import { RelayEnvironmentProvider } from "react-relay"
 import { RouteLoadingBar } from "system/RouteLoadingBar"
 import { getSession, SessionProvider } from "next-auth/react"
+import { Suspense } from "react"
 
 const { GlobalStyles } = injectGlobalStyles(`
   /* overrides and additions */
@@ -26,12 +27,14 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <Theme theme="v3">
           <ToastsProvider>
             <GlobalStyles />
-            <ErrorBoundary>
-              <Layout user={pageProps.session?.user}>
-                <RouteLoadingBar />
-                <Component {...pageProps} />
-              </Layout>
-            </ErrorBoundary>
+            <Layout user={pageProps.session?.user}>
+              <RouteLoadingBar />
+              <ErrorBoundary>
+                <Suspense fallback={null}>
+                  <Component {...pageProps} />
+                </Suspense>
+              </ErrorBoundary>
+            </Layout>
           </ToastsProvider>
         </Theme>
       </RelayEnvironmentProvider>

@@ -32,7 +32,7 @@ export function setupEnvironment({
 
 function createEnvironment(user?: UserWithAccessToken) {
   return new Environment({
-    network: new RelayNetworkLayer(getRelayMiddleware(user)),
+    network: new RelayNetworkLayer(getRelayMiddleware(user), { noThrow: true }),
     store: new Store(new RecordSource()),
   })
 }
