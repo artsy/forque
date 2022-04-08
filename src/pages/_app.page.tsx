@@ -7,7 +7,6 @@ import { Layout } from "components/Layout"
 import { ErrorBoundary } from "system/ErrorBoundary"
 import { useEnvironment } from "system/relay/setupEnvironment"
 import { RelayEnvironmentProvider } from "react-relay"
-import { SystemContextProvider } from "system/SystemContext"
 import { RouteLoadingBar } from "system/RouteLoadingBar"
 import { getSession, SessionProvider } from "next-auth/react"
 
@@ -23,21 +22,19 @@ export default function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <SessionProvider session={pageProps.session}>
-      <SystemContextProvider relayEnvironment={environment}>
-        <RelayEnvironmentProvider environment={environment!}>
-          <Theme theme="v3">
-            <ToastsProvider>
-              <GlobalStyles />
-              <ErrorBoundary>
-                <Layout user={pageProps.session?.user}>
-                  <RouteLoadingBar />
-                  <Component {...pageProps} />
-                </Layout>
-              </ErrorBoundary>
-            </ToastsProvider>
-          </Theme>
-        </RelayEnvironmentProvider>
-      </SystemContextProvider>
+      <RelayEnvironmentProvider environment={environment!}>
+        <Theme theme="v3">
+          <ToastsProvider>
+            <GlobalStyles />
+            <ErrorBoundary>
+              <Layout user={pageProps.session?.user}>
+                <RouteLoadingBar />
+                <Component {...pageProps} />
+              </Layout>
+            </ErrorBoundary>
+          </ToastsProvider>
+        </Theme>
+      </RelayEnvironmentProvider>
     </SessionProvider>
   )
 }

@@ -15,6 +15,7 @@
     "relay": "relay-compiler",
     "start": "next start",
     "storybook": "start-storybook -p 6006",
+    "sync-env": "scripts/setup.sh",
     "sync-schema": "scripts/sync-schema.sh",
     "sync-schema-local": "scripts/sync-schema-local.sh",
     "test": "jest",
