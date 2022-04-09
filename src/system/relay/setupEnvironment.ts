@@ -1,14 +1,14 @@
 import { useMemo } from "react"
 import { RelayNetworkLayer } from "react-relay-network-modern"
 import { Environment, RecordSource, Store } from "relay-runtime"
-import { UserSessionData } from "system/artsy-next-auth/auth/user"
+import type { UserWithAccessToken } from "system"
 import { getRelayMiddleware } from "./middleware"
 
 let relayEnvironment: Environment
 
 interface SetupEnvironmentProps {
   initialRecords?: any
-  user?: UserSessionData | null
+  user?: UserWithAccessToken
 }
 
 export function setupEnvironment({
@@ -30,9 +30,9 @@ export function setupEnvironment({
   return relayEnvironment
 }
 
-function createEnvironment(user?: UserSessionData | null) {
+function createEnvironment(user?: UserWithAccessToken) {
   return new Environment({
-    network: new RelayNetworkLayer(getRelayMiddleware(user)),
+    network: new RelayNetworkLayer(getRelayMiddleware(user), { noThrow: true }),
     store: new Store(new RecordSource()),
   })
 }

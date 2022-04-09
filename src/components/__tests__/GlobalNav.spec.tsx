@@ -7,20 +7,25 @@ jest.mock("next/router", () => ({ useRouter: () => ({ pathname: "/" }) }))
 
 describe("logged-out user", () => {
   it("renders a login option ", () => {
-    const user = null
+    const user = undefined
 
     render(<GlobalNav user={user} />)
 
-    expect(screen.getByRole("link", { name: "Login" })).toBeVisible()
+    expect(screen.getByText("Login")).toBeVisible()
   })
 })
 
 describe("logged-in user", () => {
   it("renders a logout option ", () => {
-    const user = { email: "fake@artsymail.com" }
+    const user = {
+      id: "fake",
+      email: "fake@artsymail.com",
+      accessToken: "fake",
+      roles: ["admin"],
+    }
 
     render(<GlobalNav user={user} />)
 
-    expect(screen.getByRole("link", { name: "Logout" })).toBeVisible()
+    expect(screen.getByText("Logout")).toBeVisible()
   })
 })

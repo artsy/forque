@@ -1,6 +1,7 @@
 import useSWR from "swr"
-import { useUser } from "./user"
 import getConfig from "next/config"
+import { useSession } from "next-auth/react"
+import type { UserWithAccessToken } from "system"
 
 const { publicRuntimeConfig } = getConfig()
 
@@ -25,7 +26,7 @@ const metaphysicsFetcher = async (
   }
 
   const json = await response.json()
-  const { data, _errors } = json // TODO: errors
+  const { data } = json // TODO: errors
 
   // uncomment to simulate delay
   // await new Promise<void>((resolve) => setTimeout(() => resolve(), 1000))
@@ -37,9 +38,15 @@ export const useMetaphysics = (
   query: string,
   variables: Record<string, unknown> = {}
 ) => {
-  const user = useUser()
+  const session = useSession()
+  const user = session.data?.user as UserWithAccessToken
+  const { accessToken } = user
+
+  if (!accessToken)
+    throw new Error("useMetaphysics requires a user with an access token")
+
   const { data, error } = useSWR(
-    user ? [query, JSON.stringify(variables), user.accessToken] : null,
+    user ? [query, JSON.stringify(variables), accessToken] : null,
     metaphysicsFetcher
   )
 

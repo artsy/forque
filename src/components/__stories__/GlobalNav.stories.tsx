@@ -5,5 +5,14 @@ export default {
   component: GlobalNav,
 }
 
-export const LoggedOut = () => <GlobalNav user={null} />
-export const LoggedIn = () => <GlobalNav user={{ email: "fake@artsy.net" }} />
+export const LoggedOut = () => <GlobalNav />
+export const LoggedIn = () => (
+  <GlobalNav
+    user={{
+      id: "fake",
+      email: "fake@artsy.net",
+      accessToken: "fake",
+      roles: ["admin"],
+    }}
+  />
+)

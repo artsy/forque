@@ -7,10 +7,9 @@ import { Layout } from "components/Layout"
 import { ErrorBoundary } from "system/ErrorBoundary"
 import { useEnvironment } from "system/relay/setupEnvironment"
 import { RelayEnvironmentProvider } from "react-relay"
-import { getUserFromCookie } from "system/artsy-next-auth/auth/user"
-import { NextApiRequest } from "next"
-import { SystemContextProvider } from "system/SystemContext"
 import { RouteLoadingBar } from "system/RouteLoadingBar"
+import { getSession, SessionProvider } from "next-auth/react"
+import { Suspense } from "react"
 
 const { GlobalStyles } = injectGlobalStyles(`
   /* overrides and additions */
@@ -19,36 +18,33 @@ const { GlobalStyles } = injectGlobalStyles(`
 export default function MyApp({ Component, pageProps }: AppProps) {
   const environment = useEnvironment({
     initialRecords: pageProps.relayData,
-    user: pageProps.systemUser,
+    user: pageProps.session?.user,
   })
 
   return (
-    <SystemContextProvider
-      relayEnvironment={environment}
-      user={pageProps.systemUser}
-    >
+    <SessionProvider session={pageProps.session}>
       <RelayEnvironmentProvider environment={environment!}>
         <Theme theme="v3">
           <ToastsProvider>
             <GlobalStyles />
-            <ErrorBoundary>
-              <Layout user={pageProps.systemUser}>
-                <RouteLoadingBar />
-                <Component {...pageProps} />
-              </Layout>
-            </ErrorBoundary>
+            <Layout user={pageProps.session?.user}>
+              <RouteLoadingBar />
+              <ErrorBoundary>
+                <Suspense fallback={null}>
+                  <Component {...pageProps} />
+                </Suspense>
+              </ErrorBoundary>
+            </Layout>
           </ToastsProvider>
         </Theme>
       </RelayEnvironmentProvider>
-    </SystemContextProvider>
+    </SessionProvider>
   )
 }
 
 MyApp.getInitialProps = async (appContext: AppContext) => {
+  const session = await getSession(appContext.ctx)
   const appProps = await App.getInitialProps(appContext)
-  const systemUser = await getUserFromCookie(
-    appContext.ctx.req as NextApiRequest
-  )
-  appProps.pageProps.systemUser = systemUser
+  appProps.pageProps.session = session
   return appProps
 }

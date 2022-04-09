@@ -1,7 +1,7 @@
 import { Spacer, Text } from "@artsy/palette"
 import { ListPagination } from "components/ListPagination"
 import { Table } from "components/Table"
-import { useExtractNodes } from "hooks/useExtractNodes"
+import { useExtractNodes } from "hooks"
 import { useRouter } from "next/router"
 import { Suspense } from "react"
 import { graphql, useRefetchableFragment } from "react-relay"
