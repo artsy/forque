@@ -67,73 +67,89 @@ export const UserSaleProfileForm: React.FC = () => {
 
         <Column span={12}>
           <Input
-            name="country"
+            name="userSaleProfile.country"
             title="Country"
             placeholder="Enter Country"
-            value={values.country}
+            value={values.userSaleProfile.country}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.country && errors.country}
+            error={
+              touched.userSaleProfile?.country &&
+              errors.userSaleProfile?.country
+            }
           />
         </Column>
 
         <Column span={12}>
           <Input
-            name="postalCode"
+            name="userSaleProfile.postalCode"
             title="Postal Code"
             placeholder="Enter Postal Code"
-            value={values.postalCode}
+            value={values.userSaleProfile.postalCode}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.postalCode && errors.postalCode}
+            error={
+              touched.userSaleProfile?.postalCode &&
+              errors.userSaleProfile?.postalCode
+            }
           />
         </Column>
 
         <Column span={12}>
           <Input
-            name="addressLine1"
+            name="userSaleProfile.addressLine1"
             title="Address Line 1"
             placeholder="Enter Address Line 1"
-            value={values.addressLine1}
+            value={values.userSaleProfile.addressLine1}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.addressLine1 && errors.addressLine1}
+            error={
+              touched.userSaleProfile?.addressLine1 &&
+              errors.userSaleProfile?.addressLine1
+            }
           />
         </Column>
 
         <Column span={12}>
           <Input
-            name="addressLine2"
+            name="userSaleProfile.addressLine2"
             title="Address Line 2"
             placeholder="Enter Address Line 2"
-            value={values.addressLine2}
+            value={values.userSaleProfile.addressLine2}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.addressLine2 && errors.addressLine2}
+            error={
+              touched.userSaleProfile?.addressLine2 &&
+              errors.userSaleProfile?.addressLine2
+            }
           />
         </Column>
 
         <Column span={12}>
           <Input
-            name="city"
+            name="userSaleProfile.city"
             title="City"
             placeholder="Enter City"
-            value={values.city}
+            value={values.userSaleProfile.city}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.city && errors.city}
+            error={
+              touched.userSaleProfile?.city && errors.userSaleProfile?.city
+            }
           />
         </Column>
 
         <Column span={12}>
           <Input
-            name="region"
+            name="userSaleProfile.region"
             title="Region"
             placeholder="Enter Region"
-            value={values.region}
+            value={values.userSaleProfile.region}
             onChange={handleChange}
             onBlur={handleBlur}
-            error={touched.region && errors.region}
+            error={
+              touched.userSaleProfile?.region && errors.userSaleProfile?.region
+            }
           />
         </Column>
 
