@@ -34,13 +34,13 @@ export const GlobalNav: FC<GlobalNavProps> = ({ user }) => {
             {(user.roles.includes("admin") ||
               user.roles.includes("customer_support")) && (
               <Item href="/users">Users</Item>
-<<<<<<< HEAD
             )}
             {user.roles.includes("admin") && (
-=======
-              <Item href="/my-collection">My Collection</Item>
->>>>>>> 24ac884 (feat: introduce My Collection artwork transfer)
               <Item href="/artists/dedupe">Dedupe Artists</Item>
+            )}
+            {(user.roles.includes("admin") ||
+              user.roles.includes("customer_support")) && (
+              <Item href="/my-collection">My Collection</Item>
             )}
             {user.roles.includes("team") && (
               <Item href="/uploads">Uploads</Item>

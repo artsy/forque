@@ -1,57 +1,28 @@
-import { Box, Separator, SkeletonText, Text } from "@artsy/palette"
-import { debounce } from "lodash"
-import React, { startTransition, useEffect, useState } from "react"
-import { validateEmail } from "utils/validateEmail"
-import { useFetchUserByEmailQuery$data } from "__generated__/useFetchUserByEmailQuery.graphql"
-import { useFetchUserByEmail } from "../queries/useFetchUserByEmail"
+import { Box, Separator, Text } from "@artsy/palette"
+import React, { Suspense } from "react"
+import { graphql, useLazyLoadQuery } from "react-relay"
+import { ErrorBoundary } from "system/ErrorBoundary"
+import { UserCardQuery } from "__generated__/UserCardQuery.graphql"
 
 interface UserCardProps {
   email: string
 }
 
-export const UserCard: React.FC<UserCardProps> = ({ email }) => {
-  const fetchUserByEmail = useFetchUserByEmail()
+export const UserCardComponent: React.FC<UserCardProps> = ({ email }) => {
+  const { user } = useLazyLoadQuery<UserCardQuery>(
+    graphql`
+      query UserCardQuery($email: String!) {
+        user(email: $email) {
+          internalID
+          name
+          userAlreadyExists
+        }
+      }
+    `,
+    { email }
+  )
 
-  const [user, setUser] = useState<useFetchUserByEmailQuery$data["user"]>()
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(false)
-
-  const fetchUser = async () => {
-    if (!validateEmail(email)) {
-      return
-    }
-
-    try {
-      const response = await fetchUserByEmail(email)
-
-      setUser(response?.user)
-    } catch (error) {
-      setError(true)
-      console.error(error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const debouncedFetchUser = debounce(fetchUser, 500)
-
-  useEffect(() => {
-    startTransition(() => {
-      setError(false)
-      setLoading(true)
-      debouncedFetchUser()
-    })
-  }, [email])
-
-  if (!validateEmail(email)) {
-    return (
-      <Wrapper>
-        <Text>Please enter a valid email.</Text>
-      </Wrapper>
-    )
-  }
-
-  if (error) {
+  if (!user) {
     return (
       <Wrapper>
         <Text>User not found.</Text>
@@ -61,18 +32,22 @@ export const UserCard: React.FC<UserCardProps> = ({ email }) => {
 
   return (
     <Wrapper>
-      <Field fieldName={"Name"} fieldValue={user?.name} loading={loading} />
+      <Field fieldName={"Name"} fieldValue={user?.name} />
       <Separator my={1} />
-      <Field fieldName={"Email"} fieldValue={email} loading={loading} />
+      <Field fieldName={"Email"} fieldValue={email} />
       <Separator my={1} />
-      <Field
-        fieldName={"User ID"}
-        fieldValue={user?.internalID}
-        loading={loading}
-      />
+      <Field fieldName={"User ID"} fieldValue={user?.internalID} />
     </Wrapper>
   )
 }
+
+export const UserCard: React.FC<UserCardProps> = ({ email }) => (
+  <ErrorBoundary>
+    <Suspense fallback={null}>
+      <UserCardComponent email={email} />
+    </Suspense>
+  </ErrorBoundary>
+)
 
 const Wrapper: React.FC = ({ children }) => (
   <Box border="1px solid" borderColor="black10" p={1} my={1}>
@@ -83,18 +58,15 @@ const Wrapper: React.FC = ({ children }) => (
 const Field: React.FC<{
   fieldName: string
   fieldValue?: string
-  loading: boolean
-}> = ({ fieldName, fieldValue, loading }) => {
+}> = ({ fieldName, fieldValue }) => {
   return (
     <>
       <Text color="black60" variant="xs">
         {fieldName}
       </Text>
-      {loading ? (
-        <SkeletonText>{fieldName}</SkeletonText>
-      ) : (
-        <Text color="black">{fieldValue ?? "/"}</Text>
-      )}
+      <Text variant="sm" color="black">
+        {fieldValue ?? "/"}
+      </Text>
     </>
   )
 }

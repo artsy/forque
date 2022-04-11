@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<18b9bedfd6570a0b5dc78e30338bf692>>
+ * @generated SignedSource<<b84f910864e57eaecbc1c42d0e31f821>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,19 +9,19 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type useFetchUserByEmailQuery$variables = {
+export type UserCardQuery$variables = {
   email: string;
 };
-export type useFetchUserByEmailQuery$data = {
+export type UserCardQuery$data = {
   readonly user: {
     readonly internalID: string;
     readonly name: string;
     readonly userAlreadyExists: boolean | null;
   } | null;
 };
-export type useFetchUserByEmailQuery = {
-  variables: useFetchUserByEmailQuery$variables;
-  response: useFetchUserByEmailQuery$data;
+export type UserCardQuery = {
+  variables: UserCardQuery$variables;
+  response: UserCardQuery$data;
 };
 
 const node: ConcreteRequest = (function(){
@@ -65,7 +65,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useFetchUserByEmailQuery",
+    "name": "UserCardQuery",
     "selections": [
       {
         "alias": null,
@@ -89,7 +89,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "useFetchUserByEmailQuery",
+    "name": "UserCardQuery",
     "selections": [
       {
         "alias": null,
@@ -115,16 +115,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "aa8c7202d7c5830182e00599f8ed14ef",
+    "cacheID": "b1162c162d1e5665e9cef4f29541b8cc",
     "id": null,
     "metadata": {},
-    "name": "useFetchUserByEmailQuery",
+    "name": "UserCardQuery",
     "operationKind": "query",
-    "text": "query useFetchUserByEmailQuery(\n  $email: String!\n) {\n  user(email: $email) {\n    internalID\n    name\n    userAlreadyExists\n    id\n  }\n}\n"
+    "text": "query UserCardQuery(\n  $email: String!\n) {\n  user(email: $email) {\n    internalID\n    name\n    userAlreadyExists\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "ed24a9aa4cf2112e292a48ffd07cb365";
+(node as any).hash = "ae2559156b3d87c928c4140e2cee0e7d";
 
 export default node;
