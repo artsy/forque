@@ -12,7 +12,7 @@ export const LoggedIn = () => (
       id: "fake",
       email: "fake@artsy.net",
       accessToken: "fake",
-      roles: ["admin"],
+      roles: ["team", "metadata_admin"],
     }}
   />
 )
