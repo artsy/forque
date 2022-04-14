@@ -5,9 +5,9 @@ A home for admin apps
 ## Meta
 
 - **State:** development
-- **Staging:** [https://forque.stg.artsy.systems](https://forque.stg.artsy.systems)
+- **Staging:** [https://tools-staging.artsy.net](https://tools-staging.artsy.net)
   - [Kubernetes](https://kubernetes.stg.artsy.systems/#/search?q=forque&namespace=default)
-- **Production:** [https://forque.prd.artsy.systems](https://forque.prd.artsy.systems)
+- **Production:** [https://tools.artsy.net](https://tools.artsy.net)
   - [Kubernetes](https://kubernetes.prd.artsy.systems/#/search?q=forque&namespace=default)
 - **GitHub:** [https://github.com/artsy/forque](https://github.com/artsy/forque)
 - **Deployment:**
