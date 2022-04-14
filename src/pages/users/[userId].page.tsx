@@ -7,6 +7,7 @@ import { Form, Formik } from "formik"
 import { UserFormValues, userValidationSchema } from "./useUserFormContext"
 import { UserForm } from "./components/form"
 import { useUpdateUser } from "./mutations/useUpdateUser"
+import { useUpdateUserSaleProfile } from "./mutations/useUpdateUserSaleProfile"
 import Head from "next/head"
 
 interface UserProps {
@@ -14,7 +15,9 @@ interface UserProps {
 }
 
 const User: React.FC<UserProps> = ({ user }) => {
-  const { submitMutation } = useUpdateUser()
+  const { submitMutation: submitUserMutation } = useUpdateUser()
+  const { submitMutation: submitSaleProfileMutation } =
+    useUpdateUserSaleProfile()
 
   if (!user) {
     return null
@@ -31,21 +34,46 @@ const User: React.FC<UserProps> = ({ user }) => {
           email: user.email,
           name: user.name,
           phoneNumber: user.phone || undefined,
+          userSaleProfile: {
+            addressLine1: user.saleProfile?.addressLine1 || undefined,
+            addressLine2: user.saleProfile?.addressLine2 || undefined,
+            city: user.saleProfile?.city || undefined,
+            region: user.saleProfile?.state || undefined,
+            postalCode: user.saleProfile?.zip || undefined,
+            country: user.saleProfile?.country || undefined,
+          },
         }}
         validationSchema={userValidationSchema}
         onSubmit={async (values) => {
           try {
-            await submitMutation({
-              variables: {
-                input: {
-                  id: user.internalID,
-                  dataTransferOptOut: values.dataTransferOptOut,
-                  email: values.email,
-                  name: values.name,
-                  phone: values.phoneNumber!,
+            const mutations = [
+              submitUserMutation({
+                variables: {
+                  input: {
+                    id: user.internalID,
+                    dataTransferOptOut: values.dataTransferOptOut,
+                    email: values.email,
+                    name: values.name,
+                    phone: values.phoneNumber!,
+                  },
                 },
-              },
-            })
+              }),
+              submitSaleProfileMutation({
+                variables: {
+                  input: {
+                    id: user.saleProfile!.internalID,
+                    addressLine1: values.userSaleProfile.addressLine1,
+                    addressLine2: values.userSaleProfile.addressLine2,
+                    city: values.userSaleProfile.city,
+                    state: values.userSaleProfile.region,
+                    zip: values.userSaleProfile.postalCode,
+                    country: values.userSaleProfile.country,
+                  },
+                },
+              }),
+            ]
+
+            await Promise.all(mutations)
           } catch (error) {
             // TODO: Since we'll eventually be submitting a few mutations we'll
             // need to funnel gravity errors up to various sub-sections. (Think,
@@ -92,6 +120,15 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
           email
           name
           phone
+          saleProfile {
+            internalID
+            addressLine1
+            addressLine2
+            city
+            state
+            zip
+            country
+          }
         }
       }
     `,

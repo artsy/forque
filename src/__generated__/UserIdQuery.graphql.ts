@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<85ecf19de897d02d0db11b9efd7f89a4>>
+ * @generated SignedSource<<19711d121eb5b02169120d2dab6e5da9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,15 @@ export type UserIdQuery$data = {
     readonly email: string;
     readonly name: string;
     readonly phone: string | null;
+    readonly saleProfile: {
+      readonly internalID: string;
+      readonly addressLine1: string | null;
+      readonly addressLine2: string | null;
+      readonly city: string | null;
+      readonly state: string | null;
+      readonly zip: string | null;
+      readonly country: string | null;
+    } | null;
   } | null;
 };
 export type UserIdQuery = {
@@ -75,6 +84,55 @@ v6 = {
   "kind": "ScalarField",
   "name": "phone",
   "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "addressLine1",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "addressLine2",
+  "storageKey": null
+},
+v9 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "city",
+  "storageKey": null
+},
+v10 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "state",
+  "storageKey": null
+},
+v11 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "zip",
+  "storageKey": null
+},
+v12 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "country",
+  "storageKey": null
+},
+v13 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
 };
 return {
   "fragment": {
@@ -95,7 +153,25 @@ return {
           (v3/*: any*/),
           (v4/*: any*/),
           (v5/*: any*/),
-          (v6/*: any*/)
+          (v6/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "UserSaleProfile",
+            "kind": "LinkedField",
+            "name": "saleProfile",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              (v7/*: any*/),
+              (v8/*: any*/),
+              (v9/*: any*/),
+              (v10/*: any*/),
+              (v11/*: any*/),
+              (v12/*: any*/)
+            ],
+            "storageKey": null
+          }
         ],
         "storageKey": null
       }
@@ -125,26 +201,39 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "id",
+            "concreteType": "UserSaleProfile",
+            "kind": "LinkedField",
+            "name": "saleProfile",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              (v7/*: any*/),
+              (v8/*: any*/),
+              (v9/*: any*/),
+              (v10/*: any*/),
+              (v11/*: any*/),
+              (v12/*: any*/),
+              (v13/*: any*/)
+            ],
             "storageKey": null
-          }
+          },
+          (v13/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "d66b5aae66a0bada093f595ec3607439",
+    "cacheID": "b2dced756ac481f3d28e8e4a30e42800",
     "id": null,
     "metadata": {},
     "name": "UserIdQuery",
     "operationKind": "query",
-    "text": "query UserIdQuery(\n  $userId: String!\n) {\n  user(id: $userId) {\n    internalID\n    dataTransferOptOut\n    email\n    name\n    phone\n    id\n  }\n}\n"
+    "text": "query UserIdQuery(\n  $userId: String!\n) {\n  user(id: $userId) {\n    internalID\n    dataTransferOptOut\n    email\n    name\n    phone\n    saleProfile {\n      internalID\n      addressLine1\n      addressLine2\n      city\n      state\n      zip\n      country\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "749804829e281db09acec5fb87f9d2b3";
+(node as any).hash = "6974cd618d3aaa5c3b5e47e9e0de3d30";
 
 export default node;
