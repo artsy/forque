@@ -1,7 +1,7 @@
 import NextAuth from "next-auth"
 import { UserinfoEndpointHandler } from "next-auth/providers"
 
-const authorizedRoles = ["admin", "customer_support", "team"] // all roles relevant to this app
+const authorizedRoles = ["customer_support", "metadata_admin", "team"] // all roles relevant to this app
 
 export default NextAuth({
   callbacks: {

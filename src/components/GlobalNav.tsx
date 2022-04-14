@@ -31,15 +31,13 @@ export const GlobalNav: FC<GlobalNavProps> = ({ user }) => {
           // Logged in
           <>
             <Item href="/">Home</Item>
-            {(user.roles.includes("admin") ||
-              user.roles.includes("customer_support")) && (
+            {user.roles.includes("customer_support") && (
               <Item href="/users">Users</Item>
             )}
-            {user.roles.includes("admin") && (
+            {user.roles.includes("metadata_admin") && (
               <Item href="/artists/dedupe">Dedupe Artists</Item>
             )}
-            {(user.roles.includes("admin") ||
-              user.roles.includes("customer_support")) && (
+            {user.roles.includes("customer_support") && (
               <Item href="/my-collection">My Collection</Item>
             )}
             {user.roles.includes("team") && (
