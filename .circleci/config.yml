@@ -3,8 +3,8 @@ version: 2.1
 orbs:
   cypress: cypress-io/cypress@1
   hokusai: artsy/hokusai@0.7
-  horizon: artsy/release@0.0.1
-  yarn: artsy/yarn@6.1.0
+  horizon: artsy/release@volatile
+  yarn: artsy/yarn@volatile
 
 not_staging_or_release: &not_staging_or_release
   filters:
