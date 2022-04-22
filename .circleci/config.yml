@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   cypress: cypress-io/cypress@1
-  hokusai: artsy/hokusai@0.7
+  hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
   yarn: artsy/yarn@volatile
 
