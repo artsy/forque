@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -8,6 +7,7 @@ metadata:
     app: {{ project_name }}
     component: web
     layer: application
+    app.kubernetes.io/version: production
 spec:
   strategy:
     rollingUpdate:
@@ -25,65 +25,71 @@ spec:
         app: {{ project_name }}
         component: web
         layer: application
+        app.kubernetes.io/version: production
       name: {{ project_name }}-web
     spec:
       containers:
-        - name: {{ project_name }}-web
-          env:
-            - name: PORT
-              value: "8080"
-            - name: NODE_ENV
-              value: production
-            - name: DATADOG_TRACE_AGENT_HOSTNAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: spec.nodeName
-            - name: NODE_OPTIONS
-              value: "--max_old_space_size=256"
-          envFrom:
-            - configMapRef:
-                name: {{ project_name }}-environment
-          image: {{ project_repo }}:production
-          imagePullPolicy: Always
-          ports:
-            # k8s limits a port name to 15 characters
-            - name: {{ project_name }}-http
-              containerPort: 8080
-          resources:
-            requests:
-              cpu: 200m
-              memory: 256Mi
-            limits:
-              memory: 1Gi
-          readinessProbe:
-            httpGet:
-              port: {{ project_name }}-http
-              path: /api/status
-              httpHeaders:
-                - name: X-Forwarded-Proto
-                  value: https
-            initialDelaySeconds: 10
-            periodSeconds: 10
-            timeoutSeconds: 5
-          lifecycle:
-            preStop:
-              exec:
-                command: ["sh", "-c", "sleep 5"]
+      - name: {{ project_name }}-web
+        env:
+        - name: PORT
+          value: '8080'
+        - name: NODE_ENV
+          value: production
+        - name: DATADOG_TRACE_AGENT_HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: NODE_OPTIONS
+          value: --max_old_space_size=256
+        - name: DD_VERSION
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['app.kubernetes.io/version']
+        envFrom:
+        - configMapRef:
+            name: {{ project_name }}-environment
+        image: {{ project_repo }}:production
+        imagePullPolicy: Always
+        ports:
+        - name: {{ project_name }}-http
+          containerPort: 8080
+        resources:
+          requests:
+            cpu: 200m
+            memory: 256Mi
+          limits:
+            memory: 1Gi
+        readinessProbe:
+          httpGet:
+            port: {{ project_name }}-http
+            path: /api/status
+            httpHeaders:
+            - name: X-Forwarded-Proto
+              value: https
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - sh
+              - -c
+              - sleep 5
       dnsPolicy: ClusterFirst
       dnsConfig:
         options:
-          - name: ndots
-            value: "1"
+        - name: ndots
+          value: '1'
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
-              - matchExpressions:
-                - key: tier
-                  operator: In
-                  values:
-                    - foreground
-
+            - matchExpressions:
+              - key: tier
+                operator: In
+                values:
+                - foreground
 ---
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
@@ -98,7 +104,6 @@ spec:
   minReplicas: 2
   maxReplicas: 6
   targetCPUUtilizationPercentage: 70
-
 ---
 apiVersion: v1
 kind: Service
@@ -111,16 +116,15 @@ metadata:
   namespace: default
 spec:
   ports:
-    - port: 8080
-      protocol: TCP
-      name: http
-      targetPort: {{ project_name }}-http
+  - port: 8080
+    protocol: TCP
+    name: http
+    targetPort: {{ project_name }}-http
   selector:
     app: {{ project_name }}
     layer: application
     component: web
   type: ClusterIP
-
 ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
@@ -129,11 +133,11 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: tools.artsy.net
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              serviceName: {{ project_name }}-web-internal
-              servicePort: http
+  - host: tools.artsy.net
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          serviceName: {{ project_name }}-web-internal
+          servicePort: http

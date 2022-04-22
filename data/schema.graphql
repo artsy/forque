@@ -1511,6 +1511,9 @@ type ArtistRelatedData {
     # Exclude artists the user already follows
     excludeFollowedArtists: Boolean
     first: Int
+
+    # Include featured artists if no results are found
+    includeFallbackArtists: Boolean
     last: Int
   ): ArtistConnection
 }
@@ -3336,6 +3339,7 @@ type CommerceBuyOrder implements CommerceOrder {
     thousand: String = ","
   ): String
   sellerTotalCents: Int
+  shippingRadius: String
   shippingTotal(
     decimal: String = "."
 
@@ -4039,6 +4043,7 @@ type CommerceOfferOrder implements CommerceOrder {
     thousand: String = ","
   ): String
   sellerTotalCents: Int
+  shippingRadius: String
   shippingTotal(
     decimal: String = "."
 
@@ -4233,6 +4238,7 @@ interface CommerceOrder {
     thousand: String = ","
   ): String
   sellerTotalCents: Int
+  shippingRadius: String
   shippingTotal(
     decimal: String = "."
 
@@ -11330,11 +11336,11 @@ type Query {
 
   # Get Algolia configuration
   _unused_gravity_algolia: Algolia!
-  _unused_gravity_categories: [MarketingCollectionCategory!]!
   _unused_gravity_devices(userId: ID!): [Device!]!
+  _unused_gravity_marketingCategories: [MarketingCollectionCategory!]!
 
   # Find a marketing collection by ID or slug
-  _unused_gravity_marketingCollection(id: ID!): MarketingCollection
+  _unused_gravity_marketingCollection(slug: String!): MarketingCollection
 
   # An array of marketing collections. Defaults to returning all available collections if no args are passed
   _unused_gravity_marketingCollections(
