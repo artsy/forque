@@ -1,14 +1,13 @@
 import NextAuth from "next-auth"
 import { UserinfoEndpointHandler } from "next-auth/providers"
-
-const authorizedRoles = ["admin", "customer_support", "team"] // all roles relevant to this app
+import { Role } from "system"
 
 export default NextAuth({
   callbacks: {
     // only allow those with relevant roles to sign in
     signIn: async ({ profile }) => {
       const userRoles = (profile.roles as string[]) || []
-      return authorizedRoles.some((r) => userRoles.includes(r))
+      return Object.values(Role).some((r) => userRoles.includes(r))
     },
     jwt: async ({ token, user, account }) => {
       if (account) {
