@@ -13,7 +13,7 @@ A home for admin apps
 - **Deployment:**
   - PRs from feature branches → main will automatically deploy to staging
   - PRs from staging → release will automatically deploy to production. ([Start a deploy...](https://github.com/artsy/forque/compare/release...staging?expand=1))
-- **Point People:** @anandaroop, @damassi
+- **Point People:** [@anandaroop](https://github.com/anandaroop), [@damassi](https://github.com/damassi)
 
 ## Setup
 
