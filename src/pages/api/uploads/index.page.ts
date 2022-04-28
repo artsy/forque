@@ -2,6 +2,7 @@ import { S3 } from "aws-sdk"
 import type { NextApiRequest, NextApiResponse } from "next"
 import { getSession } from "next-auth/react"
 import type { UserWithAccessToken } from "system"
+import { withSentry } from "@sentry/nextjs"
 
 const s3 = new S3()
 
@@ -33,4 +34,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   )
 }
 
-export default handler
+export default withSentry(handler)
