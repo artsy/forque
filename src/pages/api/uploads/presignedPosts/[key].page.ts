@@ -3,6 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next"
 import { extname } from "path"
 import { getSession } from "next-auth/react"
 import type { UserWithAccessToken } from "system"
+import { withSentry } from "@sentry/nextjs"
 
 const s3 = new S3()
 const BUCKET = `${process.env.AWS_S3_FILES_BUCKET}`
@@ -45,4 +46,4 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   })
 }
 
-export default handler
+export default withSentry(handler)
