@@ -2,12 +2,15 @@
 import { Button, Skeleton, SkeletonText, Spacer, Text } from "@artsy/palette"
 import { HeadObjectOutput } from "aws-sdk/clients/s3"
 import { filesize } from "./utils/filesize"
+import getConfig from "next/config"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { FC, SyntheticEvent, useState } from "react"
 import useSWR from "swr"
 import { Optimizer } from "./components/Optimizer"
 import { CopyToClipboard } from "./components/CopyToClipboard"
+
+const { publicRuntimeConfig } = getConfig()
 
 const UploadPage: FC = () => {
   const router = useRouter()
@@ -17,7 +20,7 @@ const UploadPage: FC = () => {
     fetcher
   )
 
-  const url = `${process.env.NEXT_PUBLIC_FILES_ENDPOINT_URL}/${router.query.key}`
+  const url = `${publicRuntimeConfig.NEXT_PUBLIC_FILES_ENDPOINT_URL}/${router.query.key}`
 
   const [[width, height], setDimensions] = useState([0, 0])
 
