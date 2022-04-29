@@ -14,6 +14,7 @@ const nextConfig = {
   },
   pageExtensions: ["page.tsx", "page.ts"],
   publicRuntimeConfig: {
+    NEXT_PUBLIC_FILES_ENDPOINT_URL: process.env.NEXT_PUBLIC_FILES_ENDPOINT_URL,
     NEXT_PUBLIC_GRAVITY_URL: process.env.NEXT_PUBLIC_GRAVITY_URL,
     NEXT_PUBLIC_METAPHYSICS_URL: process.env.NEXT_PUBLIC_METAPHYSICS_URL,
   },
