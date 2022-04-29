@@ -1,7 +1,10 @@
+import getConfig from "next/config"
+import { getSession } from "next-auth/react"
 import React, { Dispatch, useState } from "react"
 import { Action, RecordStatus, SingleValuedField, State } from "./state"
 import { ArtistCardHeader } from "./ArtistCardHeader"
 import { Artist } from "../types"
+import { UserWithAccessToken } from "system"
 
 interface Props {
   state: State
@@ -33,6 +36,7 @@ export const Confirm: React.FC<Props> = ({ state }) => {
           onClick={async () => {
             const payload = getPayload(state)
             setPayload(payload)
+            postPayload(payload)
           }}
         >
           Ok, proceed
@@ -147,4 +151,25 @@ const ConfirmedField: React.FC<{
       <div className="[min-height:2em]">{fieldValue}</div>
     </div>
   )
+}
+
+const postPayload = async (payload: Payload) => {
+  const { publicRuntimeConfig } = getConfig()
+  const session = await getSession()
+  const user = session?.user as UserWithAccessToken
+  const url = `${publicRuntimeConfig.NEXT_PUBLIC_GRAVITY_URL}/api/v1/artists/merge`
+
+  console.log({ user, payload, url })
+
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-Access-Token": user.accessToken,
+    },
+    body: JSON.stringify(payload),
+  })
+
+  const json = await response.json()
+  console.log(json)
 }
