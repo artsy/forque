@@ -1,3 +1,4 @@
+import { Box, Flex, Text } from "@artsy/palette"
 import { GetServerSideProps } from "next"
 import Head from "next/head"
 import Image from "next/image"
@@ -18,21 +19,19 @@ export default function Home({ me }: HomeProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex flex-col items-center mt-4 sm:mt-12">
-        <h1 className="mb-4 text-xxl">Welcome to Artsy</h1>
-        <p className="mb-4">
-          Hi, <strong>{me?.email}</strong>
-        </p>
-        <div className="relative [width:20em] aspect-[196/129]">
+      <Flex flexDirection="column" alignItems="center" mt={[4, 12]}>
+        <Text variant="xxl">Welcome to Artsy</Text>
+
+        <Text my={4}>Hi, {me?.email}</Text>
+
+        <Box position="relative" width="20em" height="13em">
           <Image
             src="/under.gif"
-            width={196}
-            height={129}
             layout="fill"
             alt="Pikachu jackhammering in front of an Under Construction sign"
           />
-        </div>
-      </div>
+        </Box>
+      </Flex>
     </div>
   )
 }
