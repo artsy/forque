@@ -28,6 +28,7 @@ const sentryWebpackPluginOptions = {
   //   release, url, org, project, authToken, configFile, stripPrefix,
   //   urlPrefix, include, ignore
 
+  // necesary to use authenticat sentry-cli
   authToken: process.env.SENTRY_AUTH_TOKEN,
 
   silent: true, // Suppresses all logs
