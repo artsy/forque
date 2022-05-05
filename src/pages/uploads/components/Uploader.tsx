@@ -19,11 +19,20 @@ export const Uploader: FC<UploaderProps> = ({ file }) => {
 
   const router = useRouter()
 
+  // HACK: Impose no cache for Uploader SWR call to address behavior where an
+  //   existing file is overwritten when performing consecutive uploads using a
+  //   new file with same name during the same browser session.
+  //   Adopted from: https://github.com/vercel/swr/discussions/456#discussioncomment-25602
+  const random = useRef(Date.now())
+
   const { data } = useSWR<PresignedPost>(
-    {
-      url: `/api/uploads/presignedPosts/${encodeURIComponent(key)}`,
-      args: { contentType: file.type },
-    },
+    [
+      {
+        url: `/api/uploads/presignedPosts/${encodeURIComponent(key)}`,
+        args: { contentType: file.type },
+      },
+      random.current,
+    ],
     fetcher
   )
 
