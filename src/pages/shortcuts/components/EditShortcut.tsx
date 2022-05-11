@@ -2,7 +2,7 @@ import { Form, Formik } from "formik"
 import { Button, Input, Spacer, useToasts } from "@artsy/palette"
 import { useState } from "react"
 import * as Yup from "yup"
-import { CreateOrEditShortcut } from "./CreateOrEditShortcut"
+import { CreateOrEditShortcutForm } from "./CreateOrEditShortcutForm"
 import { useSession } from "next-auth/react"
 import { UserWithAccessToken } from "system"
 
@@ -76,7 +76,7 @@ export const EditShortcut = () => {
       </Formik>
       <Spacer my={4} />
       {searchResponse && (
-        <CreateOrEditShortcut
+        <CreateOrEditShortcutForm
           isEditContext={true}
           shortToBeEdited={searchResponse.short}
           longToBeEdited={

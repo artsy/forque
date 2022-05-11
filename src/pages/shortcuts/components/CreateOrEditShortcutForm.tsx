@@ -36,7 +36,7 @@ interface FormValues {
   term: string
 }
 
-export const CreateOrEditShortcut: FC<CreateOrEditShortcutProps> = ({
+export const CreateOrEditShortcutForm: FC<CreateOrEditShortcutProps> = ({
   shortToBeEdited,
   longToBeEdited,
   isEditContext,

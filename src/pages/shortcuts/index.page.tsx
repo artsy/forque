@@ -1,6 +1,6 @@
 import { Tabs, Tab } from "@artsy/palette"
 import { FC } from "react"
-import { CreateOrEditShortcut } from "./components/CreateOrEditShortcut"
+import { CreateOrEditShortcutForm } from "./components/CreateOrEditShortcutForm"
 import { EditShortcut } from "./components/EditShortcut"
 
 const ShortcutsPage: FC = () => {
@@ -8,7 +8,7 @@ const ShortcutsPage: FC = () => {
     <>
       <Tabs>
         <Tab name="Create">
-          <CreateOrEditShortcut isEditContext={false} />
+          <CreateOrEditShortcutForm isEditContext={false} />
         </Tab>
         <Tab name="Edit">
           <EditShortcut />
