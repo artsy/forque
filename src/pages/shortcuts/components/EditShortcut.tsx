@@ -1,26 +1,48 @@
 import { Form, Formik } from "formik"
-import { useGravity } from "hooks"
 import { Button, Input, Spacer, useToasts } from "@artsy/palette"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import * as Yup from "yup"
 import { CreateOrEditShortcut } from "./CreateOrEditShortcut"
+import { useSession } from "next-auth/react"
+import { UserWithAccessToken } from "system"
 
 export const EditShortcut = () => {
+  const session = useSession()
+  const user = session.data?.user as UserWithAccessToken
+  const { accessToken } = user
+
   const { sendToast } = useToasts()
   //TODO: fix this any
   const [searchResponse, setSearchResponse] = useState<any>()
 
-  const { data, error } = useGravity(`shortcut/${searchResponse}`)
+  const handleSubmit = async (searchTerm: string) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_GRAVITY_URL}/api/v1/shortcut/${searchTerm}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-Access-Token": accessToken,
+          },
+        }
+      )
 
-  useEffect(() => {
-    // TODO: probably a better way to do this.
-    if (error && searchResponse) {
-      sendToast({
-        variant: "error",
-        message: "Something went wrong :(",
-      })
+      const json = await response.json()
+
+      if (json.error) {
+        sendToast({
+          variant: "error",
+          message: json.error,
+        })
+        return
+      }
+
+      setSearchResponse(json)
+      return json
+    } catch (error) {
+      console.error(`[FORQUE] error updating shortcut: ${error}`)
     }
-  }, [searchResponse, error, sendToast, data])
+  }
 
   return (
     <>
@@ -32,7 +54,7 @@ export const EditShortcut = () => {
           search: Yup.string().required("url required"),
         })}
         onSubmit={(values) => {
-          setSearchResponse(values.search)
+          handleSubmit(values.search)
         }}
       >
         {({ values, handleChange }) => (
@@ -53,11 +75,15 @@ export const EditShortcut = () => {
         )}
       </Formik>
       <Spacer my={4} />
-      {data && (
+      {searchResponse && (
         <CreateOrEditShortcut
           isEditContext={true}
-          short={data.short}
-          long={data.long.includes("?") ? data.long.split("?")[0] : data.long}
+          shortToBeEdited={searchResponse.short}
+          longToBeEdited={
+            searchResponse.long?.includes("?")
+              ? searchResponse.long?.split("?")[0]
+              : searchResponse.long
+          }
         />
       )}
     </>

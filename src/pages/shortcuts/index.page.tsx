@@ -8,7 +8,7 @@ const ShortcutsPage: FC = () => {
     <>
       <Tabs>
         <Tab name="Create">
-          <CreateOrEditShortcut />
+          <CreateOrEditShortcut isEditContext={false} />
         </Tab>
         <Tab name="Edit">
           <EditShortcut />

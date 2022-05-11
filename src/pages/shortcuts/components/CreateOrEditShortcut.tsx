@@ -4,23 +4,25 @@ import {
   Checkbox,
   Button,
   useToasts,
-  StackableBorderBox,
   Text,
 } from "@artsy/palette"
-import { FC, useEffect, useState } from "react"
+import { FC, useState } from "react"
 import { Form, Formik } from "formik"
 import * as Yup from "yup"
 import { useSession } from "next-auth/react"
 import { UserWithAccessToken } from "system"
+import { returnUTMString } from "../helpers/shortcutHelpers"
 
-interface CreateOrEditShortcutProps extends ShortcutResponse {
-  isEditContext?: boolean
+interface CreateOrEditShortcutProps {
+  isEditContext: boolean
+  shortToBeEdited?: string | undefined
+  longToBeEdited?: string | undefined
 }
 
 interface ShortcutResponse {
-  id?: string
-  short?: string
-  long?: string
+  id: string
+  short: string
+  long: string
 }
 
 interface FormValues {
@@ -29,15 +31,14 @@ interface FormValues {
   showUtm: boolean
   source: string
   medium: string
-  //TODO: Make sure this is the right syntax for the UTM string param
-  campaignName: string
+  campaign: string
   content: string
   term: string
 }
 
 export const CreateOrEditShortcut: FC<CreateOrEditShortcutProps> = ({
-  short,
-  long,
+  shortToBeEdited,
+  longToBeEdited,
   isEditContext,
 }) => {
   const session = useSession()
@@ -47,19 +48,22 @@ export const CreateOrEditShortcut: FC<CreateOrEditShortcutProps> = ({
   const { sendToast } = useToasts()
 
   const [shortcutResponse, setShortcutResponse] = useState<ShortcutResponse>()
-  const [isEdit, setIsEdit] = useState(false)
-
-  useEffect(() => {
-    if (isEditContext) setIsEdit(true)
-  }, [setIsEdit, isEditContext])
 
   const handleSubmit = async (values: FormValues) => {
-    const { long, short, source, medium, campaignName, content, term } = values
+    const {
+      long,
+      short,
+      source,
+      medium,
+      campaign: campaign,
+      content,
+      term,
+    } = values
 
     const utmString = returnUTMString({
       source,
       medium,
-      campaignName,
+      campaign,
       content,
       term,
     })
@@ -67,20 +71,23 @@ export const CreateOrEditShortcut: FC<CreateOrEditShortcutProps> = ({
     const longUrlWithUtm = utmString ? `${long}?${utmString}` : long
 
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_GRAVITY_URL}/api/v1/shortcut`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "X-Access-Token": accessToken,
-          },
-          method: isEditContext ? "PUT" : "POST",
-          body: JSON.stringify({
-            short,
-            long: longUrlWithUtm,
-          }),
-        }
-      )
+      const url = isEditContext
+        ? `${process.env.NEXT_PUBLIC_GRAVITY_URL}/api/v1/shortcut/${shortToBeEdited}`
+        : `${process.env.NEXT_PUBLIC_GRAVITY_URL}/api/v1/shortcut`
+
+      const method = isEditContext ? "PUT" : "POST"
+
+      const response = await fetch(url, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-Access-Token": accessToken,
+        },
+        method,
+        body: JSON.stringify({
+          short,
+          long: longUrlWithUtm,
+        }),
+      })
 
       const json = await response.json()
 
@@ -105,12 +112,12 @@ export const CreateOrEditShortcut: FC<CreateOrEditShortcutProps> = ({
   }
 
   const initialValues: FormValues = {
-    short: short ? short : "",
-    long: long ? long : "",
+    short: shortToBeEdited ?? "",
+    long: longToBeEdited ?? "",
     showUtm: false,
     source: "",
     medium: "",
-    campaignName: "",
+    campaign: "",
     content: "",
     term: "",
   }
@@ -121,7 +128,7 @@ export const CreateOrEditShortcut: FC<CreateOrEditShortcutProps> = ({
         initialValues={{
           ...initialValues,
         }}
-        validationSchema={Yup.object({
+        validationSchema={Yup.object().shape({
           long: Yup.string().required("A target URL is required"),
         })}
         onSubmit={(values) => {
@@ -167,6 +174,7 @@ export const CreateOrEditShortcut: FC<CreateOrEditShortcutProps> = ({
                   type="text"
                   onChange={handleChange}
                   value={values.source}
+                  error={errors.source}
                 />
                 <Spacer my={4} />
                 <Input
@@ -180,11 +188,11 @@ export const CreateOrEditShortcut: FC<CreateOrEditShortcutProps> = ({
                 <Spacer my={4} />
                 <Input
                   placeholder="e.g. gallery-insight, art-basel, auction-sothebys-2022-oct"
-                  title="Campaign Name"
-                  name="campaignName"
+                  title="Campaign"
+                  name="campaign"
                   type="text"
                   onChange={handleChange}
-                  value={values.campaignName}
+                  value={values.campaign}
                 />
                 <Spacer my={4} />
                 <Input
@@ -208,7 +216,7 @@ export const CreateOrEditShortcut: FC<CreateOrEditShortcutProps> = ({
               </>
             )}
             <Spacer my={4} />
-            {isEdit ? (
+            {isEditContext ? (
               <Button type="submit" width="100%">
                 Update
               </Button>
@@ -219,17 +227,15 @@ export const CreateOrEditShortcut: FC<CreateOrEditShortcutProps> = ({
             )}
             <Spacer my={4} />
             {shortcutResponse && (
-              // TODO: Make this better
               <>
-                <StackableBorderBox>
-                  <Text>{shortcutResponse.id}</Text>
-                </StackableBorderBox>
-                <StackableBorderBox>
-                  <Text>{shortcutResponse.short}</Text>
-                </StackableBorderBox>
-                <StackableBorderBox>
-                  <Text>{shortcutResponse.long}</Text>
-                </StackableBorderBox>
+                <Text>ID:</Text>
+                <Text>{shortcutResponse.id}</Text>
+                <Spacer my={2} />
+                <Text>Short:</Text>
+                <Text>{shortcutResponse.short}</Text>
+                <Spacer my={2} />
+                <Text>Long:</Text>
+                <Text>{shortcutResponse.long}</Text>
               </>
             )}
           </Form>
@@ -237,14 +243,4 @@ export const CreateOrEditShortcut: FC<CreateOrEditShortcutProps> = ({
       </Formik>
     </>
   )
-}
-
-const returnUTMString = (utmParams: Record<string, string>): string => {
-  const result = []
-
-  for (const key in utmParams) {
-    if (utmParams[key]) result.push(`${key.toString()}=${utmParams[key]}`)
-  }
-
-  return result.join("&")
 }
