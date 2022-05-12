@@ -127,7 +127,9 @@ export const CreateOrEditShortcutForm: FC<CreateOrEditShortcutProps> = ({
       <Formik
         initialValues={initialValues}
         validationSchema={Yup.object().shape({
-          long: Yup.string().required("A target URL is required"),
+          long: Yup.string()
+            .required("A target URL is required")
+            .url("Must be a valid url"),
           source: Yup.string().when("showUtm", {
             is: true,
             then: Yup.string().required("Source required for utm"),
