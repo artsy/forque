@@ -1,10 +1,16 @@
 import { Form, Formik } from "formik"
-import { Button, Input, Spacer, useToasts } from "@artsy/palette"
+import { Button, Flex, Input, Spacer, useToasts } from "@artsy/palette"
 import { useState } from "react"
 import * as Yup from "yup"
 import { CreateOrEditShortcutForm } from "./CreateOrEditShortcutForm"
 import { useSession } from "next-auth/react"
 import { UserWithAccessToken } from "system"
+
+interface SearchResponse {
+  id: string
+  short: string
+  long: string
+}
 
 export const EditShortcut = () => {
   const session = useSession()
@@ -12,8 +18,8 @@ export const EditShortcut = () => {
   const { accessToken } = user
 
   const { sendToast } = useToasts()
-  //TODO: fix this any
-  const [searchResponse, setSearchResponse] = useState<any>()
+
+  const [searchResponse, setSearchResponse] = useState<SearchResponse>()
 
   const handleSubmit = async (searchTerm: string) => {
     try {
@@ -59,18 +65,21 @@ export const EditShortcut = () => {
       >
         {({ values, handleChange }) => (
           <Form>
-            <Input
-              placeholder="Short URL"
-              title="artsy.net/"
-              name="search"
-              type="text"
-              onChange={handleChange}
-              value={values.search}
-            />
-            <Spacer my={4} />
-            <Button type="submit" width="100%">
-              Find it
-            </Button>
+            <Spacer />
+            <Flex alignItems="flex-end">
+              <Input
+                placeholder="Short URL"
+                title="artsy.net/"
+                name="search"
+                type="text"
+                onChange={handleChange}
+                value={values.search}
+                width="50%"
+              />
+              <Button type="submit" ml={4}>
+                Find it
+              </Button>
+            </Flex>
           </Form>
         )}
       </Formik>

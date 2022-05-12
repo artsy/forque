@@ -5,6 +5,8 @@ import {
   Button,
   useToasts,
   Text,
+  Separator,
+  Flex,
 } from "@artsy/palette"
 import { FC, useState } from "react"
 import { Form, Formik } from "formik"
@@ -50,15 +52,7 @@ export const CreateOrEditShortcutForm: FC<CreateOrEditShortcutProps> = ({
   const [shortcutResponse, setShortcutResponse] = useState<ShortcutResponse>()
 
   const handleSubmit = async (values: FormValues) => {
-    const {
-      long,
-      short,
-      source,
-      medium,
-      campaign: campaign,
-      content,
-      term,
-    } = values
+    const { long, short, source, medium, campaign, content, term } = values
 
     const utmString = returnUTMString({
       source,
@@ -101,7 +95,7 @@ export const CreateOrEditShortcutForm: FC<CreateOrEditShortcutProps> = ({
 
       sendToast({
         variant: "success",
-        message: "Shortcut created",
+        message: isEditContext ? "Shortcut updated" : "Shortcut created",
       })
 
       setShortcutResponse(json)
@@ -125,11 +119,21 @@ export const CreateOrEditShortcutForm: FC<CreateOrEditShortcutProps> = ({
   return (
     <>
       <Formik
-        initialValues={{
-          ...initialValues,
-        }}
+        initialValues={initialValues}
         validationSchema={Yup.object().shape({
           long: Yup.string().required("A target URL is required"),
+          source: Yup.string().when("showUtm", {
+            is: true,
+            then: Yup.string().required("Source required for utm"),
+          }),
+          medium: Yup.string().when("showUtm", {
+            is: true,
+            then: Yup.string().required("Medium required for utm"),
+          }),
+          campaign: Yup.string().when("showUtm", {
+            is: true,
+            then: Yup.string().required("Campaign name required for utm"),
+          }),
         })}
         onSubmit={(values) => {
           handleSubmit(values)
@@ -137,6 +141,12 @@ export const CreateOrEditShortcutForm: FC<CreateOrEditShortcutProps> = ({
       >
         {({ values, handleChange, errors, setFieldValue }) => (
           <Form>
+            {isEditContext && (
+              <>
+                <Spacer my={6} />
+                <Separator my={2} />
+              </>
+            )}
             <Input
               placeholder="Short URL"
               title="artsy.net/"
@@ -144,6 +154,7 @@ export const CreateOrEditShortcutForm: FC<CreateOrEditShortcutProps> = ({
               type="text"
               onChange={handleChange}
               value={values.short}
+              disabled={isEditContext}
             />
             <Spacer my={4} />
             <Input
@@ -184,6 +195,7 @@ export const CreateOrEditShortcutForm: FC<CreateOrEditShortcutProps> = ({
                   type="text"
                   onChange={handleChange}
                   value={values.medium}
+                  error={errors.medium}
                 />
                 <Spacer my={4} />
                 <Input
@@ -193,6 +205,7 @@ export const CreateOrEditShortcutForm: FC<CreateOrEditShortcutProps> = ({
                   type="text"
                   onChange={handleChange}
                   value={values.campaign}
+                  error={errors.campaign}
                 />
                 <Spacer my={4} />
                 <Input
@@ -225,17 +238,33 @@ export const CreateOrEditShortcutForm: FC<CreateOrEditShortcutProps> = ({
                 Create
               </Button>
             )}
-            <Spacer my={4} />
             {shortcutResponse && (
               <>
-                <Text>ID:</Text>
-                <Text>{shortcutResponse.id}</Text>
-                <Spacer my={2} />
-                <Text>Short:</Text>
-                <Text>{shortcutResponse.short}</Text>
-                <Spacer my={2} />
-                <Text>Long:</Text>
-                <Text>{shortcutResponse.long}</Text>
+                <Spacer my={6} />
+                <Flex flexDirection="column" bg="black5" p={4}>
+                  <Flex>
+                    <Text variant="lg" mr={2}>
+                      ID:
+                    </Text>
+                    <Text>{shortcutResponse.id}</Text>
+                  </Flex>
+                  <Spacer my={2} />
+
+                  <Flex>
+                    <Text mr={2} variant="lg">
+                      Short:
+                    </Text>
+                    <Text>{shortcutResponse.short}</Text>
+                  </Flex>
+
+                  <Spacer my={2} />
+                  <Flex>
+                    <Text mr={2} variant="lg">
+                      Long:
+                    </Text>
+                    <Text>{shortcutResponse.long}</Text>
+                  </Flex>
+                </Flex>
               </>
             )}
           </Form>
