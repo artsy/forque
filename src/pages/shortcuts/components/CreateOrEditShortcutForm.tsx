@@ -15,6 +15,7 @@ import { useSession } from "next-auth/react"
 import { UserWithAccessToken } from "system"
 import { returnUTMString } from "../helpers/shortcutHelpers"
 import { useClipboard } from "hooks"
+import getConfig from "next/config"
 
 interface CreateOrEditShortcutProps {
   isEditContext: boolean
@@ -51,6 +52,8 @@ export const CreateOrEditShortcutForm: FC<CreateOrEditShortcutProps> = ({
   const user = session.data?.user as UserWithAccessToken
   const { accessToken } = user
 
+  const { publicRuntimeConfig } = getConfig()
+
   const { sendToast } = useToasts()
   const { copied, handleCopy } = useClipboard({
     value: shortcutUrl,
@@ -71,8 +74,8 @@ export const CreateOrEditShortcutForm: FC<CreateOrEditShortcutProps> = ({
 
     try {
       const url = isEditContext
-        ? `${process.env.NEXT_PUBLIC_GRAVITY_URL}/api/v1/shortcut/${shortToBeEdited}`
-        : `${process.env.NEXT_PUBLIC_GRAVITY_URL}/api/v1/shortcut`
+        ? `${publicRuntimeConfig.NEXT_PUBLIC_GRAVITY_URL}/api/v1/shortcut/${shortToBeEdited}`
+        : `${publicRuntimeConfig.NEXT_PUBLIC_GRAVITY_URL}/api/v1/shortcut`
 
       const method = isEditContext ? "PUT" : "POST"
 
@@ -104,7 +107,9 @@ export const CreateOrEditShortcutForm: FC<CreateOrEditShortcutProps> = ({
       })
 
       setShortcutResponse(json)
-      setShortcutUrl(`${process.env.NEXT_PUBLIC_FORCE_DSN}/${json.short}`)
+      setShortcutUrl(
+        `${publicRuntimeConfig.NEXT_PUBLIC_FORCE_URL}/${json.short}`
+      )
       return json
     } catch (error) {
       console.error(`[FORQUE] error creating shortcut: ${error}`)
