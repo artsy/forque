@@ -14,6 +14,7 @@ import * as Yup from "yup"
 import { useSession } from "next-auth/react"
 import { UserWithAccessToken } from "system"
 import { returnUTMString } from "../helpers/shortcutHelpers"
+import { useClipboard } from "hooks"
 
 interface CreateOrEditShortcutProps {
   isEditContext: boolean
@@ -43,13 +44,17 @@ export const CreateOrEditShortcutForm: FC<CreateOrEditShortcutProps> = ({
   longToBeEdited,
   isEditContext,
 }) => {
+  const [shortcutResponse, setShortcutResponse] = useState<ShortcutResponse>()
+  const [shortcutUrl, setShortcutUrl] = useState("")
+
   const session = useSession()
   const user = session.data?.user as UserWithAccessToken
   const { accessToken } = user
 
   const { sendToast } = useToasts()
-
-  const [shortcutResponse, setShortcutResponse] = useState<ShortcutResponse>()
+  const { copied, handleCopy } = useClipboard({
+    value: shortcutUrl,
+  })
 
   const handleSubmit = async (values: FormValues) => {
     const { long, short, source, medium, campaign, content, term } = values
@@ -99,6 +104,7 @@ export const CreateOrEditShortcutForm: FC<CreateOrEditShortcutProps> = ({
       })
 
       setShortcutResponse(json)
+      setShortcutUrl(`${process.env.NEXT_PUBLIC_FORCE_DSN}/${json.short}`)
       return json
     } catch (error) {
       console.error(`[FORQUE] error creating shortcut: ${error}`)
@@ -238,38 +244,41 @@ export const CreateOrEditShortcutForm: FC<CreateOrEditShortcutProps> = ({
                 Create
               </Button>
             )}
-            {shortcutResponse && (
-              <>
-                <Spacer my={6} />
-                <Flex flexDirection="column" bg="black5" p={4}>
-                  <Flex>
-                    <Text variant="lg" mr={2}>
-                      ID:
-                    </Text>
-                    <Text>{shortcutResponse.id}</Text>
-                  </Flex>
-                  <Spacer my={2} />
-
-                  <Flex>
-                    <Text mr={2} variant="lg">
-                      Short:
-                    </Text>
-                    <Text>{shortcutResponse.short}</Text>
-                  </Flex>
-
-                  <Spacer my={2} />
-                  <Flex>
-                    <Text mr={2} variant="lg">
-                      Long:
-                    </Text>
-                    <Text>{shortcutResponse.long}</Text>
-                  </Flex>
-                </Flex>
-              </>
-            )}
           </Form>
         )}
       </Formik>
+      {shortcutResponse && (
+        <>
+          <Spacer my={6} />
+          <Flex flexDirection="column" bg="black5" p={4}>
+            <Flex>
+              <Text variant="lg" mr={2}>
+                ID:
+              </Text>
+              <Text>{shortcutResponse.id}</Text>
+            </Flex>
+            <Spacer my={2} />
+
+            <Flex>
+              <Text mr={2} variant="lg">
+                Short:
+              </Text>
+              <Text>{shortcutUrl}</Text>
+            </Flex>
+
+            <Spacer my={2} />
+            <Flex>
+              <Text mr={2} variant="lg">
+                Long:
+              </Text>
+              <Text>{shortcutResponse.long}</Text>
+            </Flex>
+          </Flex>
+          <Button mt={1} onClick={handleCopy} variant="secondaryOutline">
+            {copied ? "Copied to Clipboard" : "Copy to Clipboard"}
+          </Button>
+        </>
+      )}
     </>
   )
 }
