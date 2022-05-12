@@ -19,3 +19,5 @@ const ShortcutsPage: FC = () => {
 }
 
 export default ShortcutsPage
+
+export const getServerSideProps = () => ({ props: {} })
