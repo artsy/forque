@@ -27,7 +27,7 @@ export const EditShortcut = () => {
   const handleSubmit = async (searchTerm: string) => {
     try {
       const response = await fetch(
-        `${publicRuntimeConfig.NEXT_PUBLIC_GRAVITY_UR}/api/v1/shortcut/${searchTerm}`,
+        `${publicRuntimeConfig.NEXT_PUBLIC_GRAVITY_URL}/api/v1/shortcut/${searchTerm}`,
         {
           headers: {
             "Content-Type": "application/json",
