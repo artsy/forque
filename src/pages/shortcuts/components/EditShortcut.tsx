@@ -5,6 +5,7 @@ import * as Yup from "yup"
 import { CreateOrEditShortcutForm } from "./CreateOrEditShortcutForm"
 import { useSession } from "next-auth/react"
 import { UserWithAccessToken } from "system"
+import getConfig from "next/config"
 
 interface SearchResponse {
   id: string
@@ -19,12 +20,14 @@ export const EditShortcut = () => {
 
   const { sendToast } = useToasts()
 
+  const { publicRuntimeConfig } = getConfig()
+
   const [searchResponse, setSearchResponse] = useState<SearchResponse>()
 
   const handleSubmit = async (searchTerm: string) => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_GRAVITY_URL}/api/v1/shortcut/${searchTerm}`,
+        `${publicRuntimeConfig.NEXT_PUBLIC_GRAVITY_UR}/api/v1/shortcut/${searchTerm}`,
         {
           headers: {
             "Content-Type": "application/json",
