@@ -44,6 +44,9 @@ export const GlobalNav: FC<GlobalNavProps> = ({ user }) => {
             {isPermitted(user, [Action.list, Action.create], "uploads") && (
               <Item href="/uploads">Uploads</Item>
             )}
+            {isPermitted(user, [Action.create], "shortcuts") && (
+              <Item href="/shortcuts">Shortcuts</Item>
+            )}
             <Item href="#" onClick={() => signOut()}>
               Logout
             </Item>
