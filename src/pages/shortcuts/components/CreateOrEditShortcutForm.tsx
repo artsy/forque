@@ -185,6 +185,7 @@ export const CreateOrEditShortcutForm: FC<CreateOrEditShortcutProps> = ({
                 setFieldValue("showUtm", selected)
               }}
               selected={values.showUtm}
+              data-testid="utmCheckbox"
             >
               Add/Edit UTM tags (optional)
             </Checkbox>
