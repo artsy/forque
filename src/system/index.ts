@@ -10,6 +10,7 @@ export enum Role {
   customer_support = "customer_support",
   metadata_admin = "metadata_admin",
   team = "team",
+  content_manager = "content_manager",
 }
 
 export enum Action {
@@ -17,6 +18,7 @@ export enum Action {
   dedupe,
   create,
   transfer,
+  edit,
 }
 
 // For each _domain_, a map of _actions_ to the authorized _roles_.
@@ -34,6 +36,10 @@ const PERMISSIONS: Record<string, Record<string, Role[]>> = {
   uploads: {
     [Action.list]: [Role.team],
     [Action.create]: [Role.team],
+  },
+  shortcuts: {
+    [Action.create]: [Role.content_manager],
+    [Action.edit]: [Role.content_manager],
   },
 }
 
