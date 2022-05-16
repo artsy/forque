@@ -32,12 +32,12 @@ export const GlobalNav: FC<GlobalNavProps> = ({ user }) => {
           // Logged in
           <>
             <Item href="/">Home</Item>
-            {isPermitted(user, [Action.list], "users") && (
+            {/* {isPermitted(user, [Action.list], "users") && (
               <Item href="/users">Users</Item>
             )}
             {isPermitted(user, [Action.dedupe], "artists") && (
               <Item href="/artists/dedupe">Dedupe Artists</Item>
-            )}
+            )} */}
             {isPermitted(user, [Action.transfer], "my_collection") && (
               <Item href="/my-collection">My Collection</Item>
             )}
@@ -54,7 +54,6 @@ export const GlobalNav: FC<GlobalNavProps> = ({ user }) => {
         ) : (
           // Logged out
           <>
-            <Item href="/">Home</Item>
             <Item href="#" onClick={() => signIn("artsy")}>
               Login
             </Item>
