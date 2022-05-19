@@ -65,7 +65,11 @@ export const assertPermitted = (
 ) => {
   if (!isPermitted(user, [action], domain)) {
     const permittedRoles = PERMISSIONS[domain][action] || []
-    const message = `Unauthorized: ${domain} (${Action[action]}) requires roles: ${permittedRoles}`
+    const message = `Unauthorized: ${domain} (${
+      Action[action]
+    }) requires roles: ${permittedRoles.join(
+      ", "
+    )}. Please contact your product team for assistance.`
     throw new Error(message)
   }
 }
