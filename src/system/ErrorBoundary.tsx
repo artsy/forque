@@ -1,46 +1,52 @@
-import React from "react"
+import React, { ReactNode } from "react"
+import { Text } from "@artsy/palette"
 
-interface ErrorBoundaryState {
-  hasError: boolean
-  error: any
+interface Props {
+  children: ReactNode
 }
 
-export class ErrorBoundary extends React.Component<
-  React.ComponentPropsWithRef<any>,
-  ErrorBoundaryState
-> {
+interface State {
+  hasError: boolean
+  errorMessage: string
+}
+
+export class ErrorBoundary extends React.Component<Props, State> {
   constructor(props: any) {
     super(props)
 
     this.state = {
       hasError: false,
-      error: null,
+      errorMessage: "Something went wrong",
     }
   }
 
-  static getDerivedStateFromError(error: any) {
+  static getDerivedStateFromError(error: Error): Partial<State> {
     return {
       hasError: true,
-      error,
+      errorMessage: error.message,
     }
   }
 
   componentDidCatch(error: any, errorInfo: any) {
+    // TODO: send this to Sentry in addition / instead?
     console.error("[forque] Error:", error, errorInfo)
   }
 
   render() {
-    const { hasError, error, children } = this.props
-
-    if (hasError) {
+    if (this.state.hasError) {
       return (
         <div>
-          <h1>Something went wrong.</h1>
-          <pre>{error}</pre>
+          <Text as="h1" variant="xxl">
+            Error
+          </Text>
+
+          <Text variant="lg" mt={2} color="red100">
+            {this.state.errorMessage}
+          </Text>
         </div>
       )
     }
 
-    return children
+    return this.props.children
   }
 }

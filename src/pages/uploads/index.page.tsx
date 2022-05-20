@@ -1,12 +1,18 @@
 import { AutocompleteInput, Column, GridColumns, Text } from "@artsy/palette"
 import { ListObjectsV2Output } from "aws-sdk/clients/s3"
+import { useSession } from "next-auth/react"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { FC, useState } from "react"
 import useSWR from "swr"
+import { Action, assertPermitted, UserWithAccessToken } from "system"
 import { UploadButton } from "./components/UploadButton"
 
 const UploadsPage: FC = () => {
+  const session = useSession()
+  const user = session.data?.user as UserWithAccessToken
+  assertPermitted(user, Action.create, "uploads")
+
   const router = useRouter()
 
   const [prefix, setPrefix] = useState("")
