@@ -11,7 +11,7 @@ import { UploadButton } from "./components/UploadButton"
 const UploadsPage: FC = () => {
   const session = useSession()
   const user = session.data?.user as UserWithAccessToken
-  assertPermitted(user, Action.create, "uploads")
+  assertPermitted(user, "uploads", Action.create)
 
   const router = useRouter()
 

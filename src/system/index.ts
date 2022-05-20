@@ -15,11 +15,11 @@ export enum Role {
 }
 
 export enum Action {
-  list,
-  dedupe,
-  create,
-  transfer,
-  edit,
+  list = "list",
+  dedupe = "dedup",
+  create = "create",
+  transfer = "tranfer",
+  edit = "edit",
 }
 
 // For each _domain_, a map of _actions_ to the authorized _roles_.
@@ -30,6 +30,7 @@ const PERMISSIONS: Record<string, Record<string, Role[]>> = {
   artists: {
     [Action.dedupe]: [Role.metadata_admin],
     [Action.list]: [Role.metadata_admin],
+    [Action.transfer]: [Role.team],
   },
   my_collection: {
     [Action.transfer]: [Role.customer_support],
@@ -48,29 +49,46 @@ type Domain = keyof typeof PERMISSIONS
 
 export const isPermitted = (
   user: UserWithAccessToken,
-  actions: Action[],
-  domain: Domain
-) => {
-  return actions.some((action) => {
-    const permittedRoles = PERMISSIONS[domain][action] || []
-    return permittedRoles.some((permittedRole) =>
-      user.roles.includes(`${permittedRole}`)
-    )
+  domain: Domain,
+  action?: Action
+): boolean => {
+  const actionPermittedByrole = (action: Action, role: Role): boolean => {
+    return PERMISSIONS[domain][action].includes(role)
+  }
+
+  return user.roles.some((role) => {
+    if (action) return actionPermittedByrole(action, role)
+
+    for (const actionEnum in PERMISSIONS[domain]) {
+      if (actionPermittedByrole(actionEnum, role)) return true
+    }
+    return false
   })
 }
 
 export const assertPermitted = (
   user: UserWithAccessToken,
-  action: Action,
-  domain: Domain
+  domain: Domain,
+  action?: Action
 ) => {
-  if (!isPermitted(user, [action], domain)) {
-    const permittedRoles = PERMISSIONS[domain][action] || []
-    const message = `Unauthorized: ${domain} (${
-      Action[action]
-    }) requires roles: ${permittedRoles.join(
+  if (!isPermitted(user, domain, action)) {
+    const permittedRoles = buildPermittedRoles(domain)
+
+    const message = `Unauthorized: ${domain} requires role(s): ${permittedRoles.join(
       ", "
     )}. Please contact your product team for assistance.`
     throw new Error(message)
   }
+}
+
+const buildPermittedRoles = (domain: Domain): [string] => {
+  const approvedRoles = []
+
+  for (const action in PERMISSIONS[domain]) {
+    PERMISSIONS[domain][action].forEach((role) => {
+      if (!approvedRoles.includes(role)) approvedRoles.push(role)
+    })
+  }
+
+  return approvedRoles
 }

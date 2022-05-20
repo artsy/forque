@@ -9,7 +9,7 @@ import { useSession } from "next-auth/react"
 const ShortcutsPage: FC = () => {
   const session = useSession()
   const user = session.data?.user as UserWithAccessToken
-  assertPermitted(user, Action.create, "shortcuts")
+  assertPermitted(user, "shortcuts", Action.create)
 
   return (
     <>

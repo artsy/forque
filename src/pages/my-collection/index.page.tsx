@@ -8,7 +8,7 @@ import { MyCollectionTransfer } from "./components/MyCollectionTransfer"
 const MyCollectionPage: FC = () => {
   const session = useSession()
   const user = session.data?.user as UserWithAccessToken
-  assertPermitted(user, Action.transfer, "my_collection")
+  assertPermitted(user, "my_collection", Action.transfer)
 
   return (
     <>

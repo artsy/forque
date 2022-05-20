@@ -18,7 +18,7 @@ export type RecentArtist = {
 export default function Page() {
   const session = useSession()
   const user = session.data?.user as UserWithAccessToken
-  assertPermitted(user, Action.list, "artists")
+  assertPermitted(user, "artists", Action.list)
 
   const [page, setPage] = useState<number>(1)
 

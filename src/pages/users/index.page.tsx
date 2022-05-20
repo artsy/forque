@@ -14,7 +14,7 @@ interface UserProps {
 const Users: React.FC<UserProps> = ({ viewer }) => {
   const session = useSession()
   const user = session.data?.user as UserWithAccessToken
-  assertPermitted(user, Action.list, "users")
+  assertPermitted(user, "users", Action.list)
 
   return (
     <>
