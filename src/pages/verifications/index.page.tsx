@@ -1,6 +1,7 @@
 import Head from "next/head"
 import { Tab, Tabs } from "@artsy/palette"
-import { VarificationCreate } from "./components/VerificationCreate"
+import { VerificationsCreate } from "./components/VerificationsCreate"
+import { VerificationsList } from "./components/VerificationsList"
 import { useSession } from "next-auth/react"
 import { Action, assertPermitted, UserWithAccessToken } from "system"
 
@@ -16,9 +17,11 @@ const VerificationsPage: React.FC = () => {
       </Head>
 
       <Tabs>
-        <Tab name="List"></Tab>
+        <Tab name="List">
+          <VerificationsList viewer={viewer} />
+        </Tab>
         <Tab name="Create">
-          <VarificationCreate />
+          <VerificationsCreate />
         </Tab>
       </Tabs>
     </>
