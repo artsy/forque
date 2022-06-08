@@ -22,14 +22,6 @@ export const VerificationsList: React.FC = () => {
     { email }
   )
 
-  const [gotEmail, setGotEmail] = useState(false)
-
-  useEffect(() => {
-    if (query.email !== undefined) {
-      setGotEmail(true)
-    }
-  })
-
   return (
     <>
       <Formik
@@ -37,7 +29,6 @@ export const VerificationsList: React.FC = () => {
           emailInput: "",
         }}
         onSubmit={({ emailInput }) => {
-          setGotEmail(true)
           router.push("/verifications?" + "email=" + emailInput)
         }}
       >
@@ -48,7 +39,7 @@ export const VerificationsList: React.FC = () => {
                 name="emailInput"
                 title="email"
                 type="emailInput"
-                placeholder="Email of the person to be identity verified"
+                placeholder="Email of the person who was identity verified"
                 value={values.emailInput}
                 onChange={handleChange}
               />
@@ -59,7 +50,7 @@ export const VerificationsList: React.FC = () => {
           )
         }}
       </Formik>
-      {gotEmail && <VerificationsTable viewer={viewerData["viewer"]} />}
+        <VerificationsTable viewer={viewerData["viewer"]} />
     </>
   )
 }
