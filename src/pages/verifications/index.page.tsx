@@ -18,7 +18,7 @@ const VerificationsPage: React.FC = () => {
 
       <Tabs>
         <Tab name="List">
-          <VerificationsList viewer={viewer} />
+          <VerificationsList />
         </Tab>
         <Tab name="Create">
           <VerificationsCreate />

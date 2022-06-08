@@ -1,36 +1,26 @@
-import { Button, Column, GridColumns, Input, Text } from "@artsy/palette"
-import Head from "next/head"
-import { fetchRelayData } from "system/relay"
-import { useSession } from "next-auth/react"
-import { GetServerSideProps } from "next"
-import { graphql } from "relay-runtime"
-import { useFragment } from "react-relay"
-import { Action, assertPermitted, UserWithAccessToken } from "system"
+import { Button, Input } from "@artsy/palette"
 import { useRouter } from "next/router"
-import { VerificationsTable } from "./VerificationsTable"
-import { VerificationsList_viewer$key } from "__generated__/VerificationsList_viewer.graphql"
-import { Form, Formik } from "formik"
-import * as Yup from "yup"
 import { useState, useEffect } from "react"
+import { useLazyLoadQuery } from "react-relay"
+import { graphql } from "relay-runtime"
+import { VerificationsTable } from "./VerificationsTable"
+import { Form, Formik } from "formik"
 
-interface VerificationsListProps {
-  viewer: VerificationsList_viewer$key
-}
-
-export const VerificationsList: React.FC<VerificationsListProps> = ({ viewer }) => {
+export const VerificationsList: React.FC = () => {
   const router = useRouter()
-  const { query } = useRouter();
-
+  const query = router.query
   const email = query.email
 
-  const viewerData = useFragment(
+  const viewerData = useLazyLoadQuery(
     graphql`
-      fragment VerificationsList_viewer on Viewer {
-        ...VerificationsTable_viewer
+      query VerificationsListQuery($email: String) {
+        viewer {
+          ...VerificationsTable_viewer
+        }
       }
     `,
-    viewer,
-  );
+    { email }
+  )
 
   const [gotEmail, setGotEmail] = useState(false)
 
@@ -38,7 +28,7 @@ export const VerificationsList: React.FC<VerificationsListProps> = ({ viewer }) 
     if (query.email !== undefined) {
       setGotEmail(true)
     }
-  });
+  })
 
   return (
     <>
@@ -51,34 +41,25 @@ export const VerificationsList: React.FC<VerificationsListProps> = ({ viewer }) 
           router.push("/verifications?" + "email=" + emailInput)
         }}
       >
-        {({
-          values,
-          handleChange,
-        }) => {
+        {({ values, handleChange }) => {
           return (
             <Form>
               <Input
                 name="emailInput"
                 title="email"
                 type="emailInput"
-                placeholder="Verifiee's email"
+                placeholder="Email of the person to be identity verified"
                 value={values.emailInput}
                 onChange={handleChange}
               />
-              <Button
-                type="submit"
-                width="100%"
-                size="medium"
-              >
+              <Button type="submit" width="100%" size="medium">
                 Search
               </Button>
             </Form>
           )
         }}
       </Formik>
-      {gotEmail && (
-        <VerificationsTable viewer={viewerData} email={query.email} />
-      )}
+      {gotEmail && <VerificationsTable viewer={viewerData["viewer"]} />}
     </>
   )
 }

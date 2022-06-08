@@ -2,21 +2,17 @@ import { Spacer, Text } from "@artsy/palette"
 import { ListPagination } from "components/ListPagination"
 import { Table } from "components/Table"
 import { useExtractNodes } from "hooks"
-import { useRouter } from "next/router"
 import { Suspense } from "react"
 import { graphql, useRefetchableFragment } from "react-relay"
 import { VerificationsTable_viewer$key } from "__generated__/VerificationsTable_viewer.graphql"
 
 interface VerificationsTableProps {
   viewer: VerificationsTable_viewer$key
-  email: String
 }
 
-export const VerificationsTable: React.FC<VerificationsTableProps> = ({ viewer }) => {
-  const router = useRouter()
-  const { query } = useRouter();
-  const email = query.email
-
+export const VerificationsTable: React.FC<VerificationsTableProps> = ({
+  viewer,
+}) => {
   const [viewerData, refetch] = useRefetchableFragment(
     graphql`
       fragment VerificationsTable_viewer on Viewer
@@ -26,7 +22,6 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = ({ viewer }
         last: { type: "Int" }
         after: { type: "String" }
         before: { type: "String" }
-        email: { type: "String", defaultValue: email }
       ) {
         identityVerificationsConnection(
           first: $first
@@ -42,8 +37,8 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = ({ viewer }
           pageCursors {
             ...ListPagination_pageCursors
           }
-          edges{
-            node{
+          edges {
+            node {
               internalID
               state
             }
@@ -51,16 +46,19 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = ({ viewer }
         }
       }
     `,
-    viewer,
+    viewer
   )
 
-  const verifications = useExtractNodes(viewerData.identityVerificationsConnection)
+  const verifications = useExtractNodes(
+    viewerData.identityVerificationsConnection
+  )
 
   if (!verifications.length) {
     return null
   }
 
-  const showPagination = !!viewerData.identityVerificationsConnection?.pageCursors
+  const showPagination =
+    !!viewerData.identityVerificationsConnection?.pageCursors
 
   return (
     <>

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9597aaad4022496156d3f506f8bda766>>
+ * @generated SignedSource<<3c80fd23e88c36917dd5cb7396570ad8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,35 +10,44 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type verificationsPageQuery$variables = {};
-export type verificationsPageQuery$data = {
+export type VerificationsListQuery$variables = {
+  email?: string | null;
+};
+export type VerificationsListQuery$data = {
   readonly viewer: {
-    readonly " $fragmentSpreads": FragmentRefs<"VerificationsList_viewer">;
+    readonly " $fragmentSpreads": FragmentRefs<"VerificationsTable_viewer">;
   } | null;
 };
-export type verificationsPageQuery = {
-  variables: verificationsPageQuery$variables;
-  response: verificationsPageQuery$data;
+export type VerificationsListQuery = {
+  variables: VerificationsListQuery$variables;
+  response: VerificationsListQuery$data;
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = {
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "email"
+  }
+],
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v1 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "page",
   "storageKey": null
 },
-v2 = [
-  (v0/*: any*/),
+v3 = [
   (v1/*: any*/),
+  (v2/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -49,10 +58,10 @@ v2 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "verificationsPageQuery",
+    "name": "VerificationsListQuery",
     "selections": [
       {
         "alias": null,
@@ -65,7 +74,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "VerificationsList_viewer"
+            "name": "VerificationsTable_viewer"
           }
         ],
         "storageKey": null
@@ -76,9 +85,9 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "verificationsPageQuery",
+    "name": "VerificationsListQuery",
     "selections": [
       {
         "alias": null,
@@ -92,9 +101,9 @@ return {
             "alias": null,
             "args": [
               {
-                "kind": "Literal",
+                "kind": "Variable",
                 "name": "email",
-                "value": "foo@bar.com"
+                "variableName": "email"
               },
               {
                 "kind": "Literal",
@@ -147,7 +156,7 @@ return {
                     "kind": "LinkedField",
                     "name": "around",
                     "plural": true,
-                    "selections": (v2/*: any*/),
+                    "selections": (v3/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -157,7 +166,7 @@ return {
                     "kind": "LinkedField",
                     "name": "first",
                     "plural": false,
-                    "selections": (v2/*: any*/),
+                    "selections": (v3/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -167,7 +176,7 @@ return {
                     "kind": "LinkedField",
                     "name": "last",
                     "plural": false,
-                    "selections": (v2/*: any*/),
+                    "selections": (v3/*: any*/),
                     "storageKey": null
                   },
                   {
@@ -178,8 +187,8 @@ return {
                     "name": "previous",
                     "plural": false,
                     "selections": [
-                      (v0/*: any*/),
-                      (v1/*: any*/)
+                      (v1/*: any*/),
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -230,7 +239,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "identityVerificationsConnection(email:\"foo@bar.com\",first:20)"
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -238,16 +247,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b5858e6fa950879427f71b30dfcce36c",
+    "cacheID": "a46a89d90c30bd4aca6ad016572fbe7d",
     "id": null,
     "metadata": {},
-    "name": "verificationsPageQuery",
+    "name": "VerificationsListQuery",
     "operationKind": "query",
-    "text": "query verificationsPageQuery {\n  viewer {\n    ...VerificationsList_viewer\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment VerificationsList_viewer on Viewer {\n  ...VerificationsTable_viewer_47vGaz\n}\n\nfragment VerificationsTable_viewer_47vGaz on Viewer {\n  identityVerificationsConnection(first: 20, email: \"foo@bar.com\") {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        state\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query VerificationsListQuery(\n  $email: String\n) {\n  viewer {\n    ...VerificationsTable_viewer\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment VerificationsTable_viewer on Viewer {\n  identityVerificationsConnection(first: 20, email: $email) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        state\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c3e5937c34021c6d3af34e0aefae62d1";
+(node as any).hash = "9600213ad474d4e614398dea0237a657";
 
 export default node;
