@@ -1,6 +1,5 @@
 import { Button, Input } from "@artsy/palette"
 import { useRouter } from "next/router"
-import { useState, useEffect } from "react"
 import { useLazyLoadQuery } from "react-relay"
 import { graphql } from "relay-runtime"
 import { Form, Formik } from "formik"
@@ -20,7 +19,7 @@ export const VerificationsList: React.FC = () => {
       }
     `,
     { email },
-    { skip: true }
+    { fetchPolicy: !email ? "store-only" : "store-or-network" }
   )
 
   return (
@@ -51,7 +50,7 @@ export const VerificationsList: React.FC = () => {
           )
         }}
       </Formik>
-        <VerificationsTable viewer={viewerData["viewer"]} />
+      {email && <VerificationsTable viewer={viewerData["viewer"]} />}
     </>
   )
 }
