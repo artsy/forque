@@ -3,8 +3,8 @@ import { useRouter } from "next/router"
 import { useState, useEffect } from "react"
 import { useLazyLoadQuery } from "react-relay"
 import { graphql } from "relay-runtime"
-import { VerificationsTable } from "./VerificationsTable"
 import { Form, Formik } from "formik"
+import { VerificationsTable } from "./VerificationsTable"
 
 export const VerificationsList: React.FC = () => {
   const router = useRouter()

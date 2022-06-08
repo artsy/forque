@@ -79,6 +79,7 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = ({
             },
           ]}
           data={verifications}
+          onRowClick={(row) => {}}
         />
       </Suspense>
 
