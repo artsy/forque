@@ -19,7 +19,8 @@ export const VerificationsList: React.FC = () => {
         }
       }
     `,
-    { email }
+    { email },
+    { skip: true }
   )
 
   return (
