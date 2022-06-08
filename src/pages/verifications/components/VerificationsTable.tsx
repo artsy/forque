@@ -29,7 +29,7 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
           last: $last
           after: $after
           before: $before
-          email: $email
+          userId: $email
         ) {
           pageInfo {
             hasNextPage
@@ -42,6 +42,17 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
             node {
               internalID
               state
+              scanReferences {
+                extractedFirstName
+                extractedLastName
+                result
+                finishedAt
+                extractedIdFailReason
+                extractedSimilarityFailReason
+                jumioID
+                id
+                internalID
+              }
             }
           }
         }
@@ -83,7 +94,7 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
             },
           ]}
           data={verifications}
-          onRowClick={}
+          onRowClick={(row) => {}}
         />
       </Suspense>
 

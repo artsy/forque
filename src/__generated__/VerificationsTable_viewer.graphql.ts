@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ca0a5912538ff317769ea0479ef30028>>
+ * @generated SignedSource<<e8e25fc71df5c66ffacf87566eaad979>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,17 @@ export type VerificationsTable_viewer$data = {
       readonly node: {
         readonly internalID: string;
         readonly state: string;
+        readonly scanReferences: ReadonlyArray<{
+          readonly extractedFirstName: string | null;
+          readonly extractedLastName: string | null;
+          readonly result: string | null;
+          readonly finishedAt: string | null;
+          readonly extractedIdFailReason: string | null;
+          readonly extractedSimilarityFailReason: string | null;
+          readonly jumioID: string;
+          readonly id: string;
+          readonly internalID: string;
+        } | null> | null;
       } | null;
     } | null> | null;
   } | null;
@@ -33,7 +44,15 @@ export type VerificationsTable_viewer$key = {
   readonly " $fragmentSpreads": FragmentRefs<"VerificationsTable_viewer">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -87,11 +106,6 @@ const node: ReaderFragment = {
         },
         {
           "kind": "Variable",
-          "name": "email",
-          "variableName": "email"
-        },
-        {
-          "kind": "Variable",
           "name": "first",
           "variableName": "first"
         },
@@ -99,6 +113,11 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "last",
           "variableName": "last"
+        },
+        {
+          "kind": "Variable",
+          "name": "userId",
+          "variableName": "email"
         }
       ],
       "concreteType": "IdentityVerificationConnection",
@@ -163,18 +182,80 @@ const node: ReaderFragment = {
               "name": "node",
               "plural": false,
               "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "internalID",
-                  "storageKey": null
-                },
+                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
                   "name": "state",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "IdentityVerificationScanReference",
+                  "kind": "LinkedField",
+                  "name": "scanReferences",
+                  "plural": true,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "extractedFirstName",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "extractedLastName",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "result",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "finishedAt",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "extractedIdFailReason",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "extractedSimilarityFailReason",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "jumioID",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "id",
+                      "storageKey": null
+                    },
+                    (v0/*: any*/)
+                  ],
                   "storageKey": null
                 }
               ],
@@ -190,7 +271,8 @@ const node: ReaderFragment = {
   "type": "Viewer",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "f88d43aacbde543d11c70e22104c8812";
+(node as any).hash = "1eb440441678f50b951d58110378da81";
 
 export default node;

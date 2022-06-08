@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3c80fd23e88c36917dd5cb7396570ad8>>
+ * @generated SignedSource<<52550605387aded14ae34306b04875ad>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -55,7 +55,21 @@ v3 = [
     "name": "isCurrent",
     "storageKey": null
   }
-];
+],
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -101,14 +115,14 @@ return {
             "alias": null,
             "args": [
               {
-                "kind": "Variable",
-                "name": "email",
-                "variableName": "email"
-              },
-              {
                 "kind": "Literal",
                 "name": "first",
                 "value": 20
+              },
+              {
+                "kind": "Variable",
+                "name": "userId",
+                "variableName": "email"
               }
             ],
             "concreteType": "IdentityVerificationConnection",
@@ -211,13 +225,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "internalID",
-                        "storageKey": null
-                      },
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -228,10 +236,66 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "kind": "ScalarField",
-                        "name": "id",
+                        "concreteType": "IdentityVerificationScanReference",
+                        "kind": "LinkedField",
+                        "name": "scanReferences",
+                        "plural": true,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "extractedFirstName",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "extractedLastName",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "result",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "finishedAt",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "extractedIdFailReason",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "extractedSimilarityFailReason",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "jumioID",
+                            "storageKey": null
+                          },
+                          (v5/*: any*/),
+                          (v4/*: any*/)
+                        ],
                         "storageKey": null
-                      }
+                      },
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -247,12 +311,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a46a89d90c30bd4aca6ad016572fbe7d",
+    "cacheID": "ba70a801e1e019bf0db6bf39c8aeb52e",
     "id": null,
     "metadata": {},
     "name": "VerificationsListQuery",
     "operationKind": "query",
-    "text": "query VerificationsListQuery(\n  $email: String\n) {\n  viewer {\n    ...VerificationsTable_viewer\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment VerificationsTable_viewer on Viewer {\n  identityVerificationsConnection(first: 20, email: $email) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        state\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query VerificationsListQuery(\n  $email: String\n) {\n  viewer {\n    ...VerificationsTable_viewer\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment VerificationsTable_viewer on Viewer {\n  identityVerificationsConnection(first: 20, userId: $email) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        internalID\n        state\n        scanReferences {\n          extractedFirstName\n          extractedLastName\n          result\n          finishedAt\n          extractedIdFailReason\n          extractedSimilarityFailReason\n          jumioID\n          id\n          internalID\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
