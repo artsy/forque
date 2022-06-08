@@ -51,7 +51,9 @@ export const VerificationsList: React.FC = () => {
           )
         }}
       </Formik>
-      {email && <VerificationsTable viewer={viewerData["viewer"]} />}
+      {email && (
+        <VerificationsTable viewer={viewerData["viewer"]} email={email} />
+      )}
     </>
   )
 }

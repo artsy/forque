@@ -8,11 +8,12 @@ import { VerificationsTable_viewer$key } from "__generated__/VerificationsTable_
 
 interface VerificationsTableProps {
   viewer: VerificationsTable_viewer$key
+  email: string
 }
 
-export const VerificationsTable: React.FC<VerificationsTableProps> = ({
-  viewer,
-}) => {
+export const VerificationsTable: React.FC<VerificationsTableProps> = (
+  props
+) => {
   const [viewerData, refetch] = useRefetchableFragment(
     graphql`
       fragment VerificationsTable_viewer on Viewer
@@ -46,7 +47,7 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = ({
         }
       }
     `,
-    viewer
+    props.viewer
   )
 
   const verifications = useExtractNodes(
@@ -63,7 +64,10 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = ({
   return (
     <>
       <Text variant="xl" mb={4}>
-        verifications
+        <Spacer my={20} />
+        Identity Verifications of:
+        <Spacer my={20} />
+        {props.email}
       </Text>
 
       <Suspense fallback={null}>
@@ -79,7 +83,7 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = ({
             },
           ]}
           data={verifications}
-          onRowClick={(row) => {}}
+          onRowClick={}
         />
       </Suspense>
 
