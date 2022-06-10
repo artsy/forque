@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<94e3ac013e863a8aed24d0ea5670bf39>>
+ * @generated SignedSource<<e251f1b0f9477a77bbcd831ba14ca797>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -172,13 +172,13 @@ return {
             "args": [
               (v1/*: any*/),
               (v2/*: any*/),
-              (v3/*: any*/),
-              (v4/*: any*/),
               {
                 "kind": "Variable",
-                "name": "userId",
+                "name": "email",
                 "variableName": "email"
-              }
+              },
+              (v3/*: any*/),
+              (v4/*: any*/)
             ],
             "concreteType": "IdentityVerificationConnection",
             "kind": "LinkedField",
@@ -409,16 +409,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "115931994cef8c1894cc91e3f9ab2e6c",
+    "cacheID": "4ba6f185be3fab64dee3ad5c66fc4c59",
     "id": null,
     "metadata": {},
     "name": "VerificationsTableQuery",
     "operationKind": "query",
-    "text": "query VerificationsTableQuery(\n  $after: String\n  $before: String\n  $email: String\n  $first: Int = 20\n  $last: Int\n) {\n  viewer {\n    ...VerificationsTable_viewer_pbnwq\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment VerificationsTable_viewer_pbnwq on Viewer {\n  identityVerificationsConnection(first: $first, last: $last, after: $after, before: $before, userId: $email) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        createdAt\n        internalID\n        state\n        scanReferences {\n          createdAt\n          extractedFirstName\n          extractedLastName\n          extractedIdFailReason\n          extractedSimilarityFailReason\n          finishedAt\n          id\n          internalID\n          jumioID\n          result\n        }\n        overrides {\n          createdAt\n          newState\n          oldState\n          reason\n          userID\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query VerificationsTableQuery(\n  $after: String\n  $before: String\n  $email: String\n  $first: Int = 20\n  $last: Int\n) {\n  viewer {\n    ...VerificationsTable_viewer_pbnwq\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment VerificationsTable_viewer_pbnwq on Viewer {\n  identityVerificationsConnection(first: $first, last: $last, after: $after, before: $before, email: $email) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        createdAt\n        internalID\n        state\n        scanReferences {\n          createdAt\n          extractedFirstName\n          extractedLastName\n          extractedIdFailReason\n          extractedSimilarityFailReason\n          finishedAt\n          id\n          internalID\n          jumioID\n          result\n        }\n        overrides {\n          createdAt\n          newState\n          oldState\n          reason\n          userID\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "8d6e7242278c4e33e85eb41a9a4493a5";
+(node as any).hash = "458d665edd22a4a913f0898415a76a89";
 
 export default node;

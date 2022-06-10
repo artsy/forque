@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2356e2b7bac23066f78a9d874ed978ed>>
+ * @generated SignedSource<<552ba3a63f9da5700c8c180a7f08d821>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -122,14 +122,14 @@ return {
             "alias": null,
             "args": [
               {
+                "kind": "Variable",
+                "name": "email",
+                "variableName": "email"
+              },
+              {
                 "kind": "Literal",
                 "name": "first",
                 "value": 20
-              },
-              {
-                "kind": "Variable",
-                "name": "userId",
-                "variableName": "email"
               }
             ],
             "concreteType": "IdentityVerificationConnection",
@@ -361,12 +361,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "963d3e433e9289652fe2b03ce58a93a6",
+    "cacheID": "a52804ccdedabf9f48f2dbdab9dbe513",
     "id": null,
     "metadata": {},
     "name": "VerificationsListQuery",
     "operationKind": "query",
-    "text": "query VerificationsListQuery(\n  $email: String\n) {\n  viewer {\n    ...VerificationsTable_viewer\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment VerificationsTable_viewer on Viewer {\n  identityVerificationsConnection(first: 20, userId: $email) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        createdAt\n        internalID\n        state\n        scanReferences {\n          createdAt\n          extractedFirstName\n          extractedLastName\n          extractedIdFailReason\n          extractedSimilarityFailReason\n          finishedAt\n          id\n          internalID\n          jumioID\n          result\n        }\n        overrides {\n          createdAt\n          newState\n          oldState\n          reason\n          userID\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query VerificationsListQuery(\n  $email: String\n) {\n  viewer {\n    ...VerificationsTable_viewer\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment VerificationsTable_viewer on Viewer {\n  identityVerificationsConnection(first: 20, email: $email) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        createdAt\n        internalID\n        state\n        scanReferences {\n          createdAt\n          extractedFirstName\n          extractedLastName\n          extractedIdFailReason\n          extractedSimilarityFailReason\n          finishedAt\n          id\n          internalID\n          jumioID\n          result\n        }\n        overrides {\n          createdAt\n          newState\n          oldState\n          reason\n          userID\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

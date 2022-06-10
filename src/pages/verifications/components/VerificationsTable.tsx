@@ -31,7 +31,7 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
           last: $last
           after: $after
           before: $before
-          userId: $email
+          email: $email
         ) {
           pageInfo {
             hasNextPage
