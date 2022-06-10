@@ -94,7 +94,13 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
             },
           ]}
           data={verifications}
-          onRowClick={(row) => {}}
+          renderExpandedRow={(row) => {
+            console.log(row)
+            return <div>ive expanded!!!</div>
+          }}
+          onRowClick={(row) => {
+            row.toggleRowExpanded()
+          }}
         />
       </Suspense>
 
