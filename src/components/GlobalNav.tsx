@@ -32,6 +32,7 @@ export const GlobalNav: FC<GlobalNavProps> = ({ user }) => {
           // Logged in
           <>
             <Item href="/">Home</Item>
+            <Item href="/feature-flags">Feature Flags</Item>
             {/* {isPermitted(user, [Action.list], "users") && (
               <Item href="/users">Users</Item>
             )}
