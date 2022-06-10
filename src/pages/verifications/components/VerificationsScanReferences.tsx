@@ -1,24 +1,16 @@
-import { useRouter } from "next/router"
-import { useLazyLoadQuery } from "react-relay"
-import { graphql } from "relay-runtime"
-import { Form, Formik } from "formik"
-import { VerificationsTable } from "./VerificationsTable"
-import { VerificationsListQuery } from "__generated__/VerificationsListQuery.graphql"
+import { Spacer } from "@artsy/palette"
 import { Table } from "components/Table"
-import { Button, Input, Spacer, Text } from "@artsy/palette"
 
-export const VerificationsScanReferences: React.FC = (
-  props
-) => {
+export const VerificationsScanReferences: React.FC = (props) => {
   const scanReferences = props.scanReferences
+
+  const onRowClick = () => {
+    // do nothing
+  }
 
   return (
     <>
-      <Spacer my={20} />
-      <Text>
-        Scan References
-      </Text>
-
+      Scan References
       <Table
         columns={[
           {
@@ -59,8 +51,9 @@ export const VerificationsScanReferences: React.FC = (
           },
         ]}
         data={scanReferences}
-        onRowClick={() => {}}
+        onRowClick={onRowClick}
       />
+      <Spacer my={2} />
     </>
   )
 }

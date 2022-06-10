@@ -1,32 +1,25 @@
-import { Button, Input, Spacer, Text } from "@artsy/palette"
-import { useRouter } from "next/router"
-import { useLazyLoadQuery } from "react-relay"
-import { graphql } from "relay-runtime"
-import { Form, Formik } from "formik"
-import { VerificationsTable } from "./VerificationsTable"
-import { VerificationsListQuery } from "__generated__/VerificationsListQuery.graphql"
+import { Spacer } from "@artsy/palette"
 import { Table } from "components/Table"
 
-export const VerificationsOverrides: React.FC = (
-  props
-) => {
-  const overrides= props.overrides
+export const VerificationsOverrides: React.FC = (props) => {
+  const overrides = props.overrides
+
+  const onRowClick = () => {
+    // do nothing
+  }
 
   return (
     <>
-      <Spacer my={20} />
-      <Text>
-        Overrides
-      </Text>
+      Overrides
       <Table
         columns={[
           {
-            Header: "Admin Email",
+            Header: "Admin User ID",
             accessor: "userID",
           },
           {
             Header: "Created At",
-            accessor: "created_at",
+            accessor: "createdAt",
           },
           {
             Header: "Old State",
@@ -42,8 +35,9 @@ export const VerificationsOverrides: React.FC = (
           },
         ]}
         data={overrides}
-        onRowClick={() => {}}
+        onRowClick={onRowClick}
       />
+      <Spacer my={2} />
     </>
   )
 }

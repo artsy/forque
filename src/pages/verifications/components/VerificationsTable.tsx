@@ -5,10 +5,8 @@ import { useExtractNodes } from "hooks"
 import { Suspense } from "react"
 import { graphql, useRefetchableFragment } from "react-relay"
 import { VerificationsTable_viewer$key } from "__generated__/VerificationsTable_viewer.graphql"
-import { VerificationsScanReferences } from "./VerificationsScanReferences"
-import { VerificationsOverrides } from "./VerificationsOverrides"
 import { VerificationsDetails } from "./VerificationsDetails"
-import styled from 'styled-components'
+import styled from "styled-components"
 
 interface VerificationsTableProps {
   viewer: VerificationsTable_viewer$key
@@ -44,20 +42,22 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
           }
           edges {
             node {
+              createdAt
               internalID
               state
               scanReferences {
+                createdAt
                 extractedFirstName
                 extractedLastName
-                result
-                finishedAt
                 extractedIdFailReason
                 extractedSimilarityFailReason
-                jumioID
+                finishedAt
                 id
                 internalID
+                jumioID
+                result
               }
-              overrides{
+              overrides {
                 createdAt
                 newState
                 oldState
@@ -91,10 +91,9 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
   `
   return (
     <>
+      <Spacer my={2} />
+
       <Text variant="xl" mb={4}>
-        <Spacer my={2} />
-        Identity Verifications of:
-        <Spacer my={2} />
         {props.email}
       </Text>
 
@@ -103,20 +102,23 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
           <Table
             columns={[
               {
-                Header: "internalID",
+                Header: "Verification ID",
                 accessor: "internalID",
               },
               {
-                Header: "state",
+                Header: "Created At",
+                accessor: "createdAt",
+              },
+              {
+                Header: "State",
                 accessor: "state",
               },
             ]}
             data={verifications}
             renderExpandedRow={(row) => {
-              console.log(row)
               return (
                 <>
-                  <VerificationsDetails row={row}/>
+                  <VerificationsDetails row={row} />
                 </>
               )
             }}
