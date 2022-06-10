@@ -4,13 +4,14 @@ import { useLazyLoadQuery } from "react-relay"
 import { graphql } from "relay-runtime"
 import { Form, Formik } from "formik"
 import { VerificationsTable } from "./VerificationsTable"
+import { VerificationsListQuery } from "__generated__/VerificationsListQuery.graphql"
 
 export const VerificationsList: React.FC = () => {
   const router = useRouter()
   const query = router.query
-  const email = query.email
+  const email = query.email as string
 
-  const viewerData = useLazyLoadQuery(
+  const viewerData = useLazyLoadQuery<VerificationsListQuery>(
     graphql`
       query VerificationsListQuery($email: String) {
         viewer {
@@ -51,8 +52,9 @@ export const VerificationsList: React.FC = () => {
           )
         }}
       </Formik>
+
       {email && (
-        <VerificationsTable viewer={viewerData["viewer"]} email={email} />
+        <VerificationsTable viewer={viewerData.viewer!} email={email} />
       )}
     </>
   )
