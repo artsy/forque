@@ -42,6 +42,7 @@ export const VerificationsOverrides: React.FC = (
           },
         ]}
         data={overrides}
+        onRowClick={() => {}}
       />
     </>
   )

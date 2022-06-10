@@ -59,6 +59,7 @@ export const VerificationsScanReferences: React.FC = (
           },
         ]}
         data={scanReferences}
+        onRowClick={() => {}}
       />
     </>
   )
