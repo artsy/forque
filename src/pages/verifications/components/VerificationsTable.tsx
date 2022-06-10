@@ -1,4 +1,4 @@
-import { Spacer, Text } from "@artsy/palette"
+import { Box, Spacer, Text } from "@artsy/palette"
 import { ListPagination } from "components/ListPagination"
 import { Table } from "components/Table"
 import { useExtractNodes } from "hooks"
@@ -7,6 +7,8 @@ import { graphql, useRefetchableFragment } from "react-relay"
 import { VerificationsTable_viewer$key } from "__generated__/VerificationsTable_viewer.graphql"
 import { VerificationsScanReferences } from "./VerificationsScanReferences"
 import { VerificationsOverrides } from "./VerificationsOverrides"
+import { VerificationsDetails } from "./VerificationsDetails"
+import styled from 'styled-components'
 
 interface VerificationsTableProps {
   viewer: VerificationsTable_viewer$key
@@ -81,41 +83,48 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
   const showPagination =
     !!viewerData.identityVerificationsConnection?.pageCursors
 
+  const StyledBox = styled(Box)`
+    td {
+      padding-bottom:1%;
+    }
+  }
+  `
   return (
     <>
       <Text variant="xl" mb={4}>
-        <Spacer my={20} />
+        <Spacer my={2} />
         Identity Verifications of:
-        <Spacer my={20} />
+        <Spacer my={2} />
         {props.email}
       </Text>
 
       <Suspense fallback={null}>
-        <Table
-          columns={[
-            {
-              Header: "internalID",
-              accessor: "internalID",
-            },
-            {
-              Header: "state",
-              accessor: "state",
-            },
-          ]}
-          data={verifications}
-          renderExpandedRow={(row) => {
-            console.log(row)
-            return (
-              <>
-                <VerificationsScanReferences scanReferences={row.original.scanReferences} />
-                <VerificationsOverrides overrides={row.original.overrides} />
-              </>
-            )
-          }}
-          onRowClick={(row) => {
-            row.toggleRowExpanded()
-          }}
-        />
+        <StyledBox>
+          <Table
+            columns={[
+              {
+                Header: "internalID",
+                accessor: "internalID",
+              },
+              {
+                Header: "state",
+                accessor: "state",
+              },
+            ]}
+            data={verifications}
+            renderExpandedRow={(row) => {
+              console.log(row)
+              return (
+                <>
+                  <VerificationsDetails row={row}/>
+                </>
+              )
+            }}
+            onRowClick={(row) => {
+              row.toggleRowExpanded()
+            }}
+          />
+        </StyledBox>
       </Suspense>
 
       {showPagination && (
