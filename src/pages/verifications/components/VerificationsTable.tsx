@@ -5,6 +5,8 @@ import { useExtractNodes } from "hooks"
 import { Suspense } from "react"
 import { graphql, useRefetchableFragment } from "react-relay"
 import { VerificationsTable_viewer$key } from "__generated__/VerificationsTable_viewer.graphql"
+import { VerificationsScanReferences } from "./VerificationsScanReferences"
+import { VerificationsOverrides } from "./VerificationsOverrides"
 
 interface VerificationsTableProps {
   viewer: VerificationsTable_viewer$key
@@ -53,6 +55,13 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
                 id
                 internalID
               }
+              overrides{
+                createdAt
+                newState
+                oldState
+                reason
+                userID
+              }
             }
           }
         }
@@ -96,7 +105,12 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
           data={verifications}
           renderExpandedRow={(row) => {
             console.log(row)
-            return <div>ive expanded!!!</div>
+            return (
+              <>
+                <VerificationsScanReferences scanReferences={row.original.scanReferences} />
+                <VerificationsOverrides overrides={row.original.overrides} />
+              </>
+            )
           }}
           onRowClick={(row) => {
             row.toggleRowExpanded()

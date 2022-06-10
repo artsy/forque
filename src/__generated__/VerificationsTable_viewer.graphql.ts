@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e8e25fc71df5c66ffacf87566eaad979>>
+ * @generated SignedSource<<3389e14db61a546820669017ff6ad60d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,6 +33,13 @@ export type VerificationsTable_viewer$data = {
           readonly jumioID: string;
           readonly id: string;
           readonly internalID: string;
+        } | null> | null;
+        readonly overrides: ReadonlyArray<{
+          readonly createdAt: string | null;
+          readonly newState: string;
+          readonly oldState: string;
+          readonly reason: string;
+          readonly userID: string | null;
         } | null> | null;
       } | null;
     } | null> | null;
@@ -257,6 +264,52 @@ return {
                     (v0/*: any*/)
                   ],
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "IdentityVerificationOverride",
+                  "kind": "LinkedField",
+                  "name": "overrides",
+                  "plural": true,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "createdAt",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "newState",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "oldState",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "reason",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "userID",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -273,6 +326,6 @@ return {
 };
 })();
 
-(node as any).hash = "1eb440441678f50b951d58110378da81";
+(node as any).hash = "488a139f2d734c43ca28623f9604503f";
 
 export default node;
