@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3389e14db61a546820669017ff6ad60d>>
+ * @generated SignedSource<<dfc764251f90b8d52f446eea19dbcc29>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,18 +21,20 @@ export type VerificationsTable_viewer$data = {
     };
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly createdAt: string | null;
         readonly internalID: string;
         readonly state: string;
         readonly scanReferences: ReadonlyArray<{
+          readonly createdAt: string | null;
           readonly extractedFirstName: string | null;
           readonly extractedLastName: string | null;
-          readonly result: string | null;
-          readonly finishedAt: string | null;
           readonly extractedIdFailReason: string | null;
           readonly extractedSimilarityFailReason: string | null;
-          readonly jumioID: string;
+          readonly finishedAt: string | null;
           readonly id: string;
           readonly internalID: string;
+          readonly jumioID: string;
+          readonly result: string | null;
         } | null> | null;
         readonly overrides: ReadonlyArray<{
           readonly createdAt: string | null;
@@ -53,6 +55,13 @@ export type VerificationsTable_viewer$key = {
 
 const node: ReaderFragment = (function(){
 var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "createdAt",
+  "storageKey": null
+},
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -190,6 +199,7 @@ return {
               "plural": false,
               "selections": [
                 (v0/*: any*/),
+                (v1/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -205,6 +215,7 @@ return {
                   "name": "scanReferences",
                   "plural": true,
                   "selections": [
+                    (v0/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -217,20 +228,6 @@ return {
                       "args": null,
                       "kind": "ScalarField",
                       "name": "extractedLastName",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "result",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "finishedAt",
                       "storageKey": null
                     },
                     {
@@ -251,7 +248,7 @@ return {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
-                      "name": "jumioID",
+                      "name": "finishedAt",
                       "storageKey": null
                     },
                     {
@@ -261,7 +258,21 @@ return {
                       "name": "id",
                       "storageKey": null
                     },
-                    (v0/*: any*/)
+                    (v1/*: any*/),
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "jumioID",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "result",
+                      "storageKey": null
+                    }
                   ],
                   "storageKey": null
                 },
@@ -273,13 +284,7 @@ return {
                   "name": "overrides",
                   "plural": true,
                   "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "createdAt",
-                      "storageKey": null
-                    },
+                    (v0/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -326,6 +331,6 @@ return {
 };
 })();
 
-(node as any).hash = "488a139f2d734c43ca28623f9604503f";
+(node as any).hash = "8d6e7242278c4e33e85eb41a9a4493a5";
 
 export default node;

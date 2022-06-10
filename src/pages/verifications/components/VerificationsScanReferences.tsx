@@ -23,7 +23,7 @@ export const VerificationsScanReferences: React.FC = (props) => {
           },
           {
             Header: "Created At",
-            accessor: "created_at",
+            accessor: "createdAt",
           },
           {
             Header: "Result",
