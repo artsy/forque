@@ -8758,6 +8758,15 @@ type HomePageSalesModule {
 }
 
 type IdentityVerification {
+  createdAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+
   # A globally unique ID.
   id: ID!
 
@@ -8882,6 +8891,14 @@ type IdentityVerificationOverride {
 }
 
 type IdentityVerificationScanReference {
+  createdAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
   extractedFirstName: String
   extractedIdFailReason: String
   extractedLastName: String
@@ -10482,6 +10499,16 @@ enum MyCollectionArtworkSorts {
 type MyCollectionConnection {
   artistsCount: Int!
   artworksCount: Int!
+
+  # A connection of artists in the users' collection
+  collectedArtistsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    page: Int
+    size: Int
+  ): ArtistConnection
   default: Boolean!
   description: String!
 
@@ -10554,6 +10581,16 @@ type MyCollectionEdge {
 type MyCollectionInfo {
   artistsCount: Int!
   artworksCount: Int!
+
+  # A connection of artists in the users' collection
+  collectedArtistsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    page: Int
+    size: Int
+  ): ArtistConnection
   default: Boolean!
   description: String!
   includesPurchasedArtworks: Boolean!
@@ -12899,10 +12936,14 @@ type Sale implements Node {
     after: String
     before: String
 
+    # When this is true and there is no access token present, allow a loader that caches to be used.
+    cached: Boolean = true
+
     # List of artwork IDs to exclude from the response (irrespective of size)
     exclude: [String]
     first: Int
     last: Int
+    status: SaleArtworkStatus
   ): ArtworkConnection
   associatedSale: Sale
   bidder: Bidder
@@ -12980,6 +13021,9 @@ type Sale implements Node {
   isGalleryAuction: Boolean
   isLiveOpen: Boolean
   isLotConditionsReportEnabled: Boolean
+
+  # True for a cascading-end-time enabled sale where lots have started closing
+  isLotsClosing: Boolean!
   isOpen: Boolean
   isPreliminary: Boolean
   isPreview: Boolean
