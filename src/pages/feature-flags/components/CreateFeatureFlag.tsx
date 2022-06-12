@@ -25,7 +25,21 @@ const CreateFeatureFlag: React.FC = () => {
           strategyType: "DEFAULT",
           rollOut: 100,
         },
-        experiment: false,
+        experiment: {
+          isExperiment: false,
+          variants: [
+            {
+              name: "control",
+              weight: 0,
+              weightType: "VARIABLE",
+            },
+            {
+              name: "expriment",
+              weight: 0,
+              weightType: "VARIABLE",
+            },
+          ],
+        },
       }}
       validationSchema={Yup.object().shape({
         name: Yup.string().required("A name is required"),
@@ -41,7 +55,7 @@ const CreateFeatureFlag: React.FC = () => {
                   strategyType: values.strategy.strategyType,
                   rollOut: values.strategy.rollout,
                 },
-                // variants: values.variants,
+                variants: values.variants,
               },
             },
           })
@@ -67,6 +81,13 @@ const CreateFeatureFlag: React.FC = () => {
         handleBlur,
         setFieldValue,
       }) => {
+        const handleAddAdditionalVariant = () => {
+          setFieldValue("experiment.variants", [
+            ...values.experiment.variants,
+            { name: "", weight: 500, weightType: "VARIABLE" },
+          ])
+        }
+
         return (
           <Form>
             <Input
@@ -115,14 +136,58 @@ const CreateFeatureFlag: React.FC = () => {
 
             <Spacer my={2} />
 
-            <Checkbox
-              onSelect={(selected) => {
-                setFieldValue("experiment", selected)
-              }}
-              selected={values.experiment}
-            >
-              Experiment
-            </Checkbox>
+            <Box>
+              <Checkbox
+                onSelect={(selected) => {
+                  setFieldValue("experiment.isEnabled", selected)
+                }}
+                selected={values.experiment.isEnabled}
+              >
+                Experiment
+              </Checkbox>
+
+              {values.experiment.isEnabled && (
+                <>
+                  {values.experiment.variants.map((variant, index) => {
+                    return (
+                      <Box border="1px solid #ccc" key={index} p={2} my={1}>
+                        <Input
+                          my={1}
+                          name={`experiment.variants.${index}.name`}
+                          title="Variant Name"
+                          placeholder="Variant Name"
+                          value={values.experiment.variants[index].name}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={
+                            touched?.experiment?.variants?.[index]?.name &&
+                            errors.experiment?.variants?.[index]?.name
+                          }
+                        />
+                        <Input
+                          my={1}
+                          name={`experiment.variants.${index}.weight`}
+                          title="Variant Weight"
+                          placeholder="Variant Name"
+                          value={values.experiment.variants[index].weight}
+                          type="number"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          error={
+                            touched?.experiment?.variants?.[index]?.weight &&
+                            errors.experiment?.variants?.[index]?.weight
+                          }
+                        />
+                      </Box>
+                    )
+                  })}
+
+                  <Button size="small" onClick={handleAddAdditionalVariant}>
+                    Add Additional Variant
+                  </Button>
+                </>
+              )}
+            </Box>
 
             <Spacer my={2} />
 
