@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b221a66dd28266e7174dab1f471748f5>>
+ * @generated SignedSource<<e080140b6e5732720cb31ecb7474ab1a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,23 +10,26 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AdminDeleteFeatureFlagInput = {
+export type AdminUpdateFeatureFlagInput = {
   clientMutationId?: string | null;
-  name?: string | null;
+  description?: string | null;
+  impressionData?: boolean | null;
+  name: string;
+  type?: string | null;
 };
-export type useDeleteFeatureFlagMutation$variables = {
-  input: AdminDeleteFeatureFlagInput;
+export type useUpdateFeatureFlagMutation$variables = {
+  input: AdminUpdateFeatureFlagInput;
 };
-export type useDeleteFeatureFlagMutation$data = {
-  readonly adminDeleteFeatureFlag: {
-    readonly featureFlags: ReadonlyArray<{
+export type useUpdateFeatureFlagMutation$data = {
+  readonly adminUpdateFeatureFlag: {
+    readonly featureFlag: {
       readonly " $fragmentSpreads": FragmentRefs<"FeatureFlagsTable">;
-    } | null> | null;
+    } | null;
   } | null;
 };
-export type useDeleteFeatureFlagMutation = {
-  variables: useDeleteFeatureFlagMutation$variables;
-  response: useDeleteFeatureFlagMutation$data;
+export type useUpdateFeatureFlagMutation = {
+  variables: useUpdateFeatureFlagMutation$variables;
+  response: useUpdateFeatureFlagMutation$data;
 };
 
 const node: ConcreteRequest = (function(){
@@ -63,14 +66,14 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useDeleteFeatureFlagMutation",
+    "name": "useUpdateFeatureFlagMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "AdminDeleteFeatureFlagPayload",
+        "concreteType": "AdminUpdateFeatureFlagPayload",
         "kind": "LinkedField",
-        "name": "adminDeleteFeatureFlag",
+        "name": "adminUpdateFeatureFlag",
         "plural": false,
         "selections": [
           {
@@ -78,8 +81,8 @@ return {
             "args": null,
             "concreteType": "FeatureFlag",
             "kind": "LinkedField",
-            "name": "featureFlags",
-            "plural": true,
+            "name": "featureFlag",
+            "plural": false,
             "selections": [
               {
                 "args": null,
@@ -100,14 +103,14 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "useDeleteFeatureFlagMutation",
+    "name": "useUpdateFeatureFlagMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "AdminDeleteFeatureFlagPayload",
+        "concreteType": "AdminUpdateFeatureFlagPayload",
         "kind": "LinkedField",
-        "name": "adminDeleteFeatureFlag",
+        "name": "adminUpdateFeatureFlag",
         "plural": false,
         "selections": [
           {
@@ -115,8 +118,8 @@ return {
             "args": null,
             "concreteType": "FeatureFlag",
             "kind": "LinkedField",
-            "name": "featureFlags",
-            "plural": true,
+            "name": "featureFlag",
+            "plural": false,
             "selections": [
               (v2/*: any*/),
               {
@@ -223,16 +226,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fb43d977339b10e3a5730e71ccbd1cb5",
+    "cacheID": "cd1e25c77d886aa5a03e384cc4faf835",
     "id": null,
     "metadata": {},
-    "name": "useDeleteFeatureFlagMutation",
+    "name": "useUpdateFeatureFlagMutation",
     "operationKind": "mutation",
-    "text": "mutation useDeleteFeatureFlagMutation(\n  $input: AdminDeleteFeatureFlagInput!\n) {\n  adminDeleteFeatureFlag(input: $input) {\n    featureFlags {\n      ...FeatureFlagsTable\n      id\n    }\n  }\n}\n\nfragment FeatureFlagsTable on FeatureFlag {\n  name\n  stale\n  enabled\n  description\n  impressionData\n  type\n  createdAt(format: \"MMM DD, YYYY\")\n  environments {\n    enabled\n    name\n  }\n  variants {\n    name\n    stickiness\n    weight\n    weightType\n  }\n}\n"
+    "text": "mutation useUpdateFeatureFlagMutation(\n  $input: AdminUpdateFeatureFlagInput!\n) {\n  adminUpdateFeatureFlag(input: $input) {\n    featureFlag {\n      ...FeatureFlagsTable\n      id\n    }\n  }\n}\n\nfragment FeatureFlagsTable on FeatureFlag {\n  name\n  stale\n  enabled\n  description\n  impressionData\n  type\n  createdAt(format: \"MMM DD, YYYY\")\n  environments {\n    enabled\n    name\n  }\n  variants {\n    name\n    stickiness\n    weight\n    weightType\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "ff697827cd11724a49b24bfffd3240ce";
+(node as any).hash = "46befe622434f47db15cc8a8643ad470";
 
 export default node;

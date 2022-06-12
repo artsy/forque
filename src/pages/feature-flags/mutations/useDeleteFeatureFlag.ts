@@ -9,7 +9,9 @@ export const useDeleteFeatureFlag = () => {
         $input: AdminDeleteFeatureFlagInput!
       ) {
         adminDeleteFeatureFlag(input: $input) {
-          success
+          featureFlags {
+            ...FeatureFlagsTable
+          }
         }
       }
     `,

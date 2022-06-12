@@ -8,9 +8,9 @@ export const useUpdateFeatureFlag = () => {
       mutation useUpdateFeatureFlagMutation(
         $input: AdminUpdateFeatureFlagInput!
       ) {
-        adminCreateFeatureFlag(input: $input) {
+        adminUpdateFeatureFlag(input: $input) {
           featureFlag {
-            name
+            ...FeatureFlagsTable
           }
         }
       }

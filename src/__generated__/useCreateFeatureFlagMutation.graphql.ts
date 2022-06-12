@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e3197f511a3217097261984e52854f7>>
+ * @generated SignedSource<<c4ba00a559d869880b44ea3d73f33de0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,12 +9,28 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
+export type FeatureFlagStrategyType = "DEFAULT" | "FLEXIBLE_ROLLOUT" | "%future added value";
+export type FeatureFlagToggleType = "EXPERIMENT" | "RELEASE" | "%future added value";
+export type FeatureFlagVariantWeightType = "VARIABLE" | "%future added value";
+export type FeatureFlagsType = "EXPERIMENT" | "RELEASE" | "%future added value";
 export type AdminCreateFeatureFlagInput = {
   clientMutationId?: string | null;
   description?: string | null;
   impressionData?: boolean | null;
   name?: string | null;
-  type?: string | null;
+  strategy: FeatureFlagStrategyInput;
+  type: FeatureFlagToggleType;
+  variants?: ReadonlyArray<FeatureFlagVariantInputName | null> | null;
+};
+export type FeatureFlagStrategyInput = {
+  rollOut?: number | null;
+  strategyType?: FeatureFlagStrategyType | null;
+};
+export type FeatureFlagVariantInputName = {
+  name: string;
+  stickiness?: string | null;
+  weight: number;
+  weightType?: FeatureFlagVariantWeightType | null;
 };
 export type useCreateFeatureFlagMutation$variables = {
   input: AdminCreateFeatureFlagInput;
@@ -23,6 +39,22 @@ export type useCreateFeatureFlagMutation$data = {
   readonly adminCreateFeatureFlag: {
     readonly featureFlag: {
       readonly name: string | null;
+      readonly stale: boolean | null;
+      readonly enabled: boolean | null;
+      readonly description: string | null;
+      readonly impressionData: boolean | null;
+      readonly type: FeatureFlagsType | null;
+      readonly createdAt: string | null;
+      readonly environments: ReadonlyArray<{
+        readonly enabled: boolean | null;
+        readonly name: string | null;
+      } | null> | null;
+      readonly variants: ReadonlyArray<{
+        readonly name: string | null;
+        readonly stickiness: string | null;
+        readonly weight: number | null;
+        readonly weightType: string | null;
+      } | null> | null;
     } | null;
   } | null;
 };
@@ -41,48 +73,151 @@ var v0 = [
 ],
 v1 = [
   {
-    "alias": null,
-    "args": [
-      {
-        "kind": "Variable",
-        "name": "input",
-        "variableName": "input"
-      }
-    ],
-    "concreteType": "AdminCreateFeatureFlagPayload",
-    "kind": "LinkedField",
-    "name": "adminCreateFeatureFlag",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "FeatureFlags",
-        "kind": "LinkedField",
-        "name": "featureFlag",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
+    "kind": "Variable",
+    "name": "input",
+    "variableName": "input"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "stale",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "enabled",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "description",
+  "storageKey": null
+},
+v6 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "impressionData",
+  "storageKey": null
+},
+v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "type",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": [
+    {
+      "kind": "Literal",
+      "name": "format",
+      "value": "MMM DD, YYYY"
+    }
+  ],
+  "kind": "ScalarField",
+  "name": "createdAt",
+  "storageKey": "createdAt(format:\"MMM DD, YYYY\")"
+},
+v9 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "FeatureFlagEnvironments",
+  "kind": "LinkedField",
+  "name": "environments",
+  "plural": true,
+  "selections": [
+    (v4/*: any*/),
+    (v2/*: any*/)
+  ],
+  "storageKey": null
+},
+v10 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "FeatureFlagVariantType",
+  "kind": "LinkedField",
+  "name": "variants",
+  "plural": true,
+  "selections": [
+    (v2/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "stickiness",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "weight",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "weightType",
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "useCreateFeatureFlagMutation",
-    "selections": (v1/*: any*/),
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "AdminCreateFeatureFlagPayload",
+        "kind": "LinkedField",
+        "name": "adminCreateFeatureFlag",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "FeatureFlag",
+            "kind": "LinkedField",
+            "name": "featureFlag",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/),
+              (v6/*: any*/),
+              (v7/*: any*/),
+              (v8/*: any*/),
+              (v9/*: any*/),
+              (v10/*: any*/)
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ],
     "type": "Mutation",
     "abstractKey": null
   },
@@ -91,19 +226,58 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "useCreateFeatureFlagMutation",
-    "selections": (v1/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "AdminCreateFeatureFlagPayload",
+        "kind": "LinkedField",
+        "name": "adminCreateFeatureFlag",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "FeatureFlag",
+            "kind": "LinkedField",
+            "name": "featureFlag",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/),
+              (v6/*: any*/),
+              (v7/*: any*/),
+              (v8/*: any*/),
+              (v9/*: any*/),
+              (v10/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "id",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ]
   },
   "params": {
-    "cacheID": "7d7fb0d804582a9efeccdc57873337c4",
+    "cacheID": "371d3c27bf2efa9cb9e0bd207a0e4ee9",
     "id": null,
     "metadata": {},
     "name": "useCreateFeatureFlagMutation",
     "operationKind": "mutation",
-    "text": "mutation useCreateFeatureFlagMutation(\n  $input: AdminCreateFeatureFlagInput!\n) {\n  adminCreateFeatureFlag(input: $input) {\n    featureFlag {\n      name\n    }\n  }\n}\n"
+    "text": "mutation useCreateFeatureFlagMutation(\n  $input: AdminCreateFeatureFlagInput!\n) {\n  adminCreateFeatureFlag(input: $input) {\n    featureFlag {\n      name\n      stale\n      enabled\n      description\n      impressionData\n      type\n      createdAt(format: \"MMM DD, YYYY\")\n      environments {\n        enabled\n        name\n      }\n      variants {\n        name\n        stickiness\n        weight\n        weightType\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d9bb7877a06de1ab7ae33d30fd7c710d";
+(node as any).hash = "b513e0aca5e9bed65ab74ca5bea43798";
 
 export default node;

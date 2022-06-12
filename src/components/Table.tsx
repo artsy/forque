@@ -75,7 +75,7 @@ export const Table: React.FC<TableProps> = ({
               >
                 {row.cells.map((cell, cellKey) => {
                   return (
-                    <TD {...cell.getCellProps()} key={cellKey} as="td">
+                    <TD {...cell.getCellProps()} key={cellKey} as="td" py={0.5}>
                       {cell.render("Cell")}
                     </TD>
                   )
@@ -87,7 +87,7 @@ export const Table: React.FC<TableProps> = ({
                 // into `Row` interface.
                 // @ts-ignore
                 row.isExpanded && renderExpandedRow && (
-                  <tr>
+                  <tr key={`${rowIndex}-expanded`}>
                     <td colSpan={visibleColumns.length}>
                       {renderExpandedRow?.(row)}
                     </td>

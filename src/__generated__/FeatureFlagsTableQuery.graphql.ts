@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cb2900f8693463aa22df21862df02d5e>>
+ * @generated SignedSource<<2ef0816464ef3537637c2eff969b21b9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type featureFlagsQuery$variables = {};
-export type featureFlagsQuery$data = {
+export type FeatureFlagsTableQuery$variables = {};
+export type FeatureFlagsTableQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"FeatureFlagsTable_featureFlag">;
   } | null;
 };
-export type featureFlagsQuery = {
-  variables: featureFlagsQuery$variables;
-  response: featureFlagsQuery$data;
+export type FeatureFlagsTableQuery = {
+  variables: FeatureFlagsTableQuery$variables;
+  response: FeatureFlagsTableQuery$data;
 };
 
 const node: ConcreteRequest = (function(){
@@ -41,7 +41,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "featureFlagsQuery",
+    "name": "FeatureFlagsTableQuery",
     "selections": [
       {
         "alias": null,
@@ -67,7 +67,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "featureFlagsQuery",
+    "name": "FeatureFlagsTableQuery",
     "selections": [
       {
         "alias": null,
@@ -201,16 +201,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b2ff5b5deefea61512c994e3a634871d",
+    "cacheID": "5685c79476dd557129334f3268323e2c",
     "id": null,
     "metadata": {},
-    "name": "featureFlagsQuery",
+    "name": "FeatureFlagsTableQuery",
     "operationKind": "query",
-    "text": "query featureFlagsQuery {\n  viewer {\n    ...FeatureFlagsTable_featureFlag\n  }\n}\n\nfragment FeatureFlagsTable_featureFlag on Viewer {\n  admin {\n    featureFlags {\n      name\n      stale\n      enabled\n      description\n      impressionData\n      type\n      createdAt(format: \"MMM DD, YYYY\")\n      environments {\n        enabled\n        name\n      }\n      variants {\n        name\n        stickiness\n        weight\n        weightType\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query FeatureFlagsTableQuery {\n  viewer {\n    ...FeatureFlagsTable_featureFlag\n  }\n}\n\nfragment FeatureFlagsTable_featureFlag on Viewer {\n  admin {\n    featureFlags {\n      name\n      stale\n      enabled\n      description\n      impressionData\n      type\n      createdAt(format: \"MMM DD, YYYY\")\n      environments {\n        enabled\n        name\n      }\n      variants {\n        name\n        stickiness\n        weight\n        weightType\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "876c472a6ee4972c292afdc5e4855648";
+(node as any).hash = "6b0ac17d41cfe0593f45522c1fab0132";
 
 export default node;

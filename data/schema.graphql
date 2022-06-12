@@ -98,7 +98,7 @@ type Admin {
   featureFlags(
     # The sort order of the results
     sortBy: FeatureFlagsSortBy
-  ): [FeatureFlags]
+  ): [FeatureFlag]
 }
 
 input AdminCreateFeatureFlagInput {
@@ -106,12 +106,20 @@ input AdminCreateFeatureFlagInput {
   description: String = ""
   impressionData: Boolean = false
   name: String
-  type: String = "release"
+  strategy: FeatureFlagStrategyInput!
+  type: FeatureFlagToggleType!
+  variants: [FeatureFlagVariantInputName]
 }
 
 type AdminCreateFeatureFlagPayload {
   clientMutationId: String
-  featureFlag: FeatureFlags
+  featureFlag: FeatureFlag
+
+  # A list of feature flags
+  featureFlags(
+    # The sort order of the results
+    sortBy: FeatureFlagsSortBy
+  ): [FeatureFlag]
 }
 
 input AdminDeleteFeatureFlagInput {
@@ -121,22 +129,49 @@ input AdminDeleteFeatureFlagInput {
 
 type AdminDeleteFeatureFlagPayload {
   clientMutationId: String
-  error: String
+
+  # A list of feature flags
+  featureFlags(
+    # The sort order of the results
+    sortBy: FeatureFlagsSortBy
+  ): [FeatureFlag]
+  success: Boolean
+}
+
+enum AdminToggleFeatureFlagEnvironment {
+  DEVELOPMENT
+  PRODUCTION
+}
+
+input AdminToggleFeatureFlagInput {
+  clientMutationId: String
+  enabled: Boolean!
+  environment: AdminToggleFeatureFlagEnvironment!
+  name: String!
+}
+
+type AdminToggleFeatureFlagPayload {
+  clientMutationId: String
+
+  # A list of feature flags
+  featureFlags(
+    # The sort order of the results
+    sortBy: FeatureFlagsSortBy
+  ): [FeatureFlag]
   success: Boolean
 }
 
 input AdminUpdateFeatureFlagInput {
   clientMutationId: String
   description: String
-  id: String!
   impressionData: Boolean = false
-  name: String
+  name: String!
   type: String = "release"
 }
 
 type AdminUpdateFeatureFlagPayload {
   clientMutationId: String
-  featureFlag: FeatureFlags
+  featureFlag: FeatureFlag
 }
 
 # One item in an aggregation
@@ -2904,6 +2939,23 @@ type BackupSecondFactors {
 # A list of backup second factors or errors
 union BackupSecondFactorsOrErrorsUnion = BackupSecondFactors | Errors
 
+type BankAccount {
+  # Name on the bank account
+  accountHolderName: String
+
+  # Bank name
+  bankName: String!
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
+
+  # Last four characters of the account identifier
+  last4: String!
+}
+
 type Bidder implements Node {
   createdAt(
     format: String
@@ -3468,7 +3520,9 @@ type CommerceBuyOrder implements CommerceOrder {
   ): CommerceLineItemConnection
   mode: CommerceOrderModeEnum
   orderHistory: [CommerceOrderEventUnion!]!
+  orderUpdateState: String
   paymentMethod: CommercePaymentMethodEnum
+  paymentMethodDetails: PaymentMethodUnion
   requestedFulfillment: CommerceRequestedFulfillmentUnion
   seller: CommerceOrderPartyUnion!
   sellerDetails: OrderParty
@@ -4221,7 +4275,9 @@ type CommerceOfferOrder implements CommerceOrder {
     thousand: String = ","
   ): String
   orderHistory: [CommerceOrderEventUnion!]!
+  orderUpdateState: String
   paymentMethod: CommercePaymentMethodEnum
+  paymentMethodDetails: PaymentMethodUnion
   requestedFulfillment: CommerceRequestedFulfillmentUnion
   seller: CommerceOrderPartyUnion!
   sellerDetails: OrderParty
@@ -4422,7 +4478,9 @@ interface CommerceOrder {
   ): CommerceLineItemConnection
   mode: CommerceOrderModeEnum
   orderHistory: [CommerceOrderEventUnion!]!
+  orderUpdateState: String
   paymentMethod: CommercePaymentMethodEnum
+  paymentMethodDetails: PaymentMethodUnion
   requestedFulfillment: CommerceRequestedFulfillmentUnion
   seller: CommerceOrderPartyUnion!
   sellerDetails: OrderParty
@@ -7844,7 +7902,7 @@ type FeaturedLink {
 
 union FeaturedLinkEntity = Artist | Gene | Partner
 
-type FeatureFlags {
+type FeatureFlag {
   createdAt(
     format: String
 
@@ -7855,6 +7913,8 @@ type FeatureFlags {
   ): String
   description: String
   enabled: Boolean
+  environments: [FeatureFlagEnvironments]
+  id: ID!
   impressionData: Boolean
   lastSeenAt(
     format: String
@@ -7868,7 +7928,13 @@ type FeatureFlags {
   project: String
   stale: Boolean
   type: FeatureFlagsType
-  variants: [FeatureFlagVariant]
+  variants: [FeatureFlagVariantType]
+}
+
+type FeatureFlagEnvironments {
+  displayName: String
+  enabled: Boolean
+  name: String
 }
 
 enum FeatureFlagsSortBy {
@@ -7876,16 +7942,45 @@ enum FeatureFlagsSortBy {
   NAME
 }
 
+input FeatureFlagStrategyInput {
+  rollOut: Int = 100
+  strategyType: FeatureFlagStrategyType
+}
+
+enum FeatureFlagStrategyType {
+  # Simple on/off flag
+  DEFAULT
+
+  # For A/B tests, where you can specify a percentage of users to be served a variant
+  FLEXIBLE_ROLLOUT
+}
+
 enum FeatureFlagsType {
   EXPERIMENT
   RELEASE
 }
 
-type FeatureFlagVariant {
+enum FeatureFlagToggleType {
+  EXPERIMENT
+  RELEASE
+}
+
+input FeatureFlagVariantInputName {
+  name: String!
+  stickiness: String = "sessionId"
+  weight: Int!
+  weightType: FeatureFlagVariantWeightType
+}
+
+type FeatureFlagVariantType {
   name: String
   stickiness: String
   weight: Int
   weightType: String
+}
+
+enum FeatureFlagVariantWeightType {
+  VARIABLE
 }
 
 enum FeatureLayouts {
@@ -8825,6 +8920,15 @@ type HomePageSalesModule {
 }
 
 type IdentityVerification {
+  createdAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+
   # A globally unique ID.
   id: ID!
 
@@ -8873,17 +8977,40 @@ type IdentityVerificationEdge {
 }
 
 type IdentityVerificationEmail {
+  created_at(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+
+  # Email of the identity verification's owner
+  email: String
+
   # A globally unique ID.
   id: ID!
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
 
+  # Name of the identity verification's owner
+  name: String
+
   # Identity verification lifecycle state
   state: String!
+  updated_at(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
 
   # User ID of the identity verification's owner
-  userID: String!
+  userID: String
 }
 
 type IdentityVerificationEmailMutationFailureType {
@@ -8926,6 +9053,14 @@ type IdentityVerificationOverride {
 }
 
 type IdentityVerificationScanReference {
+  createdAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
   extractedFirstName: String
   extractedIdFailReason: String
   extractedLastName: String
@@ -10139,6 +10274,11 @@ type Mutation {
     input: AdminDeleteFeatureFlagInput!
   ): AdminDeleteFeatureFlagPayload
 
+  # Toggles a feature flag on or off for a given environment
+  adminToggleFeatureFlag(
+    input: AdminToggleFeatureFlagInput!
+  ): AdminToggleFeatureFlagPayload
+
   # Updates a feature flag
   adminUpdateFeatureFlag(
     input: AdminUpdateFeatureFlagInput!
@@ -10541,6 +10681,16 @@ enum MyCollectionArtworkSorts {
 type MyCollectionConnection {
   artistsCount: Int!
   artworksCount: Int!
+
+  # A connection of artists in the users' collection
+  collectedArtistsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    page: Int
+    size: Int
+  ): ArtistConnection
   default: Boolean!
   description: String!
 
@@ -10613,6 +10763,16 @@ type MyCollectionEdge {
 type MyCollectionInfo {
   artistsCount: Int!
   artworksCount: Int!
+
+  # A connection of artists in the users' collection
+  collectedArtistsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    page: Int
+    size: Int
+  ): ArtistConnection
   default: Boolean!
   description: String!
   includesPurchasedArtworks: Boolean!
@@ -11403,6 +11563,8 @@ enum PartnersSortType {
 
 union PartnerTypes = ExternalPartner | Partner
 
+union PaymentMethodUnion = BankAccount | CreditCard | WireTransfer
+
 enum PhoneNumberErrors {
   INVALID_COUNTRY_CODE
   INVALID_NUMBER
@@ -12081,6 +12243,12 @@ type Query {
   # `LOGGED_IN` because we don't know whether or not the authentication is valid
   # (error could be something else).
   authenticationStatus: AuthenticationStatus!
+
+  # A user's bank account
+  bankAccount(
+    # The ID of the bank account
+    id: String!
+  ): BankAccount
   channel(id: ID!): Channel!
 
   # A list of cities
@@ -12951,10 +13119,14 @@ type Sale implements Node {
     after: String
     before: String
 
+    # When this is true and there is no access token present, allow a loader that caches to be used.
+    cached: Boolean = true
+
     # List of artwork IDs to exclude from the response (irrespective of size)
     exclude: [String]
     first: Int
     last: Int
+    status: SaleArtworkStatus
   ): ArtworkConnection
   associatedSale: Sale
   bidder: Bidder
@@ -13032,6 +13204,9 @@ type Sale implements Node {
   isGalleryAuction: Boolean
   isLiveOpen: Boolean
   isLotConditionsReportEnabled: Boolean
+
+  # True for a cascading-end-time enabled sale where lots have started closing
+  isLotsClosing: Boolean!
   isOpen: Boolean
   isPreliminary: Boolean
   isPreview: Boolean
@@ -13075,6 +13250,7 @@ type Sale implements Node {
     # List of sale artwork internal IDs to fetch
     internalIDs: [ID]
     last: Int
+    status: SaleArtworkStatus
   ): SaleArtworkConnection
   saleType: String
 
@@ -13395,6 +13571,11 @@ type SaleArtworksConnection implements ArtworkConnectionInterface {
   # Information to aid in pagination.
   pageInfo: PageInfo!
   totalCount: Int
+}
+
+enum SaleArtworkStatus {
+  CLOSED
+  OPEN
 }
 
 type SaleCascadingEndTime {
@@ -13817,6 +13998,11 @@ union SendFeedbackMutationType =
 
 input SendIdentityVerificationEmailMutationInput {
   clientMutationId: String
+
+  # The email for the user undergoing identity verificaiton
+  email: String
+
+  # The user Id for the user undergoing identity verificaiton
   userID: String
 }
 
@@ -15464,6 +15650,12 @@ type Viewer {
   # `LOGGED_IN` because we don't know whether or not the authentication is valid
   # (error could be something else).
   authenticationStatus: AuthenticationStatus!
+
+  # A user's bank account
+  bankAccount(
+    # The ID of the bank account
+    id: String!
+  ): BankAccount
   channel(id: ID!): Channel!
 
   # A list of cities
@@ -16079,6 +16271,10 @@ input ViewingRoomSubsectionInput {
   delete: Boolean = false
   image: ARImageInput
   internalID: ID
+}
+
+type WireTransfer {
+  isManualPayment: Boolean!
 }
 
 type YearRange {

@@ -10,7 +10,7 @@ export const useCreateFeatureFlag = () => {
       ) {
         adminCreateFeatureFlag(input: $input) {
           featureFlag {
-            name
+            ...FeatureFlagsTable @relay(mask: false)
           }
         }
       }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b221a66dd28266e7174dab1f471748f5>>
+ * @generated SignedSource<<d6a357b87f3e56e2cb99b9e50e506e3f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,23 +10,26 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AdminDeleteFeatureFlagInput = {
+export type AdminToggleFeatureFlagEnvironment = "DEVELOPMENT" | "PRODUCTION" | "%future added value";
+export type AdminToggleFeatureFlagInput = {
   clientMutationId?: string | null;
-  name?: string | null;
+  enabled: boolean;
+  environment: AdminToggleFeatureFlagEnvironment;
+  name: string;
 };
-export type useDeleteFeatureFlagMutation$variables = {
-  input: AdminDeleteFeatureFlagInput;
+export type useToggleFeatureFlagMutation$variables = {
+  input: AdminToggleFeatureFlagInput;
 };
-export type useDeleteFeatureFlagMutation$data = {
-  readonly adminDeleteFeatureFlag: {
+export type useToggleFeatureFlagMutation$data = {
+  readonly adminToggleFeatureFlag: {
     readonly featureFlags: ReadonlyArray<{
       readonly " $fragmentSpreads": FragmentRefs<"FeatureFlagsTable">;
     } | null> | null;
   } | null;
 };
-export type useDeleteFeatureFlagMutation = {
-  variables: useDeleteFeatureFlagMutation$variables;
-  response: useDeleteFeatureFlagMutation$data;
+export type useToggleFeatureFlagMutation = {
+  variables: useToggleFeatureFlagMutation$variables;
+  response: useToggleFeatureFlagMutation$data;
 };
 
 const node: ConcreteRequest = (function(){
@@ -63,14 +66,14 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useDeleteFeatureFlagMutation",
+    "name": "useToggleFeatureFlagMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "AdminDeleteFeatureFlagPayload",
+        "concreteType": "AdminToggleFeatureFlagPayload",
         "kind": "LinkedField",
-        "name": "adminDeleteFeatureFlag",
+        "name": "adminToggleFeatureFlag",
         "plural": false,
         "selections": [
           {
@@ -100,14 +103,14 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "useDeleteFeatureFlagMutation",
+    "name": "useToggleFeatureFlagMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "AdminDeleteFeatureFlagPayload",
+        "concreteType": "AdminToggleFeatureFlagPayload",
         "kind": "LinkedField",
-        "name": "adminDeleteFeatureFlag",
+        "name": "adminToggleFeatureFlag",
         "plural": false,
         "selections": [
           {
@@ -223,16 +226,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fb43d977339b10e3a5730e71ccbd1cb5",
+    "cacheID": "09e707c3558e42f356104c36b8b2b3f2",
     "id": null,
     "metadata": {},
-    "name": "useDeleteFeatureFlagMutation",
+    "name": "useToggleFeatureFlagMutation",
     "operationKind": "mutation",
-    "text": "mutation useDeleteFeatureFlagMutation(\n  $input: AdminDeleteFeatureFlagInput!\n) {\n  adminDeleteFeatureFlag(input: $input) {\n    featureFlags {\n      ...FeatureFlagsTable\n      id\n    }\n  }\n}\n\nfragment FeatureFlagsTable on FeatureFlag {\n  name\n  stale\n  enabled\n  description\n  impressionData\n  type\n  createdAt(format: \"MMM DD, YYYY\")\n  environments {\n    enabled\n    name\n  }\n  variants {\n    name\n    stickiness\n    weight\n    weightType\n  }\n}\n"
+    "text": "mutation useToggleFeatureFlagMutation(\n  $input: AdminToggleFeatureFlagInput!\n) {\n  adminToggleFeatureFlag(input: $input) {\n    featureFlags {\n      ...FeatureFlagsTable\n      id\n    }\n  }\n}\n\nfragment FeatureFlagsTable on FeatureFlag {\n  name\n  stale\n  enabled\n  description\n  impressionData\n  type\n  createdAt(format: \"MMM DD, YYYY\")\n  environments {\n    enabled\n    name\n  }\n  variants {\n    name\n    stickiness\n    weight\n    weightType\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "ff697827cd11724a49b24bfffd3240ce";
+(node as any).hash = "ce55e5c0febcf285e64935243644dc1c";
 
 export default node;
