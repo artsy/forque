@@ -2,7 +2,7 @@ import Head from "next/head"
 import { Tab, Tabs } from "@artsy/palette"
 import { VarificationCreate } from "./components/VerificationCreate"
 
-const verificationsPage: React.FC = () => {
+const VerificationsPage: React.FC = () => {
   return (
     <>
       <Head>
@@ -19,4 +19,4 @@ const verificationsPage: React.FC = () => {
   )
 }
 
-export default verificationsPage
+export default VerificationsPage
