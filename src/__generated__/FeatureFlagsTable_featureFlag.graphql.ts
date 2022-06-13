@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<718b06289f75decd26b648043957093b>>
+ * @generated SignedSource<<e0f2b324ecdb8502918cb70e8acde095>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,28 +9,27 @@
 // @ts-nocheck
 
 import { ReaderFragment, RefetchableFragment } from 'relay-runtime';
-export type FeatureFlagsType = "EXPERIMENT" | "RELEASE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type FeatureFlagsTable_featureFlag$data = {
   readonly admin: {
     readonly featureFlags: ReadonlyArray<{
-      readonly name: string | null;
-      readonly stale: boolean | null;
-      readonly enabled: boolean | null;
+      readonly name: string;
+      readonly stale: boolean;
+      readonly enabled: boolean;
       readonly description: string | null;
-      readonly impressionData: boolean | null;
-      readonly type: FeatureFlagsType | null;
+      readonly impressionData: boolean;
+      readonly type: string;
       readonly createdAt: string | null;
       readonly environments: ReadonlyArray<{
-        readonly enabled: boolean | null;
-        readonly name: string | null;
+        readonly enabled: boolean;
+        readonly name: string;
       } | null> | null;
       readonly variants: ReadonlyArray<{
-        readonly name: string | null;
+        readonly name: string;
         readonly stickiness: string | null;
-        readonly weight: number | null;
+        readonly weight: number;
         readonly weightType: string | null;
-      } | null> | null;
+      }>;
     } | null> | null;
   } | null;
   readonly " $fragmentType": "FeatureFlagsTable_featureFlag";

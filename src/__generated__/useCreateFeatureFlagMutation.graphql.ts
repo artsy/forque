@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c4ba00a559d869880b44ea3d73f33de0>>
+ * @generated SignedSource<<19225b95d3b13d24e0a18cdba7c1ea15>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,6 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type FeatureFlagStrategyType = "DEFAULT" | "FLEXIBLE_ROLLOUT" | "%future added value";
 export type FeatureFlagToggleType = "EXPERIMENT" | "RELEASE" | "%future added value";
 export type FeatureFlagVariantWeightType = "VARIABLE" | "%future added value";
-export type FeatureFlagsType = "EXPERIMENT" | "RELEASE" | "%future added value";
 export type AdminCreateFeatureFlagInput = {
   clientMutationId?: string | null;
   description?: string | null;
@@ -38,23 +37,23 @@ export type useCreateFeatureFlagMutation$variables = {
 export type useCreateFeatureFlagMutation$data = {
   readonly adminCreateFeatureFlag: {
     readonly featureFlag: {
-      readonly name: string | null;
-      readonly stale: boolean | null;
-      readonly enabled: boolean | null;
+      readonly name: string;
+      readonly stale: boolean;
+      readonly enabled: boolean;
       readonly description: string | null;
-      readonly impressionData: boolean | null;
-      readonly type: FeatureFlagsType | null;
+      readonly impressionData: boolean;
+      readonly type: string;
       readonly createdAt: string | null;
       readonly environments: ReadonlyArray<{
-        readonly enabled: boolean | null;
-        readonly name: string | null;
+        readonly enabled: boolean;
+        readonly name: string;
       } | null> | null;
       readonly variants: ReadonlyArray<{
-        readonly name: string | null;
+        readonly name: string;
         readonly stickiness: string | null;
-        readonly weight: number | null;
+        readonly weight: number;
         readonly weightType: string | null;
-      } | null> | null;
+      }>;
     } | null;
   } | null;
 };

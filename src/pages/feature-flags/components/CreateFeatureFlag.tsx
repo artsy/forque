@@ -89,7 +89,7 @@ const CreateFeatureFlag: React.FC = () => {
             type: values.experiment.isExperiment ? "EXPERIMENT" : "RELEASE",
             strategy: {
               strategyType: values.strategy.strategyType,
-              rollOut: values.strategy.rollout,
+              rollOut: values.strategy.rollOut,
             },
             variants: values.experiment.isEnabled
               ? values.experiment.variants
