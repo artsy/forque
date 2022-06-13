@@ -1,5 +1,6 @@
 import { Tab, Tabs } from "@artsy/palette"
 import { GetServerSideProps } from "next"
+import Head from "next/head"
 import { graphql } from "react-relay"
 import { fetchRelayData } from "system/relay"
 import { featureFlagsQuery$data } from "__generated__/featureFlagsQuery.graphql"
@@ -12,14 +13,19 @@ interface FeatureFlagPageProps {
 
 const FeatureFlagPage: React.FC<FeatureFlagPageProps> = (props) => {
   return (
-    <Tabs>
-      <Tab name="List">
-        <FeatureFlagsTable viewer={props?.viewer!} />
-      </Tab>
-      <Tab name="Create">
-        <CreateFeatureFlag />
-      </Tab>
-    </Tabs>
+    <>
+      <Head>
+        <title>Feature Flag Management</title>
+      </Head>
+      <Tabs>
+        <Tab name="List">
+          <FeatureFlagsTable viewer={props?.viewer!} />
+        </Tab>
+        <Tab name="Create">
+          <CreateFeatureFlag />
+        </Tab>
+      </Tabs>
+    </>
   )
 }
 

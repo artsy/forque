@@ -70,7 +70,7 @@ const EditFeatureFlag: React.FC<EditFeatureFlagProps> = ({ row, ...rest }) => {
         }) => {
           return (
             <Form>
-              <Box border="1px solid #ccc" p={2}>
+              <Box border="1px solid" borderColor="black10" p={2}>
                 <Join separator={<Spacer my={2} />}>
                   <Input
                     name="name"

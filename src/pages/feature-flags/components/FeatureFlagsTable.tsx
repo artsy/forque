@@ -1,11 +1,11 @@
-import { Flex, Checkbox, Box, Button } from "@artsy/palette"
+import { Flex, Checkbox, Button, useToasts } from "@artsy/palette"
 import { Table } from "components/Table"
 import { graphql, useRefetchableFragment } from "react-relay"
 import { FeatureFlagsTable_featureFlag$key } from "__generated__/FeatureFlagsTable_featureFlag.graphql"
 import { useDeleteFeatureFlag } from "../mutations/useDeleteFeatureFlag"
 import { useToggleFeatureFlag } from "../mutations/useToggleFeatureFlag"
 import FeatureFlagOverview from "./FeatureFlagOverview"
-import { startTransition } from "react"
+import { startTransition, useState } from "react"
 
 interface FeatureFlagsTableProps {
   viewer: FeatureFlagsTable_featureFlag$key
@@ -82,13 +82,9 @@ const FeatureFlagTable: React.FC<FeatureFlagsTableProps> = ({ viewer }) => {
                 <Flex>
                   {row.values.environments.map((env: any, key: number) => {
                     return (
-                      <Checkbox
-                        mx={1}
+                      <ToggleEnvCheckbox
+                        enabled={env.enabled}
                         key={key}
-                        onClick={(event) => {
-                          event.preventDefault()
-                          event.stopPropagation()
-                        }}
                         onSelect={async (selected: boolean) => {
                           await toggleFeatureFlag({
                             variables: {
@@ -100,10 +96,9 @@ const FeatureFlagTable: React.FC<FeatureFlagsTableProps> = ({ viewer }) => {
                             },
                           })
                         }}
-                        selected={env.enabled}
                       >
                         {env.name}
-                      </Checkbox>
+                      </ToggleEnvCheckbox>
                     )
                   })}
                 </Flex>
@@ -114,30 +109,22 @@ const FeatureFlagTable: React.FC<FeatureFlagsTableProps> = ({ viewer }) => {
             Header: "Actions",
             Cell: ({ row }: any) => {
               return (
-                <Box>
-                  <Button
-                    size="small"
-                    variant="secondaryOutline"
-                    onClick={async (event) => {
-                      event.stopPropagation()
-                      event.preventDefault()
-
-                      await deleteFeatureFlag({
-                        variables: {
-                          input: {
-                            name: row.values.name,
-                          },
+                <DeleteButton
+                  name={row.values.name}
+                  onDelete={async () => {
+                    await deleteFeatureFlag({
+                      variables: {
+                        input: {
+                          name: row.values.name,
                         },
-                      })
+                      },
+                    })
 
-                      startTransition(() => {
-                        refetch({}, { fetchPolicy: "network-only" })
-                      })
-                    }}
-                  >
-                    Delete
-                  </Button>
-                </Box>
+                    startTransition(() => {
+                      refetch({}, { fetchPolicy: "network-only" })
+                    })
+                  }}
+                />
               )
             },
           },
@@ -151,6 +138,61 @@ const FeatureFlagTable: React.FC<FeatureFlagsTableProps> = ({ viewer }) => {
         }}
       />
     </>
+  )
+}
+
+const ToggleEnvCheckbox: React.FC<{
+  enabled: boolean
+  onSelect: (selected: boolean) => Promise<void>
+}> = ({ children, enabled, onSelect }) => {
+  const [isLoading, setIsLoading] = useState(false)
+
+  return (
+    <Checkbox
+      mx={1}
+      style={{ opacity: isLoading ? 0.3 : 1 }}
+      onClick={(event) => {
+        event.preventDefault()
+        event.stopPropagation()
+      }}
+      onSelect={async (selected: boolean) => {
+        setIsLoading(true)
+        await onSelect(selected)
+      }}
+      selected={enabled}
+    >
+      {isLoading ? (enabled ? "Disabling..." : "Enabling...") : children}
+    </Checkbox>
+  )
+}
+
+const DeleteButton: React.FC<{
+  name: string
+  onDelete: () => Promise<void>
+}> = ({ name, onDelete }) => {
+  const { sendToast } = useToasts()
+  const [isDeleting, setIsDeleting] = useState(false)
+
+  return (
+    <Button
+      size="small"
+      variant="secondaryOutline"
+      loading={isDeleting}
+      onClick={async (event) => {
+        event.stopPropagation()
+        event.preventDefault()
+
+        setIsDeleting(true)
+        await onDelete()
+
+        sendToast({
+          message: `Successfully archived ${name}`,
+          variant: "alert",
+        })
+      }}
+    >
+      Delete
+    </Button>
   )
 }
 

@@ -10,7 +10,7 @@ const FeatureFlagOverview: React.FC<FeatureFlagOverview> = ({
   ...rest
 }) => {
   return (
-    <Box border="1px solid #ccc" p={2} {...rest}>
+    <Box border="1px solid" borderColor="black10" p={2} {...rest}>
       <Text variant="md" fontWeight="bold">
         View on Unleash
       </Text>

@@ -5,7 +5,7 @@ export type UserWithAccessToken = User & {
   roles: string[]
 }
 
-// all supported roles
+// All supported roles
 // NOTE: Do not add Admin to supported roles. It is to be deprectated.
 export enum Role {
   customer_support = "customer_support",

@@ -8,6 +8,8 @@ import {
   RadioGroup,
   Spacer,
   Message,
+  Separator,
+  useToasts,
 } from "@artsy/palette"
 import { Form, Formik } from "formik"
 import { useRouter } from "next/router"
@@ -21,6 +23,7 @@ const CreateFeatureFlag: React.FC = () => {
   const [submitError, setSubmitError] = useState<string | null>(null)
   const router = useRouter()
   const { submitMutation } = useCreateFeatureFlag()
+  const { sendToast } = useToasts()
 
   return (
     <Formik<any>
@@ -30,6 +33,7 @@ const CreateFeatureFlag: React.FC = () => {
           strategyType: "DEFAULT",
           rollOut: 100,
         },
+        type: "RELEASE",
         experiment: {
           isExperiment: false,
           variants: [
@@ -49,15 +53,18 @@ const CreateFeatureFlag: React.FC = () => {
       validationSchema={Yup.object().shape({
         name: Yup.string().required("A name is required"),
       })}
-      onSubmit={async (_values) => {
+      onSubmit={async (values) => {
         try {
           await submitMutation({
             variables: submitData.current!,
           })
 
-          setTimeout(() => {
-            router.push("/feature-flags")
-          }, 1000)
+          sendToast({
+            message: `Successfully created ${values.name}.`,
+            variant: "success",
+          })
+
+          router.push("/feature-flags")
         } catch (error: any) {
           const errorMessage = JSON.parse(error[0].message)
           setSubmitError(errorMessage)
@@ -79,7 +86,7 @@ const CreateFeatureFlag: React.FC = () => {
         submitData.current = {
           input: {
             name: values.name,
-            type: values.experiment ? "EXPERIMENT" : "RELEASE",
+            type: values.experiment.isExperiment ? "EXPERIMENT" : "RELEASE",
             strategy: {
               strategyType: values.strategy.strategyType,
               rollOut: values.strategy.rollout,
@@ -129,7 +136,7 @@ const CreateFeatureFlag: React.FC = () => {
               {values.strategy.strategyType === "FLEXIBLE_ROLLOUT" && (
                 <Input
                   my={1}
-                  name="strategy.rollout"
+                  name="strategy.rollOut"
                   title="Rollout Percentage"
                   placeholder="100"
                   value={values.strategy.rollOut}
@@ -160,7 +167,13 @@ const CreateFeatureFlag: React.FC = () => {
                   {values.experiment.variants.map(
                     (variant: any, index: number) => {
                       return (
-                        <Box border="1px solid #ccc" key={index} p={2} my={1}>
+                        <Box
+                          border="1px solid"
+                          borderColor="black10"
+                          key={index}
+                          p={2}
+                          my={1}
+                        >
                           <Input
                             my={1}
                             name={`experiment.variants.${index}.name`}
@@ -185,14 +198,22 @@ const CreateFeatureFlag: React.FC = () => {
                     }
                   )}
 
-                  <Button size="small" onClick={handleAddAdditionalVariant}>
+                  <Button
+                    size="small"
+                    onClick={(event) => {
+                      event.stopPropagation()
+                      event.preventDefault()
+
+                      handleAddAdditionalVariant()
+                    }}
+                  >
                     Add Additional Variant
                   </Button>
                 </>
               )}
             </Box>
 
-            <Spacer my={2} />
+            <Separator my={2} />
 
             <Button
               loading={
