@@ -41,7 +41,7 @@ export const VarificationCreate: React.FC = () => {
             })
           } catch (error) {
             console.error(
-              "[forque] Error creating identity verificaiton:",
+              "[forque] Error creating identity verification:",
               error
             )
 
