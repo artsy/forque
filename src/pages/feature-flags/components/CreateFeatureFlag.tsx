@@ -7,13 +7,18 @@ import {
   Radio,
   RadioGroup,
   Spacer,
+  Message,
 } from "@artsy/palette"
 import { Form, Formik } from "formik"
 import { useRouter } from "next/router"
+import { useRef, useState } from "react"
 import * as Yup from "yup"
+import { useCreateFeatureFlagMutation$variables } from "__generated__/useCreateFeatureFlagMutation.graphql"
 import { useCreateFeatureFlag } from "../mutations/useCreateFeatureFlag"
 
 const CreateFeatureFlag: React.FC = () => {
+  const submitData = useRef<useCreateFeatureFlagMutation$variables | null>(null)
+  const [submitError, setSubmitError] = useState<string | null>(null)
   const router = useRouter()
   const { submitMutation } = useCreateFeatureFlag()
 
@@ -44,30 +49,19 @@ const CreateFeatureFlag: React.FC = () => {
       validationSchema={Yup.object().shape({
         name: Yup.string().required("A name is required"),
       })}
-      onSubmit={async (values) => {
+      onSubmit={async (_values) => {
         try {
           await submitMutation({
-            variables: {
-              input: {
-                name: values.name,
-                type: values.experiment ? "EXPERIMENT" : "RELEASE",
-                strategy: {
-                  strategyType: values.strategy.strategyType,
-                  rollOut: values.strategy.rollout,
-                },
-                variants: values.variants,
-              },
-            },
+            variables: submitData.current!,
           })
 
           setTimeout(() => {
             router.push("/feature-flags")
           }, 1000)
         } catch (error: any) {
-          console.error(
-            "[forque] Error creating feature flag",
-            JSON.parse(error.message)
-          )
+          const errorMessage = JSON.parse(error[0].message)
+          setSubmitError(errorMessage)
+          console.error("[forque] Error creating feature flag", errorMessage)
         }
       }}
     >
@@ -81,6 +75,21 @@ const CreateFeatureFlag: React.FC = () => {
         handleBlur,
         setFieldValue,
       }) => {
+        // Storing in a ref so that we can log current values to the screen
+        submitData.current = {
+          input: {
+            name: values.name,
+            type: values.experiment ? "EXPERIMENT" : "RELEASE",
+            strategy: {
+              strategyType: values.strategy.strategyType,
+              rollOut: values.strategy.rollout,
+            },
+            variants: values.experiment.isEnabled
+              ? values.experiment.variants
+              : null,
+          },
+        }
+
         const handleAddAdditionalVariant = () => {
           setFieldValue("experiment.variants", [
             ...values.experiment.variants,
@@ -148,39 +157,33 @@ const CreateFeatureFlag: React.FC = () => {
 
               {values.experiment.isEnabled && (
                 <>
-                  {values.experiment.variants.map((variant, index) => {
-                    return (
-                      <Box border="1px solid #ccc" key={index} p={2} my={1}>
-                        <Input
-                          my={1}
-                          name={`experiment.variants.${index}.name`}
-                          title="Variant Name"
-                          placeholder="Variant Name"
-                          value={values.experiment.variants[index].name}
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          error={
-                            touched?.experiment?.variants?.[index]?.name &&
-                            errors.experiment?.variants?.[index]?.name
-                          }
-                        />
-                        <Input
-                          my={1}
-                          name={`experiment.variants.${index}.weight`}
-                          title="Variant Weight"
-                          placeholder="Variant Name"
-                          value={values.experiment.variants[index].weight}
-                          type="number"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          error={
-                            touched?.experiment?.variants?.[index]?.weight &&
-                            errors.experiment?.variants?.[index]?.weight
-                          }
-                        />
-                      </Box>
-                    )
-                  })}
+                  {values.experiment.variants.map(
+                    (variant: any, index: number) => {
+                      return (
+                        <Box border="1px solid #ccc" key={index} p={2} my={1}>
+                          <Input
+                            my={1}
+                            name={`experiment.variants.${index}.name`}
+                            title="Variant Name"
+                            placeholder="Variant Name"
+                            value={values.experiment.variants[index].name}
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                          />
+                          <Input
+                            my={1}
+                            name={`experiment.variants.${index}.weight`}
+                            title="Variant Weight"
+                            placeholder="Variant Name"
+                            value={values.experiment.variants[index].weight}
+                            type="number"
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                          />
+                        </Box>
+                      )
+                    }
+                  )}
 
                   <Button size="small" onClick={handleAddAdditionalVariant}>
                     Add Additional Variant
@@ -202,11 +205,29 @@ const CreateFeatureFlag: React.FC = () => {
             >
               Create
             </Button>
+
+            {submitError && (
+              <Message
+                variant="error"
+                title="Error creating feature flag"
+                mt={2}
+              >
+                <JSONLog>{submitError}</JSONLog>
+              </Message>
+            )}
+
+            <Message variant="info" title="Submit Data" mt={4}>
+              <JSONLog>{submitData.current}</JSONLog>
+            </Message>
           </Form>
         )
       }}
     </Formik>
   )
+}
+
+const JSONLog: React.FC = ({ children }) => {
+  return <pre>{JSON.stringify(children, null, 2)}</pre>
 }
 
 export default CreateFeatureFlag

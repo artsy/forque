@@ -1,11 +1,11 @@
 import { Flex, Checkbox, Box, Button } from "@artsy/palette"
 import { Table } from "components/Table"
 import { graphql, useRefetchableFragment } from "react-relay"
-import EditFeatureFlag from "./EditFeatureFlag"
 import { FeatureFlagsTable_featureFlag$key } from "__generated__/FeatureFlagsTable_featureFlag.graphql"
 import { useDeleteFeatureFlag } from "../mutations/useDeleteFeatureFlag"
 import { useToggleFeatureFlag } from "../mutations/useToggleFeatureFlag"
-import { useRouter } from "next/router"
+import FeatureFlagOverview from "./FeatureFlagOverview"
+import { startTransition } from "react"
 
 interface FeatureFlagsTableProps {
   viewer: FeatureFlagsTable_featureFlag$key
@@ -34,7 +34,6 @@ export const FeatureFlagFields = graphql`
 `
 
 const FeatureFlagTable: React.FC<FeatureFlagsTableProps> = ({ viewer }) => {
-  const router = useRouter()
   const { submitMutation: toggleFeatureFlag } = useToggleFeatureFlag()
   const { submitMutation: deleteFeatureFlag } = useDeleteFeatureFlag()
 
@@ -90,8 +89,8 @@ const FeatureFlagTable: React.FC<FeatureFlagsTableProps> = ({ viewer }) => {
                           event.preventDefault()
                           event.stopPropagation()
                         }}
-                        onSelect={(selected: boolean) => {
-                          toggleFeatureFlag({
+                        onSelect={async (selected: boolean) => {
+                          await toggleFeatureFlag({
                             variables: {
                               input: {
                                 name: row.values.name,
@@ -131,8 +130,9 @@ const FeatureFlagTable: React.FC<FeatureFlagsTableProps> = ({ viewer }) => {
                         },
                       })
 
-                      refetch({}, { fetchPolicy: "network-only" })
-                      router.push("/feature-flags")
+                      startTransition(() => {
+                        refetch({}, { fetchPolicy: "network-only" })
+                      })
                     }}
                   >
                     Delete
@@ -144,7 +144,7 @@ const FeatureFlagTable: React.FC<FeatureFlagsTableProps> = ({ viewer }) => {
         ]}
         data={data.admin?.featureFlags as any}
         renderExpandedRow={(row) => {
-          return <EditFeatureFlag row={row} my={1} />
+          return <FeatureFlagOverview row={row} my={1} />
         }}
         onRowClick={(row) => {
           row.toggleExpandRow()

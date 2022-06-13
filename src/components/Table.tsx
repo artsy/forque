@@ -43,7 +43,7 @@ export const Table: React.FC<TableProps> = ({
           <TR {...headerGroup.getHeaderGroupProps()} key={headerKey} as="tr">
             {headerGroup.headers.map((column, columnKey) => (
               <TH {...column.getHeaderProps()} key={columnKey} as="th">
-                <Text variant="md" my={1}>
+                <Text variant="md" my={1} px={1}>
                   {column.render("Header")}
                 </Text>
               </TH>
@@ -75,7 +75,13 @@ export const Table: React.FC<TableProps> = ({
               >
                 {row.cells.map((cell, cellKey) => {
                   return (
-                    <TD {...cell.getCellProps()} key={cellKey} as="td" py={0.5}>
+                    <TD
+                      {...cell.getCellProps()}
+                      key={cellKey}
+                      as="td"
+                      py={0.5}
+                      px={1}
+                    >
                       {cell.render("Cell")}
                     </TD>
                   )
