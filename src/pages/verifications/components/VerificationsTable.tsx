@@ -78,10 +78,6 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
     viewerData.identityVerificationsConnection
   )
 
-  if (!verifications.length) {
-    return null
-  }
-
   const showPagination =
     !!viewerData.identityVerificationsConnection?.pageCursors
 
@@ -91,64 +87,75 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
       <Text variant="xl" mb={4}>
         {props.email}
       </Text>
-      <StyledBox>
-        <Table
-          columns={[
-            {
-              Header: "Verification ID",
-              accessor: "internalID",
-            },
-            {
-              Header: "Created At",
-              accessor: "createdAt",
-            },
-            {
-              Header: "State",
-              accessor: "state",
-            },
-            {
-              Header: "User ID",
-              accessor: "userID",
-            },
-            {
-              Header: "Name",
-              accessor: "name",
-            },
-            {
-              Header: "Email",
-              accessor: "email",
-            },
-            {
-              Header: "Scans",
-              accessor: "scanReferences.length",
-            },
-            {
-              Header: "Overrides",
-              accessor: "overrides.length",
-            },
-          ]}
-          data={verifications}
-          renderExpandedRow={(row) => {
-            return (
-              <>
-                <VerificationsDetails row={row} />
-              </>
-            )
-          }}
-          onRowClick={(row) => {
-            row.toggleRowExpanded()
-          }}
-        />
-      </StyledBox>
-      {showPagination && (
+      {!verifications.length && (
+        <Text variant="xl" mb={4}>
+          No Results
+        </Text>
+      )}
+      {!!verifications.length && (
         <>
-          <Spacer my={2} />
+          <StyledBox>
+            <Table
+              columns={[
+                {
+                  Header: "Verification ID",
+                  accessor: "internalID",
+                },
+                {
+                  Header: "Created At",
+                  accessor: "createdAt",
+                },
+                {
+                  Header: "State",
+                  accessor: "state",
+                },
+                {
+                  Header: "User ID",
+                  accessor: "userID",
+                },
+                {
+                  Header: "Name",
+                  accessor: "name",
+                },
+                {
+                  Header: "Email",
+                  accessor: "email",
+                },
+                {
+                  Header: "Scans",
+                  accessor: "scanReferences.length",
+                },
+                {
+                  Header: "Overrides",
+                  accessor: "overrides.length",
+                },
+              ]}
+              data={verifications}
+              renderExpandedRow={(row) => {
+                return (
+                  <>
+                    <VerificationsDetails row={row} />
+                  </>
+                )
+              }}
+              onRowClick={(row) => {
+                row.toggleRowExpanded()
+              }}
+            />
+          </StyledBox>
+          {showPagination && (
+            <>
+              <Spacer my={2} />
 
-          <ListPagination
-            pageCursors={viewerData.identityVerificationsConnection.pageCursors}
-            pageInfo={viewerData.identityVerificationsConnection.pageInfo}
-            relayRefetch={refetch}
-          />
+              <ListPagination
+                pageCursors={
+                  viewerData.identityVerificationsConnection.pageCursors
+                }
+                pageInfo={viewerData.identityVerificationsConnection.pageInfo}
+                relayRefetch={refetch}
+              />
+            </>
+          )}
         </>
       )}
     </>

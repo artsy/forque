@@ -30,7 +30,8 @@ export const VerificationsList: React.FC = () => {
         initialValues={{
           emailInput: "",
         }}
-        onSubmit={({ emailInput }) => {
+        onSubmit={({ emailInput }, actions) => {
+          actions.resetForm()
           router.push("/verifications?" + "email=" + emailInput)
         }}
       >
