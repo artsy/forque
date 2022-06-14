@@ -11,6 +11,7 @@ import {
   Separator,
   useToasts,
 } from "@artsy/palette"
+import { JSONLog } from "components/JSONLog"
 import { Form, Formik } from "formik"
 import { useRouter } from "next/router"
 import { useRef, useState } from "react"
@@ -256,10 +257,6 @@ const CreateFeatureFlag: React.FC = () => {
       }}
     </Formik>
   )
-}
-
-const JSONLog: React.FC = ({ children }) => {
-  return <pre>{JSON.stringify(children, null, 2)}</pre>
 }
 
 export default CreateFeatureFlag
