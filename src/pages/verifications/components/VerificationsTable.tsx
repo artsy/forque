@@ -2,7 +2,6 @@ import { Box, Spacer, Text } from "@artsy/palette"
 import { ListPagination } from "components/ListPagination"
 import { Table } from "components/Table"
 import { useExtractNodes } from "hooks"
-import { Suspense } from "react"
 import { graphql, useRefetchableFragment } from "react-relay"
 import { VerificationsTable_viewer$key } from "__generated__/VerificationsTable_viewer.graphql"
 import { VerificationsDetails } from "./VerificationsDetails"
@@ -89,63 +88,58 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
   return (
     <>
       <Spacer my={2} />
-
       <Text variant="xl" mb={4}>
         {props.email}
       </Text>
-
-      <Suspense fallback={null}>
-        <StyledBox>
-          <Table
-            columns={[
-              {
-                Header: "Verification ID",
-                accessor: "internalID",
-              },
-              {
-                Header: "Created At",
-                accessor: "createdAt",
-              },
-              {
-                Header: "State",
-                accessor: "state",
-              },
-              {
-                Header: "User ID",
-                accessor: "userID",
-              },
-              {
-                Header: "Name",
-                accessor: "name",
-              },
-              {
-                Header: "Email",
-                accessor: "email",
-              },
-              {
-                Header: "Scans",
-                accessor: "scanReferences.length",
-              },
-              {
-                Header: "Overrides",
-                accessor: "overrides.length",
-              },
-            ]}
-            data={verifications}
-            renderExpandedRow={(row) => {
-              return (
-                <>
-                  <VerificationsDetails row={row} />
-                </>
-              )
-            }}
-            onRowClick={(row) => {
-              row.toggleRowExpanded()
-            }}
-          />
-        </StyledBox>
-      </Suspense>
-
+      <StyledBox>
+        <Table
+          columns={[
+            {
+              Header: "Verification ID",
+              accessor: "internalID",
+            },
+            {
+              Header: "Created At",
+              accessor: "createdAt",
+            },
+            {
+              Header: "State",
+              accessor: "state",
+            },
+            {
+              Header: "User ID",
+              accessor: "userID",
+            },
+            {
+              Header: "Name",
+              accessor: "name",
+            },
+            {
+              Header: "Email",
+              accessor: "email",
+            },
+            {
+              Header: "Scans",
+              accessor: "scanReferences.length",
+            },
+            {
+              Header: "Overrides",
+              accessor: "overrides.length",
+            },
+          ]}
+          data={verifications}
+          renderExpandedRow={(row) => {
+            return (
+              <>
+                <VerificationsDetails row={row} />
+              </>
+            )
+          }}
+          onRowClick={(row) => {
+            row.toggleRowExpanded()
+          }}
+        />
+      </StyledBox>
       {showPagination && (
         <>
           <Spacer my={2} />
