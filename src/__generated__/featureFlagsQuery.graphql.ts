@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ebc59de9520aa6a575bc3499a30561ea>>
+ * @generated SignedSource<<cb2900f8693463aa22df21862df02d5e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,13 +34,6 @@ v1 = {
   "args": null,
   "kind": "ScalarField",
   "name": "enabled",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
   "storageKey": null
 };
 return {
@@ -189,11 +182,16 @@ return {
                     ],
                     "storageKey": null
                   },
-                  (v2/*: any*/)
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "id",
+                    "storageKey": null
+                  }
                 ],
                 "storageKey": null
-              },
-              (v2/*: any*/)
+              }
             ],
             "storageKey": null
           }
@@ -203,12 +201,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6ce3743d556e00eb4167f6a1c22be2ae",
+    "cacheID": "b2ff5b5deefea61512c994e3a634871d",
     "id": null,
     "metadata": {},
     "name": "featureFlagsQuery",
     "operationKind": "query",
-    "text": "query featureFlagsQuery {\n  viewer {\n    ...FeatureFlagsTable_featureFlag\n  }\n}\n\nfragment FeatureFlagsTable_featureFlag on Viewer {\n  admin {\n    featureFlags {\n      name\n      stale\n      enabled\n      description\n      impressionData\n      type\n      createdAt(format: \"MMM DD, YYYY\")\n      environments {\n        enabled\n        name\n      }\n      variants {\n        name\n        stickiness\n        weight\n        weightType\n      }\n      id\n    }\n    id\n  }\n}\n"
+    "text": "query featureFlagsQuery {\n  viewer {\n    ...FeatureFlagsTable_featureFlag\n  }\n}\n\nfragment FeatureFlagsTable_featureFlag on Viewer {\n  admin {\n    featureFlags {\n      name\n      stale\n      enabled\n      description\n      impressionData\n      type\n      createdAt(format: \"MMM DD, YYYY\")\n      environments {\n        enabled\n        name\n      }\n      variants {\n        name\n        stickiness\n        weight\n        weightType\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();
