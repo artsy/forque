@@ -19,6 +19,23 @@ import * as Yup from "yup"
 import { useCreateFeatureFlagMutation$variables } from "__generated__/useCreateFeatureFlagMutation.graphql"
 import { useCreateFeatureFlag } from "../mutations/useCreateFeatureFlag"
 
+interface InputTypes {
+  name: string
+  strategy: {
+    strategyType: "DEFAULT" | "FLEXIBLE_ROLLOUT"
+    rollOut: number
+  }
+  type: "EXPERIMENT" | "RELEASE"
+  experiment: {
+    isExperiment: boolean
+    variants: Array<{
+      name: string
+      weight: number
+      weightType: "VARIABLE"
+    }>
+  }
+}
+
 const CreateFeatureFlag: React.FC = () => {
   const submitData = useRef<useCreateFeatureFlagMutation$variables | null>(null)
   const [submitError, setSubmitError] = useState<string | null>(null)
@@ -27,7 +44,7 @@ const CreateFeatureFlag: React.FC = () => {
   const { sendToast } = useToasts()
 
   return (
-    <Formik<any>
+    <Formik<InputTypes>
       initialValues={{
         name: "",
         strategy: {
@@ -103,7 +120,7 @@ const CreateFeatureFlag: React.FC = () => {
               strategyType: values.strategy.strategyType,
               rollOut: values.strategy.rollOut,
             },
-            variants: values.experiment.isEnabled
+            variants: values.experiment.isExperiment
               ? values.experiment.variants
               : null,
           },
@@ -168,14 +185,14 @@ const CreateFeatureFlag: React.FC = () => {
             <Box>
               <Checkbox
                 onSelect={(selected) => {
-                  setFieldValue("experiment.isEnabled", selected)
+                  setFieldValue("experiment.isExperiment", selected)
                 }}
-                selected={values.experiment.isEnabled}
+                selected={values.experiment.isExperiment}
               >
                 Experiment
               </Checkbox>
 
-              {values.experiment.isEnabled && (
+              {values.experiment.isExperiment && (
                 <>
                   {values.experiment.variants.map(
                     (variant: any, index: number) => {
