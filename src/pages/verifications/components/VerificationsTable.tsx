@@ -86,12 +86,6 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
   const showPagination =
     !!viewerData.identityVerificationsConnection?.pageCursors
 
-  const StyledBox = styled(Box)`
-    td {
-      padding-bottom:1%;
-    }
-  }
-  `
   return (
     <>
       <Spacer my={2} />
@@ -166,3 +160,10 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
     </>
   )
 }
+
+const StyledBox = styled(Box)`
+  td {
+    padding-bottom: 1%;
+  }
+}
+`
