@@ -45,6 +45,7 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
               createdAt
               internalID
               state
+              userID
               scanReferences {
                 createdAt
                 extractedFirstName
@@ -112,6 +113,26 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
               {
                 Header: "State",
                 accessor: "state",
+              },
+              {
+                Header: "User ID",
+                accessor: "userID",
+              },
+              {
+                Header: "Name",
+                accessor: "name",
+              },
+              {
+                Header: "Email",
+                accessor: "email",
+              },
+              {
+                Header: "Scans",
+                accessor: "scanReferences.length",
+              },
+              {
+                Header: "Overrides",
+                accessor: "overrides.length",
               },
             ]}
             data={verifications}
