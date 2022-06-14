@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e251f1b0f9477a77bbcd831ba14ca797>>
+ * @generated SignedSource<<de57aa246a4454f47be101cf35ca8b95>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -115,6 +115,13 @@ v9 = {
   "storageKey": null
 },
 v10 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "userID",
+  "storageKey": null
+},
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -289,6 +296,7 @@ return {
                         "name": "state",
                         "storageKey": null
                       },
+                      (v10/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -333,7 +341,7 @@ return {
                             "name": "finishedAt",
                             "storageKey": null
                           },
-                          (v10/*: any*/),
+                          (v11/*: any*/),
                           (v9/*: any*/),
                           {
                             "alias": null,
@@ -382,18 +390,12 @@ return {
                             "name": "reason",
                             "storageKey": null
                           },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "userID",
-                            "storageKey": null
-                          },
-                          (v10/*: any*/)
+                          (v10/*: any*/),
+                          (v11/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v10/*: any*/)
+                      (v11/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -409,16 +411,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4ba6f185be3fab64dee3ad5c66fc4c59",
+    "cacheID": "7b0b118a15f6c9e06e9717303d81a455",
     "id": null,
     "metadata": {},
     "name": "VerificationsTableQuery",
     "operationKind": "query",
-    "text": "query VerificationsTableQuery(\n  $after: String\n  $before: String\n  $email: String\n  $first: Int = 20\n  $last: Int\n) {\n  viewer {\n    ...VerificationsTable_viewer_pbnwq\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment VerificationsTable_viewer_pbnwq on Viewer {\n  identityVerificationsConnection(first: $first, last: $last, after: $after, before: $before, email: $email) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        createdAt\n        internalID\n        state\n        scanReferences {\n          createdAt\n          extractedFirstName\n          extractedLastName\n          extractedIdFailReason\n          extractedSimilarityFailReason\n          finishedAt\n          id\n          internalID\n          jumioID\n          result\n        }\n        overrides {\n          createdAt\n          newState\n          oldState\n          reason\n          userID\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query VerificationsTableQuery(\n  $after: String\n  $before: String\n  $email: String\n  $first: Int = 20\n  $last: Int\n) {\n  viewer {\n    ...VerificationsTable_viewer_pbnwq\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment VerificationsTable_viewer_pbnwq on Viewer {\n  identityVerificationsConnection(first: $first, last: $last, after: $after, before: $before, email: $email) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        createdAt\n        internalID\n        state\n        userID\n        scanReferences {\n          createdAt\n          extractedFirstName\n          extractedLastName\n          extractedIdFailReason\n          extractedSimilarityFailReason\n          finishedAt\n          id\n          internalID\n          jumioID\n          result\n        }\n        overrides {\n          createdAt\n          newState\n          oldState\n          reason\n          userID\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "458d665edd22a4a913f0898415a76a89";
+(node as any).hash = "780a9a08525ab29c9cb640c651278356";
 
 export default node;

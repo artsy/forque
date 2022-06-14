@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<65c6fcdc62fcb4d83edbf9d89e17bdf4>>
+ * @generated SignedSource<<535f03dcdd373a4aaeb0c0a6f3b992f4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,6 +24,7 @@ export type VerificationsTable_viewer$data = {
         readonly createdAt: string | null;
         readonly internalID: string;
         readonly state: string;
+        readonly userID: string | null;
         readonly scanReferences: ReadonlyArray<{
           readonly createdAt: string | null;
           readonly extractedFirstName: string | null;
@@ -66,6 +67,13 @@ v1 = {
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "userID",
   "storageKey": null
 };
 return {
@@ -207,6 +215,7 @@ return {
                   "name": "state",
                   "storageKey": null
                 },
+                (v2/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -306,13 +315,7 @@ return {
                       "name": "reason",
                       "storageKey": null
                     },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "userID",
-                      "storageKey": null
-                    }
+                    (v2/*: any*/)
                   ],
                   "storageKey": null
                 }
@@ -331,6 +334,6 @@ return {
 };
 })();
 
-(node as any).hash = "458d665edd22a4a913f0898415a76a89";
+(node as any).hash = "780a9a08525ab29c9cb640c651278356";
 
 export default node;
