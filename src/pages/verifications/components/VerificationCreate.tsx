@@ -9,14 +9,14 @@ export const VarificationCreate: React.FC = () => {
 
   const { sendToast } = useToasts()
 
-  const initialValues = {
-    email: "",
+  interface InputTypes {
+    email: string
   }
 
   return (
     <>
-      <Formik
-        initialValues={initialValues}
+      <Formik<InputTypes>
+        initialValues={{ email: "" }}
         validationSchema={Yup.object().shape({
           email: Yup.string()
             .required("A user email is required")
