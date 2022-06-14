@@ -5,11 +5,13 @@ import {
   failureResponse,
 } from "../__fixtures__/verificationCreateMutationResponses"
 
-const mockUseToasts = jest.fn()
+const mockSendToast = jest.fn()
 
 jest.mock("@artsy/palette", () => ({
   ...jest.requireActual("@artsy/palette"),
-  useToasts: () => mockUseToasts,
+  useToasts: () => ({
+    sendToast: mockSendToast,
+  }),
 }))
 
 const mockCreateIdentityVerification = jest.fn()
@@ -20,13 +22,11 @@ jest.mock("../../mutations/useCreateIdentityVerification", () => ({
   }),
 }))
 
-it("shows a confirmation message when an identity verfication is created", () => {
+it("shows a confirmation message when an identity verfication is created", async () => {
   mockCreateIdentityVerification.mockImplementation(() => successResponse)
 
   const spy = jest.fn()
-  mockUseToasts.mockImplementation(() => ({
-    sendToast: spy,
-  }))
+  mockSendToast.mockImplementation(() => spy)
 
   render(<VarificationCreate />)
 
@@ -46,7 +46,7 @@ it("shows a confirmation message when an identity verification fails to be creat
   mockCreateIdentityVerification.mockImplementation(() => failureResponse)
 
   const spy = jest.fn()
-  mockUseToasts.mockImplementation(() => ({
+  mockSendToast.mockImplementation(() => ({
     sendToast: spy,
   }))
 
