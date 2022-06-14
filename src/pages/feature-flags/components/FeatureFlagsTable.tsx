@@ -1,4 +1,4 @@
-import { Flex, Checkbox, Button, useToasts } from "@artsy/palette"
+import { Flex, Checkbox, Button, Text, useToasts } from "@artsy/palette"
 import { Table } from "components/Table"
 import { graphql, useRefetchableFragment } from "react-relay"
 import { FeatureFlagsTable_featureFlag$key } from "__generated__/FeatureFlagsTable_featureFlag.graphql"
@@ -50,6 +50,10 @@ const FeatureFlagTable: React.FC<FeatureFlagsTableProps> = ({ viewer }) => {
     `,
     viewer
   )
+
+  if (!data.admin) {
+    return <Text variant="md">No feature flags available.</Text>
+  }
 
   return (
     <>
