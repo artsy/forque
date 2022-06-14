@@ -9,7 +9,7 @@ export const useUpdateFeatureFlag = () => {
         $input: AdminUpdateFeatureFlagInput!
       ) {
         adminUpdateFeatureFlag(input: $input) {
-          featureFlag {
+          featureFlags {
             ...FeatureFlagsTable
           }
         }

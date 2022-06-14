@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e080140b6e5732720cb31ecb7474ab1a>>
+ * @generated SignedSource<<f905f38b716be6bc690a6962ad85ef68>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,9 +22,9 @@ export type useUpdateFeatureFlagMutation$variables = {
 };
 export type useUpdateFeatureFlagMutation$data = {
   readonly adminUpdateFeatureFlag: {
-    readonly featureFlag: {
+    readonly featureFlags: ReadonlyArray<{
       readonly " $fragmentSpreads": FragmentRefs<"FeatureFlagsTable">;
-    } | null;
+    } | null> | null;
   } | null;
 };
 export type useUpdateFeatureFlagMutation = {
@@ -81,8 +81,8 @@ return {
             "args": null,
             "concreteType": "FeatureFlag",
             "kind": "LinkedField",
-            "name": "featureFlag",
-            "plural": false,
+            "name": "featureFlags",
+            "plural": true,
             "selections": [
               {
                 "args": null,
@@ -118,8 +118,8 @@ return {
             "args": null,
             "concreteType": "FeatureFlag",
             "kind": "LinkedField",
-            "name": "featureFlag",
-            "plural": false,
+            "name": "featureFlags",
+            "plural": true,
             "selections": [
               (v2/*: any*/),
               {
@@ -226,16 +226,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cd1e25c77d886aa5a03e384cc4faf835",
+    "cacheID": "57d24a6b718b4b9b6e794187e5e04084",
     "id": null,
     "metadata": {},
     "name": "useUpdateFeatureFlagMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateFeatureFlagMutation(\n  $input: AdminUpdateFeatureFlagInput!\n) {\n  adminUpdateFeatureFlag(input: $input) {\n    featureFlag {\n      ...FeatureFlagsTable\n      id\n    }\n  }\n}\n\nfragment FeatureFlagsTable on FeatureFlag {\n  name\n  stale\n  enabled\n  description\n  impressionData\n  type\n  createdAt(format: \"MMM DD, YYYY\")\n  environments {\n    enabled\n    name\n  }\n  variants {\n    name\n    stickiness\n    weight\n    weightType\n  }\n}\n"
+    "text": "mutation useUpdateFeatureFlagMutation(\n  $input: AdminUpdateFeatureFlagInput!\n) {\n  adminUpdateFeatureFlag(input: $input) {\n    featureFlags {\n      ...FeatureFlagsTable\n      id\n    }\n  }\n}\n\nfragment FeatureFlagsTable on FeatureFlag {\n  name\n  stale\n  enabled\n  description\n  impressionData\n  type\n  createdAt(format: \"MMM DD, YYYY\")\n  environments {\n    enabled\n    name\n  }\n  variants {\n    name\n    stickiness\n    weight\n    weightType\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "46befe622434f47db15cc8a8643ad470";
+(node as any).hash = "e9677c54798702f98a476d4de2ac7ca8";
 
 export default node;

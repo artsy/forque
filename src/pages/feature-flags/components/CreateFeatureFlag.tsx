@@ -55,8 +55,13 @@ const CreateFeatureFlag: React.FC = () => {
       })}
       onSubmit={async (values) => {
         try {
+          // Unleash API doesn't like empty whitespace in strings. Trim it.
+          const cleanData = JSON.parse(
+            JSON.stringify(submitData.current).replace(/"\s+|\s+"/g, '"')
+          )
+
           await submitMutation({
-            variables: submitData.current!,
+            variables: cleanData,
           })
 
           sendToast({
@@ -67,8 +72,14 @@ const CreateFeatureFlag: React.FC = () => {
           router.push("/feature-flags")
         } catch (error: any) {
           const errorMessage = JSON.parse(error[0].message)
-          setSubmitError(errorMessage)
           console.error("[forque] Error creating feature flag", errorMessage)
+
+          setSubmitError(errorMessage)
+
+          sendToast({
+            message: `Error creating feature flag`,
+            variant: "error",
+          })
         }
       }}
     >
@@ -139,6 +150,7 @@ const CreateFeatureFlag: React.FC = () => {
                   name="strategy.rollOut"
                   title="Rollout Percentage"
                   placeholder="100"
+                  type="number"
                   value={values.strategy.rollOut}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -222,7 +234,6 @@ const CreateFeatureFlag: React.FC = () => {
               }
               disabled={!isValid}
               type="submit"
-              size="small"
             >
               Create
             </Button>
