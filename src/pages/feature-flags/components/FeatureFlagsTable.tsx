@@ -113,9 +113,9 @@ const FeatureFlagTable: React.FC<FeatureFlagsTableProps> = ({ viewer }) => {
             Header: "Actions",
             Cell: ({ row }: any) => {
               return (
-                <DeleteButton
+                <ArchiveButton
                   name={row.values.name}
-                  onDelete={async () => {
+                  onArchive={async () => {
                     await deleteFeatureFlag({
                       variables: {
                         input: {
@@ -170,20 +170,20 @@ const ToggleEnvCheckbox: React.FC<{
   )
 }
 
-const DeleteButton: React.FC<{
+const ArchiveButton: React.FC<{
   name: string
-  onDelete: () => Promise<void>
-}> = ({ name, onDelete }) => {
+  onArchive: () => Promise<void>
+}> = ({ name, onArchive }) => {
   const { sendToast } = useToasts()
   const [showConfirmMessage, setShowConfirmMessage] = useState(false)
-  const [isDeleting, setIsDeleting] = useState(false)
+  const [isArchiving, setIsArchiving] = useState(false)
 
   return (
     <Button
       size="small"
       variant="secondaryOutline"
       width={80}
-      loading={isDeleting}
+      loading={isArchiving}
       onClick={async (event) => {
         event.stopPropagation()
         event.preventDefault()
@@ -191,8 +191,8 @@ const DeleteButton: React.FC<{
         setShowConfirmMessage(true)
 
         if (showConfirmMessage) {
-          setIsDeleting(true)
-          await onDelete()
+          setIsArchiving(true)
+          await onArchive()
 
           sendToast({
             message: `Successfully archived ${name}`,
@@ -201,7 +201,7 @@ const DeleteButton: React.FC<{
         }
       }}
     >
-      {showConfirmMessage ? "OK?" : "Delete"}
+      {showConfirmMessage ? "OK?" : "Archive"}
     </Button>
   )
 }
