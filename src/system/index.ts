@@ -7,7 +7,7 @@ export type UserWithAccessToken = User & {
 
 // all supported roles
 export enum Role {
-  // NOTE: Do not add Admin to supported roles. It is to be deprectated.
+  // NOTE: Do not add Admin to supported roles. It is to be deprecated.
   customer_support = "customer_support",
   metadata_admin = "metadata_admin",
   team = "team",
