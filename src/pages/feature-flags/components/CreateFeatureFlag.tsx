@@ -140,7 +140,7 @@ const CreateFeatureFlag: React.FC = () => {
                 <Radio value="DEFAULT" label="Simple on/off flag" my={0.5} />
                 <Radio
                   value="FLEXIBLE_ROLLOUT"
-                  label="Flexible Roll-out. For A/B tests, where you can specify a percentage of users to be served a variant"
+                  label="Flexible Roll-out. Enable flag for a percentage of users"
                 />
               </RadioGroup>
 
