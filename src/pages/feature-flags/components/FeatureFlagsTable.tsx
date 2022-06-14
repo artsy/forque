@@ -175,27 +175,33 @@ const DeleteButton: React.FC<{
   onDelete: () => Promise<void>
 }> = ({ name, onDelete }) => {
   const { sendToast } = useToasts()
+  const [showConfirmMessage, setShowConfirmMessage] = useState(false)
   const [isDeleting, setIsDeleting] = useState(false)
 
   return (
     <Button
       size="small"
       variant="secondaryOutline"
+      width={80}
       loading={isDeleting}
       onClick={async (event) => {
         event.stopPropagation()
         event.preventDefault()
 
-        setIsDeleting(true)
-        await onDelete()
+        setShowConfirmMessage(true)
 
-        sendToast({
-          message: `Successfully archived ${name}`,
-          variant: "alert",
-        })
+        if (showConfirmMessage) {
+          setIsDeleting(true)
+          await onDelete()
+
+          sendToast({
+            message: `Successfully archived ${name}`,
+            variant: "alert",
+          })
+        }
       }}
     >
-      Delete
+      {showConfirmMessage ? "OK?" : "Delete"}
     </Button>
   )
 }
