@@ -111,7 +111,7 @@ const CreateFeatureFlag: React.FC = () => {
         const handleAddAdditionalVariant = () => {
           setFieldValue("experiment.variants", [
             ...values.experiment.variants,
-            { name: "", weight: 500, weightType: "VARIABLE" },
+            { name: "", weight: 0, weightType: "VARIABLE" },
           ])
         }
 
