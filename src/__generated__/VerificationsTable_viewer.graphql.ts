@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<535f03dcdd373a4aaeb0c0a6f3b992f4>>
+ * @generated SignedSource<<ac598582633ec547629c6efcdd311dc0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,7 +22,9 @@ export type VerificationsTable_viewer$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly createdAt: string | null;
+        readonly email: string | null;
         readonly internalID: string;
+        readonly name: string | null;
         readonly state: string;
         readonly userID: string | null;
         readonly scanReferences: ReadonlyArray<{
@@ -207,7 +209,21 @@ return {
               "plural": false,
               "selections": [
                 (v0/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "email",
+                  "storageKey": null
+                },
                 (v1/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "name",
+                  "storageKey": null
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -334,6 +350,6 @@ return {
 };
 })();
 
-(node as any).hash = "780a9a08525ab29c9cb640c651278356";
+(node as any).hash = "dc62c28a5b0e192027aca751273e19ea";
 
 export default node;

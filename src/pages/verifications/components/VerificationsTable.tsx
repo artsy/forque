@@ -43,7 +43,9 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
           edges {
             node {
               createdAt
+              email
               internalID
+              name
               state
               userID
               scanReferences {
