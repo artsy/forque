@@ -21,7 +21,7 @@ export const VerificationsList: React.FC = () => {
     `,
     { email },
     // otherwise relay fetches on page load, with undefined email, and pulls all data
-    { fetchPolicy: !email ? "store-only" : "store-or-network" }
+    { fetchPolicy: !email ? "store-only" : "network-only" }
   )
 
   return (
