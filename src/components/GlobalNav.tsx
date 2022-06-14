@@ -35,15 +35,25 @@ export const GlobalNav: FC<GlobalNavProps> = ({ user }) => {
             {/* {isPermitted(user, [Action.list], "users") && (
               <Item href="/users">Users</Item>
             )}
+
             {isPermitted(user, [Action.dedupe], "artists") && (
               <Item href="/artists/dedupe">Dedupe Artists</Item>
             )} */}
+
+            {isPermitted(
+              user,
+              [Action.list, Action.create],
+              "feature_flags"
+            ) && <Item href="/feature-flags">Feature Flags</Item>}
+
             {isPermitted(user, [Action.transfer], "my_collection") && (
               <Item href="/my-collection">My Collection</Item>
             )}
+
             {isPermitted(user, [Action.list, Action.create], "uploads") && (
               <Item href="/uploads">Uploads</Item>
             )}
+
             {isPermitted(user, [Action.create], "shortcuts") && (
               <Item href="/shortcuts">Shortcuts</Item>
             )}
