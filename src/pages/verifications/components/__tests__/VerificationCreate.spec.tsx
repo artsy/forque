@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
-import { VarificationCreate } from "../VerificationCreate"
+import { VerificationsCreate } from "../VerificationsCreate"
 import {
   successResponse,
   failureResponse,
@@ -25,7 +25,7 @@ jest.mock("../../mutations/useCreateIdentityVerification", () => ({
 it("shows a toast message when an identity verfication is created", async () => {
   mockCreateIdentityVerification.mockImplementation(() => successResponse)
 
-  render(<VarificationCreate />)
+  render(<VerificationsCreate />)
 
   const input = screen.getByPlaceholderText("user@example.com")
 
@@ -44,7 +44,7 @@ it("shows a toast message when an identity verfication is created", async () => 
 xit("shows a toast message when an identity verification fails to be created", async () => {
   mockCreateIdentityVerification.mockImplementation(() => failureResponse)
 
-  render(<VarificationCreate />)
+  render(<VerificationsCreate />)
 
   const input = screen.getByPlaceholderText("user@example.com")
 

@@ -3,7 +3,7 @@ import { Form, Formik } from "formik"
 import * as Yup from "yup"
 import { useCreateIdentityVerification } from "../mutations/useCreateIdentityVerification"
 
-export const VarificationCreate: React.FC = () => {
+export const VerificationsCreate: React.FC = () => {
   const { submitMutation: submitIdentityVerificationMutation } =
     useCreateIdentityVerification()
 
