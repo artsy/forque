@@ -13,7 +13,7 @@ const VerificationsPage: React.FC = () => {
   return (
     <>
       <Head>
-        <title>Identity verifications | Artsy</title>
+        <title>Identity Verifications | Artsy</title>
       </Head>
 
       <Tabs>
