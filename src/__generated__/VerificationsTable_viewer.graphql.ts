@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ac598582633ec547629c6efcdd311dc0>>
+ * @generated SignedSource<<ff581db2020c896dc3ac2e2dfff4f8f7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -45,6 +45,9 @@ export type VerificationsTable_viewer$data = {
           readonly oldState: string;
           readonly reason: string;
           readonly userID: string | null;
+          readonly creator: {
+            readonly email: string;
+          } | null;
         } | null> | null;
       } | null;
     } | null> | null;
@@ -68,10 +71,17 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "email",
   "storageKey": null
 },
 v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -209,14 +219,8 @@ return {
               "plural": false,
               "selections": [
                 (v0/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "email",
-                  "storageKey": null
-                },
                 (v1/*: any*/),
+                (v2/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -231,7 +235,7 @@ return {
                   "name": "state",
                   "storageKey": null
                 },
-                (v2/*: any*/),
+                (v3/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -283,7 +287,7 @@ return {
                       "name": "id",
                       "storageKey": null
                     },
-                    (v1/*: any*/),
+                    (v2/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -331,7 +335,19 @@ return {
                       "name": "reason",
                       "storageKey": null
                     },
-                    (v2/*: any*/)
+                    (v3/*: any*/),
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "User",
+                      "kind": "LinkedField",
+                      "name": "creator",
+                      "plural": false,
+                      "selections": [
+                        (v1/*: any*/)
+                      ],
+                      "storageKey": null
+                    }
                   ],
                   "storageKey": null
                 }
@@ -350,6 +366,6 @@ return {
 };
 })();
 
-(node as any).hash = "dc62c28a5b0e192027aca751273e19ea";
+(node as any).hash = "fd2924d47145c95e327970fc74e996ed";
 
 export default node;

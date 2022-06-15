@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a4f5485d2c39dee9736b96481428bbca>>
+ * @generated SignedSource<<90c146a4b02df3a5ba6a057d4df6c4eb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -67,17 +67,24 @@ v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "email",
   "storageKey": null
 },
 v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "userID",
+  "name": "internalID",
   "storageKey": null
 },
 v7 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "userID",
+  "storageKey": null
+},
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -240,14 +247,8 @@ return {
                     "plural": false,
                     "selections": [
                       (v4/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "email",
-                        "storageKey": null
-                      },
                       (v5/*: any*/),
+                      (v6/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -262,7 +263,7 @@ return {
                         "name": "state",
                         "storageKey": null
                       },
-                      (v6/*: any*/),
+                      (v7/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -307,8 +308,8 @@ return {
                             "name": "finishedAt",
                             "storageKey": null
                           },
-                          (v7/*: any*/),
-                          (v5/*: any*/),
+                          (v8/*: any*/),
+                          (v6/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -356,12 +357,25 @@ return {
                             "name": "reason",
                             "storageKey": null
                           },
-                          (v6/*: any*/),
-                          (v7/*: any*/)
+                          (v7/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "User",
+                            "kind": "LinkedField",
+                            "name": "creator",
+                            "plural": false,
+                            "selections": [
+                              (v5/*: any*/),
+                              (v8/*: any*/)
+                            ],
+                            "storageKey": null
+                          },
+                          (v8/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v7/*: any*/)
+                      (v8/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -377,12 +391,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e2930b57769b008edf6a5517fbcdd8ac",
+    "cacheID": "8f83173837614b175086ef87e75faaf0",
     "id": null,
     "metadata": {},
     "name": "VerificationsListQuery",
     "operationKind": "query",
-    "text": "query VerificationsListQuery(\n  $email: String\n) {\n  viewer {\n    ...VerificationsTable_viewer\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment VerificationsTable_viewer on Viewer {\n  identityVerificationsConnection(first: 20, email: $email) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        createdAt\n        email\n        internalID\n        name\n        state\n        userID\n        scanReferences {\n          createdAt\n          extractedFirstName\n          extractedLastName\n          extractedIdFailReason\n          extractedSimilarityFailReason\n          finishedAt\n          id\n          internalID\n          jumioID\n          result\n        }\n        overrides {\n          createdAt\n          newState\n          oldState\n          reason\n          userID\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query VerificationsListQuery(\n  $email: String\n) {\n  viewer {\n    ...VerificationsTable_viewer\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment VerificationsTable_viewer on Viewer {\n  identityVerificationsConnection(first: 20, email: $email) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        createdAt\n        email\n        internalID\n        name\n        state\n        userID\n        scanReferences {\n          createdAt\n          extractedFirstName\n          extractedLastName\n          extractedIdFailReason\n          extractedSimilarityFailReason\n          finishedAt\n          id\n          internalID\n          jumioID\n          result\n        }\n        overrides {\n          createdAt\n          newState\n          oldState\n          reason\n          userID\n          creator {\n            email\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

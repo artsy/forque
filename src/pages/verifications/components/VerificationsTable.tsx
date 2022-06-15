@@ -65,6 +65,9 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
                 oldState
                 reason
                 userID
+                creator {
+                  email
+                }
               }
             }
           }

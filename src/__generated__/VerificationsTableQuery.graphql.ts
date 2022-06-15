@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b8d3792a688370beda8d44570b82a976>>
+ * @generated SignedSource<<498a49db3de438103261be60e3c67e6d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -111,17 +111,24 @@ v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "email",
   "storageKey": null
 },
 v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "userID",
+  "name": "internalID",
   "storageKey": null
 },
 v11 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "userID",
+  "storageKey": null
+},
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -288,14 +295,8 @@ return {
                     "plural": false,
                     "selections": [
                       (v8/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "email",
-                        "storageKey": null
-                      },
                       (v9/*: any*/),
+                      (v10/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -310,7 +311,7 @@ return {
                         "name": "state",
                         "storageKey": null
                       },
-                      (v10/*: any*/),
+                      (v11/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -355,8 +356,8 @@ return {
                             "name": "finishedAt",
                             "storageKey": null
                           },
-                          (v11/*: any*/),
-                          (v9/*: any*/),
+                          (v12/*: any*/),
+                          (v10/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -404,12 +405,25 @@ return {
                             "name": "reason",
                             "storageKey": null
                           },
-                          (v10/*: any*/),
-                          (v11/*: any*/)
+                          (v11/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "User",
+                            "kind": "LinkedField",
+                            "name": "creator",
+                            "plural": false,
+                            "selections": [
+                              (v9/*: any*/),
+                              (v12/*: any*/)
+                            ],
+                            "storageKey": null
+                          },
+                          (v12/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      (v11/*: any*/)
+                      (v12/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -425,16 +439,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8268f95fb014f6f20262a32376402517",
+    "cacheID": "86e55e81660cf74cb7271fff490984d8",
     "id": null,
     "metadata": {},
     "name": "VerificationsTableQuery",
     "operationKind": "query",
-    "text": "query VerificationsTableQuery(\n  $after: String\n  $before: String\n  $email: String\n  $first: Int = 20\n  $last: Int\n) {\n  viewer {\n    ...VerificationsTable_viewer_pbnwq\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment VerificationsTable_viewer_pbnwq on Viewer {\n  identityVerificationsConnection(first: $first, last: $last, after: $after, before: $before, email: $email) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        createdAt\n        email\n        internalID\n        name\n        state\n        userID\n        scanReferences {\n          createdAt\n          extractedFirstName\n          extractedLastName\n          extractedIdFailReason\n          extractedSimilarityFailReason\n          finishedAt\n          id\n          internalID\n          jumioID\n          result\n        }\n        overrides {\n          createdAt\n          newState\n          oldState\n          reason\n          userID\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query VerificationsTableQuery(\n  $after: String\n  $before: String\n  $email: String\n  $first: Int = 20\n  $last: Int\n) {\n  viewer {\n    ...VerificationsTable_viewer_pbnwq\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment VerificationsTable_viewer_pbnwq on Viewer {\n  identityVerificationsConnection(first: $first, last: $last, after: $after, before: $before, email: $email) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        createdAt\n        email\n        internalID\n        name\n        state\n        userID\n        scanReferences {\n          createdAt\n          extractedFirstName\n          extractedLastName\n          extractedIdFailReason\n          extractedSimilarityFailReason\n          finishedAt\n          id\n          internalID\n          jumioID\n          result\n        }\n        overrides {\n          createdAt\n          newState\n          oldState\n          reason\n          userID\n          creator {\n            email\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "dc62c28a5b0e192027aca751273e19ea";
+(node as any).hash = "fd2924d47145c95e327970fc74e996ed";
 
 export default node;

@@ -14,8 +14,8 @@ export const VerificationsOverrides: React.FC = (props) => {
       <Table
         columns={[
           {
-            Header: "Admin User ID",
-            accessor: "userID",
+            Header: "Admin Email",
+            accessor: "creator.email",
           },
           {
             Header: "Created At",
