@@ -5,13 +5,14 @@ export type UserWithAccessToken = User & {
   roles: string[]
 }
 
-// All supported roles
-// NOTE: Do not add Admin to supported roles. It is to be deprectated.
+// all supported roles
 export enum Role {
+  // NOTE: Do not add Admin to supported roles. It is to be deprecated.
   customer_support = "customer_support",
   metadata_admin = "metadata_admin",
   team = "team",
   content_manager = "content_manager",
+  verification_admin = "verification_admin",
 }
 
 export enum Action {
@@ -47,6 +48,10 @@ const PERMISSIONS: Record<string, Record<string, Role[]>> = {
   },
   users: {
     [Action.list]: [Role.customer_support],
+  },
+  verifications: {
+    [Action.create]: [Role.verification_admin],
+    [Action.list]: [Role.verification_admin],
   },
 }
 
