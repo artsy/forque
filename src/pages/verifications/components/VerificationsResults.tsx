@@ -26,7 +26,7 @@ export const VerificationsResults: React.FC<VerificationsResultsProps> = (
 
   return (
     <>
-      <VerificationsTable viewer={viewerData.viewer!} email={props.email} />
+      <VerificationsTable viewer={viewerData.viewer!} email={email} />
     </>
   )
 }
