@@ -53,9 +53,6 @@ const PERMISSIONS: Record<string, Record<string, Role[]>> = {
     [Action.create]: [Role.verification_admin],
     [Action.list]: [Role.verification_admin],
   },
-  verifications: {
-    [Action.list]: [Role.verification_admin],
-  },
 }
 
 type Domain = keyof typeof PERMISSIONS
