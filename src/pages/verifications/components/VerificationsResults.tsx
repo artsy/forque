@@ -20,7 +20,8 @@ export const VerificationsResults: React.FC<VerificationsResultsProps> = (
         }
       }
     `,
-    { email }
+    { email },
+    { fetchPolicy: "network-only" }
   )
 
   return (
