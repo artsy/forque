@@ -1,4 +1,4 @@
-import { Spacer } from "@artsy/palette"
+import { Spacer, Text } from "@artsy/palette"
 import { Table } from "components/Table"
 
 export const VerificationsOverrides: React.FC = (props) => {
@@ -10,7 +10,9 @@ export const VerificationsOverrides: React.FC = (props) => {
 
   return (
     <>
-      Overrides
+      <Text variant="lg" my={1}>
+        Overrides
+      </Text>
       <Table
         columns={[
           {

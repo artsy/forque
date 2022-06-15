@@ -1,4 +1,4 @@
-import { Spacer } from "@artsy/palette"
+import { Spacer, Text } from "@artsy/palette"
 import { Table } from "components/Table"
 
 export const VerificationsScanReferences: React.FC = (props) => {
@@ -10,7 +10,9 @@ export const VerificationsScanReferences: React.FC = (props) => {
 
   return (
     <>
-      Scan References
+      <Text variant="lg" my={1}>
+        Scan References
+      </Text>
       <Table
         columns={[
           {
