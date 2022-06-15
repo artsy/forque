@@ -1,4 +1,4 @@
-import { Spacer, Text } from "@artsy/palette"
+import { Text } from "@artsy/palette"
 import { Table } from "components/Table"
 
 export const VerificationsOverrides: React.FC = (props) => {
@@ -39,7 +39,6 @@ export const VerificationsOverrides: React.FC = (props) => {
         data={overrides}
         onRowClick={onRowClick}
       />
-      <Spacer my={2} />
     </>
   )
 }
