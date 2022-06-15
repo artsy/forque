@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<90c146a4b02df3a5ba6a057d4df6c4eb>>
+ * @generated SignedSource<<58b6eee7f8f9d4eade875d9a9b79f18f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,17 +10,17 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type VerificationsListQuery$variables = {
+export type VerificationsResultsQuery$variables = {
   email?: string | null;
 };
-export type VerificationsListQuery$data = {
+export type VerificationsResultsQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"VerificationsTable_viewer">;
   } | null;
 };
-export type VerificationsListQuery = {
-  variables: VerificationsListQuery$variables;
-  response: VerificationsListQuery$data;
+export type VerificationsResultsQuery = {
+  variables: VerificationsResultsQuery$variables;
+  response: VerificationsResultsQuery$data;
 };
 
 const node: ConcreteRequest = (function(){
@@ -96,7 +96,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "VerificationsListQuery",
+    "name": "VerificationsResultsQuery",
     "selections": [
       {
         "alias": null,
@@ -122,7 +122,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "VerificationsListQuery",
+    "name": "VerificationsResultsQuery",
     "selections": [
       {
         "alias": null,
@@ -391,16 +391,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8f83173837614b175086ef87e75faaf0",
+    "cacheID": "6504208695c10f4fbf68edd6e5c4ca9f",
     "id": null,
     "metadata": {},
-    "name": "VerificationsListQuery",
+    "name": "VerificationsResultsQuery",
     "operationKind": "query",
-    "text": "query VerificationsListQuery(\n  $email: String\n) {\n  viewer {\n    ...VerificationsTable_viewer\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment VerificationsTable_viewer on Viewer {\n  identityVerificationsConnection(first: 20, email: $email) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        createdAt\n        email\n        internalID\n        name\n        state\n        userID\n        scanReferences {\n          createdAt\n          extractedFirstName\n          extractedLastName\n          extractedIdFailReason\n          extractedSimilarityFailReason\n          finishedAt\n          id\n          internalID\n          jumioID\n          result\n        }\n        overrides {\n          createdAt\n          newState\n          oldState\n          reason\n          userID\n          creator {\n            email\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query VerificationsResultsQuery(\n  $email: String\n) {\n  viewer {\n    ...VerificationsTable_viewer\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment VerificationsTable_viewer on Viewer {\n  identityVerificationsConnection(first: 20, email: $email) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        createdAt\n        email\n        internalID\n        name\n        state\n        userID\n        scanReferences {\n          createdAt\n          extractedFirstName\n          extractedLastName\n          extractedIdFailReason\n          extractedSimilarityFailReason\n          finishedAt\n          id\n          internalID\n          jumioID\n          result\n        }\n        overrides {\n          createdAt\n          newState\n          oldState\n          reason\n          userID\n          creator {\n            email\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "9600213ad474d4e614398dea0237a657";
+(node as any).hash = "ff4e1296e6e260590af65bdbedd33f3a";
 
 export default node;

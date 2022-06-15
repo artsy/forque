@@ -1,62 +1,53 @@
-import { Button, Input } from "@artsy/palette"
-import { useRouter } from "next/router"
-import { useLazyLoadQuery } from "react-relay"
-import { graphql } from "relay-runtime"
+import { Button, Input, Spacer } from "@artsy/palette"
+import { FC, useState } from "react"
 import { Form, Formik } from "formik"
-import { VerificationsTable } from "./VerificationsTable"
-import { VerificationsListQuery } from "__generated__/VerificationsListQuery.graphql"
+import * as Yup from "yup"
+import { VerificationsResults } from "./VerificationsResults"
 
-export const VerificationsList: React.FC = () => {
-  const router = useRouter()
-  const query = router.query
-  const email = query.email as string
+export const VerificationsList: FC = () => {
+  const [email, setEmail] = useState("")
 
-  const viewerData = useLazyLoadQuery<VerificationsListQuery>(
-    graphql`
-      query VerificationsListQuery($email: String) {
-        viewer {
-          ...VerificationsTable_viewer
-        }
-      }
-    `,
-    { email },
-    // otherwise relay fetches on page load, with undefined email, and pulls all data
-    { fetchPolicy: !email ? "store-only" : "network-only" }
-  )
+  interface InputTypes {
+    emailInput: string
+  }
 
   return (
     <>
-      <Formik
+      <Formik<InputTypes>
         initialValues={{
           emailInput: "",
         }}
-        onSubmit={({ emailInput }, actions) => {
-          actions.resetForm()
-          router.push("/verifications?" + "email=" + emailInput)
+        validationSchema={Yup.object().shape({
+          emailInput: Yup.string()
+            .required("An email is required")
+            .email("Please enter a valid email"),
+        })}
+        onSubmit={({ emailInput }) => {
+          setEmail(emailInput)
         }}
       >
-        {({ values, handleChange }) => {
+        {({ values, handleChange, errors }) => {
           return (
             <Form>
               <Input
+                error={errors.emailInput}
                 name="emailInput"
-                title="email"
-                type="emailInput"
-                placeholder="Email of the person who was identity verified"
-                value={values.emailInput}
                 onChange={handleChange}
+                placeholder="user@example.com"
+                title="email"
+                type="text"
+                validateOnChange={true}
+                value={values.emailInput}
               />
-              <Button type="submit" width="100%" size="medium">
+              <Spacer my={4} />
+              <Button type="submit" width="100%">
                 Search
               </Button>
             </Form>
           )
         }}
       </Formik>
-
-      {email && (
-        <VerificationsTable viewer={viewerData.viewer!} email={email} />
-      )}
+      {!!email && <VerificationsResults email={email} />}
     </>
   )
 }
