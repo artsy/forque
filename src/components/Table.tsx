@@ -2,6 +2,7 @@ import { Box, Text, THEME_V3 } from "@artsy/palette"
 import { useMemo } from "react"
 import { Row, useExpanded, useTable } from "react-table"
 import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
 
 interface TableProps {
   columns: any[]
@@ -108,7 +109,23 @@ export const Table: React.FC<TableProps> = ({
   )
 }
 
-const TableBase = Box
+const TableBase = styled(Box)`
+  width: 100%;
+  border: 1px solid ${themeGet("colors.black10")};
+  /border-collapse: collapse;
+
+  > thead > tr > th {
+    text-align: left;
+    font-weight: heavy;
+  }
+
+  > thead > tr > th,
+  > tbody > tr > td {
+    border-bottom: 1px solid ${themeGet("colors.black10")};
+    border-left: 1px solid ${themeGet("colors.black10")};
+    padding: ${themeGet("space.1")};
+  }
+`
 const TR = Box
 const TH = Box
 const TD = Box
