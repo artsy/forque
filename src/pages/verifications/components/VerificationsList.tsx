@@ -1,10 +1,10 @@
 import { Button, Input, Spacer } from "@artsy/palette"
-import { FC, useState } from "react"
+import { useState } from "react"
 import { Form, Formik } from "formik"
 import * as Yup from "yup"
 import { VerificationsResults } from "./VerificationsResults"
 
-export const VerificationsList: FC = () => {
+export const VerificationsList: React.FC = () => {
   const [email, setEmail] = useState("")
 
   interface InputTypes {
