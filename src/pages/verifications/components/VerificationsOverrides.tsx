@@ -1,7 +1,13 @@
 import { Text } from "@artsy/palette"
 import { Table } from "components/Table"
 
-export const VerificationsOverrides: React.FC = (props) => {
+interface VerificationsOverridesProps {
+  overrides: any[]
+}
+
+export const VerificationsOverrides: React.FC<VerificationsOverridesProps> = (
+  props
+) => {
   const overrides = props.overrides
 
   const onRowClick = () => {

@@ -1,7 +1,13 @@
 import { Spacer, Text } from "@artsy/palette"
 import { Table } from "components/Table"
 
-export const VerificationsScanReferences: React.FC = (props) => {
+interface VerificationsDetailsProps {
+  scanReferences: any[]
+}
+
+export const VerificationsScanReferences: React.FC<
+  VerificationsDetailsProps
+> = (props) => {
   const scanReferences = props.scanReferences
 
   const onRowClick = () => {

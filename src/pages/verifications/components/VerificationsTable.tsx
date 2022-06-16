@@ -140,6 +140,7 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
               )
             }}
             onRowClick={(row) => {
+              //@ts-ignore
               row.toggleRowExpanded()
             }}
           />

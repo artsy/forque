@@ -17,14 +17,15 @@ export const VerificationsList: FC = () => {
         initialValues={{
           emailInput: "",
         }}
+        onSubmit={({ emailInput }) => {
+          setEmail(emailInput)
+        }}
+        validateOnChange={true}
         validationSchema={Yup.object().shape({
           emailInput: Yup.string()
             .required("An email is required")
             .email("Please enter a valid email"),
         })}
-        onSubmit={({ emailInput }) => {
-          setEmail(emailInput)
-        }}
       >
         {({ values, handleChange, errors }) => {
           return (
@@ -36,7 +37,6 @@ export const VerificationsList: FC = () => {
                 placeholder="user@example.com"
                 title="email"
                 type="text"
-                validateOnChange={true}
                 value={values.emailInput}
               />
               <Spacer my={4} />

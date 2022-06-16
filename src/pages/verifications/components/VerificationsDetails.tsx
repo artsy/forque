@@ -2,7 +2,13 @@ import { Column, GridColumns } from "@artsy/palette"
 import { VerificationsOverrides } from "./VerificationsOverrides"
 import { VerificationsScanReferences } from "./VerificationsScanReferences"
 
-export const VerificationsDetails: React.FC = (props) => {
+interface VerificationsDetailsProps {
+  row: any
+}
+
+export const VerificationsDetails: React.FC<VerificationsDetailsProps> = (
+  props
+) => {
   const scanReferences = props.row.original.scanReferences
   const overrides = props.row.original.overrides
 
