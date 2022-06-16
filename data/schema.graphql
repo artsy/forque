@@ -1409,7 +1409,17 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
   image: Image
   imageUrl: String
   initials(length: Int = 3): String
-  insights: [ArtistInsight]
+  insights(
+    # The specific insights to return.
+    kind: [ArtistInsightKind] = [
+      SOLO_SHOW
+      GROUP_SHOW
+      COLLECTED
+      REVIEWED
+      BIENNIAL
+      ACTIVE_SECONDARY_MARKET
+    ]
+  ): [ArtistInsight!]!
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
@@ -1591,14 +1601,28 @@ type ArtistHighlights {
 }
 
 type ArtistInsight {
+  description: String
+
   # List of entities relevant to the insight.
   entities: [String!]!
+
+  # The type of insight.
+  kind: ArtistInsightKind
 
   # Label to use when displaying the insight.
   label: String!
 
   # The type of insight.
-  type: String!
+  type: String! @deprecated(reason: "Use `kind` instead.")
+}
+
+enum ArtistInsightKind {
+  ACTIVE_SECONDARY_MARKET
+  BIENNIAL
+  COLLECTED
+  GROUP_SHOW
+  REVIEWED
+  SOLO_SHOW
 }
 
 type ArtistMeta {
@@ -2312,8 +2336,11 @@ union ArtworkMutationType =
 union ArtworkOrEditionSetType = Artwork | EditionSet
 
 type ArtworkPriceInsights {
+  annualLotsSold: Int
+  annualValueSoldCents: FormattedNumber
   artistId: String
   demandRank: Float
+  lastAuctionResultDate: String
   medium: String
 }
 
@@ -10008,6 +10035,9 @@ type Me implements Node {
     page: Int
     size: Int
     sort: MyCollectionArtworkSorts
+
+    # Sort by most recent price insight updates and filter out artworks without insights.
+    sortByLastAuctionResultDate: Boolean = false
   ): MyCollectionConnection
 
   # Info about the current user's my-collection
@@ -10152,6 +10182,34 @@ type Me implements Node {
     first: Int
     last: Int
   ): LotConnection
+}
+
+type MergeArtistsFailure {
+  mutationError: GravityMutationError
+}
+
+input MergeArtistsMutationInput {
+  # The database ID of the "bad" artist record(s), which will be **discarded** after the merge
+  badIds: [String!]!
+  clientMutationId: String
+
+  # The database ID of the "good" artist record, which will be **kept** after the
+  # merge. Relevant fields and associations from the bad records will be merged into this one.
+  goodId: String!
+}
+
+type MergeArtistsMutationPayload {
+  clientMutationId: String
+
+  # On success: the "good" artist record, which was kept after the merge. Upon a
+  # successful merge this record may have been updated.
+  mergeArtistsResponseOrError: MergeArtistsResponseOrError
+}
+
+union MergeArtistsResponseOrError = MergeArtistsFailure | MergeArtistsSuccess
+
+type MergeArtistsSuccess {
+  artist: Artist
 }
 
 # A message in a conversation.
@@ -10505,6 +10563,9 @@ type Mutation {
   linkAuthentication(
     input: LinkAuthenticationMutationInput!
   ): LinkAuthenticationMutationPayload
+
+  # Merge multiple artist records in order to deduplicate artists
+  mergeArtists(input: MergeArtistsMutationInput!): MergeArtistsMutationPayload
 
   # Create an artwork in my collection
   myCollectionCreateArtwork(
