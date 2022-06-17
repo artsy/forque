@@ -111,7 +111,7 @@ const Item: FC<{ href: string; onClick?: () => void }> = ({
 }) => {
   const router = useRouter()
   const active =
-    href === "/" ? router.pathname === "/" : router.pathname.startsWith(href)
+    href === "/" ? router?.pathname === "/" : router?.pathname?.startsWith(href)
 
   return (
     <Box onClick={onClick}>
