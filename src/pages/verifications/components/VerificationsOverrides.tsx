@@ -1,8 +1,9 @@
 import { Text } from "@artsy/palette"
 import { Table } from "components/Table"
+import type { Override } from "./types"
 
 interface VerificationsOverridesProps {
-  overrides: any[]
+  overrides: Override[]
 }
 
 export const VerificationsOverrides: React.FC<VerificationsOverridesProps> = (

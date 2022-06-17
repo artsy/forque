@@ -135,7 +135,10 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
             renderExpandedRow={(row) => {
               return (
                 <>
-                  <VerificationsDetails row={row} />
+                  <VerificationsDetails
+                    scanReferences={row.original.scanReferences}
+                    overrides={row.original.overrides}
+                  />
                 </>
               )
             }}

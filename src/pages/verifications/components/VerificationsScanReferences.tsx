@@ -1,8 +1,9 @@
 import { Spacer, Text } from "@artsy/palette"
 import { Table } from "components/Table"
+import type { ScanReference } from "./types"
 
 interface VerificationsDetailsProps {
-  scanReferences: any[]
+  scanReferences: ScanReference[]
 }
 
 export const VerificationsScanReferences: React.FC<
