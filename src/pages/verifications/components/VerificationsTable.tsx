@@ -132,7 +132,7 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
               },
             ]}
             data={verifications}
-            renderExpandedRow={(row) => {
+            renderExpandedRow={(row: any) => {
               return (
                 <>
                   <VerificationsDetails
