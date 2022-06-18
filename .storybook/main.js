@@ -21,6 +21,15 @@ module.exports = {
   },
   "webpackFinal": (config) => {
     /**
+     * Allows project-relative absolute imports to work
+     * @see https://github.com/storybookjs/storybook/issues/11639#issuecomment-689835701
+     */
+     config.resolve.modules = [
+      ...config.resolve.modules,
+      path.resolve(__dirname, "..", "src"),
+    ]
+
+    /**
      * Add support for alias-imports
      * @see https://github.com/storybookjs/storybook/issues/11989#issuecomment-715524391
      */
