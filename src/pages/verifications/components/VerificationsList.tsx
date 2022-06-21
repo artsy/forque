@@ -2,10 +2,14 @@ import { Button, Input, Spacer } from "@artsy/palette"
 import { useState } from "react"
 import { Form, Formik } from "formik"
 import * as Yup from "yup"
+import { useRouter } from "next/router"
 import { VerificationsResults } from "./VerificationsResults"
 
 export const VerificationsList: React.FC = () => {
   const [email, setEmail] = useState("")
+
+  const router = useRouter()
+  const [userId, setUserId] = useState(router.query.user_id)
 
   interface InputTypes {
     emailInput: string
@@ -18,6 +22,7 @@ export const VerificationsList: React.FC = () => {
           emailInput: "",
         }}
         onSubmit={({ emailInput }) => {
+          setUserId("")
           setEmail(emailInput)
         }}
         validateOnChange={true}
@@ -47,7 +52,9 @@ export const VerificationsList: React.FC = () => {
           )
         }}
       </Formik>
-      {!!email && <VerificationsResults email={email} />}
+      {(!!email || !!userId) && (
+        <VerificationsResults email={email} userId={userId} />
+      )}
     </>
   )
 }
