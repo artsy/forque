@@ -57,6 +57,7 @@ export const VerificationsCreate: React.FC = () => {
         {({ values, handleChange, errors }) => (
           <Form>
             <Input
+              description="Name to be associated with the verification request. This will be used instead of the name associated with the User's account, if applicable."
               placeholder="Jane Doe"
               title="Full Name"
               name="name"
@@ -74,7 +75,6 @@ export const VerificationsCreate: React.FC = () => {
               onChange={handleChange}
               value={values.email}
               error={errors.email}
-              required={true}
             />
             <Spacer my={4} />
             <Button type="submit" width="100%">
