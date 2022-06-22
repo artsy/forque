@@ -41,15 +41,15 @@ export const VerificationsCreate: React.FC = () => {
               variant: "success",
               message: "Identity verification created",
             })
-          } catch (error) {
-            console.error(
-              "[forque] Error creating identity verification:",
-              error
-            )
+          } catch (err) {
+            console.error("[forque] Error creating identity verification:", err)
+
+            const error = Array.isArray(err) ? err[0] : err
 
             sendToast({
               variant: "error",
               message: "There was an error creating the identity verification",
+              description: error.message,
             })
           }
         }}
@@ -57,7 +57,7 @@ export const VerificationsCreate: React.FC = () => {
         {({ values, handleChange, errors }) => (
           <Form>
             <Input
-              description="Name to be associated with the verification request. This will be used instead of the name associated with the User's account, if applicable."
+              description="Name to be associated with the verification request. When provided this will be used instead of the name associated with the User's account."
               placeholder="Jane Doe"
               title="Full Name"
               name="name"
