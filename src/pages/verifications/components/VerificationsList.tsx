@@ -9,7 +9,7 @@ export const VerificationsList: React.FC = () => {
   const [email, setEmail] = useState("")
 
   const router = useRouter()
-  const [userId, setUserId] = useState(router.query.user_id as string)
+  const [userId, setUserId] = useState(router.query.userId as string)
 
   interface InputTypes {
     emailInput: string
