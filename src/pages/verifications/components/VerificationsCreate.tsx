@@ -57,7 +57,7 @@ export const VerificationsCreate: React.FC = () => {
         {({ values, handleChange, errors }) => (
           <Form>
             <Input
-              description="Name to be associated with the verification request. When provided this will be used instead of the name associated with the User's account."
+              description="Name to be associated with the verification request. When provided, this will be used instead of the name associated with the User's account."
               placeholder="Jane Doe"
               title="Full Name"
               name="name"
