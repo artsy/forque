@@ -1,6 +1,6 @@
 import { Box, Button, Spacer } from "@artsy/palette"
-import Link from "next/link"
 import { useRouter } from "next/router"
+import { BatchUploadResult } from "pages/uploads/components/BatchUploadResult"
 import { ChangeEvent, useCallback, useEffect, useState } from "react"
 import styled from "styled-components"
 import { Uploader } from "./Uploader"
@@ -10,9 +10,9 @@ export const UploadButton = () => {
 
   const [files, setFiles] = useState<File[] | null>(null)
 
-  const [uploads, setUploads] = useState<{ key: string; complete: boolean }[]>(
-    []
-  )
+  const [uploadResults, setUploadResults] = useState<
+    { key: string; status: "success" | "fail" }[]
+  >([])
 
   const router = useRouter()
 
@@ -23,19 +23,19 @@ export const UploadButton = () => {
   }
 
   const handleUploadDone = useCallback(
-    (key: string) => {
-      setUploads((prevState) => [...prevState, { key, complete: true }])
+    (key: string, status: "success" | "fail") => {
+      setUploadResults((prevState) => [...prevState, { key, status }])
     },
-    [setUploads]
+    [setUploadResults]
   )
 
   useEffect(() => {
-    if (files?.length === uploads?.length && files?.length === 1) {
-      router.push(`/uploads/${encodeURIComponent(uploads[0].key)}`)
-    } else if (files?.length === uploads?.length && files?.length > 1) {
+    if (files?.length === uploadResults?.length && files?.length === 1) {
+      router.push(`/uploads/${encodeURIComponent(uploadResults[0].key)}`)
+    } else if (files?.length === uploadResults?.length && files?.length > 1) {
       setDisplayBatch(true)
     }
-  }, [files, router, uploads])
+  }, [files, router, uploadResults])
 
   return (
     <>
@@ -62,21 +62,7 @@ export const UploadButton = () => {
         </>
       )}
 
-      {displayBatch && (
-        <>
-          <Spacer mt={4} />
-
-          {uploads.map((upload, i) => (
-            <>
-              <Link key={i} href={`/uploads/${encodeURIComponent(upload.key)}`}>
-                {upload.key}
-              </Link>
-
-              <Spacer mt={1} />
-            </>
-          ))}
-        </>
-      )}
+      {displayBatch && <BatchUploadResult results={uploadResults} />}
     </>
   )
 }

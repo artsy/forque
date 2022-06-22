@@ -8,7 +8,7 @@ import { useRouter } from "next/router"
 
 interface UploaderProps {
   file: File
-  onUploadDone: (key: string) => void
+  onUploadDone: (key: string, status: "success" | "fail") => void
 }
 
 export const Uploader: FC<UploaderProps> = ({
@@ -38,13 +38,11 @@ export const Uploader: FC<UploaderProps> = ({
 
     uploading.current = true
 
-    setProgress(100)
-
     uploadFile({
       file,
       presignedPost: data,
       onFileDone: () => {
-        handleUploadDone(data.fields.key)
+        handleUploadDone(data.fields.key, "success")
 
         sendToast({ variant: "success", message: "File uploaded" })
       },
@@ -52,6 +50,8 @@ export const Uploader: FC<UploaderProps> = ({
         console.error(err)
 
         sendToast({ variant: "error", message: err.message })
+
+        handleUploadDone(data.fields.key, "fail")
 
         uploading.current = false
       },
