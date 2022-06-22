@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ff581db2020c896dc3ac2e2dfff4f8f7>>
+ * @generated SignedSource<<ef116af060edf116ffff65df5008ba71>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -113,6 +113,10 @@ return {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "last"
+    },
+    {
+      "kind": "RootArgument",
+      "name": "userId"
     }
   ],
   "kind": "Fragment",
@@ -154,6 +158,11 @@ return {
           "kind": "Variable",
           "name": "last",
           "variableName": "last"
+        },
+        {
+          "kind": "Variable",
+          "name": "userId",
+          "variableName": "userId"
         }
       ],
       "concreteType": "IdentityVerificationConnection",
@@ -366,6 +375,6 @@ return {
 };
 })();
 
-(node as any).hash = "fd2924d47145c95e327970fc74e996ed";
+(node as any).hash = "810d0585b22a6b9aa9cc9ea73ed22b10";
 
 export default node;

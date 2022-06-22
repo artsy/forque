@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<58b6eee7f8f9d4eade875d9a9b79f18f>>
+ * @generated SignedSource<<09a9a5a6d5be2796457432c58e3f7e7d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type VerificationsResultsQuery$variables = {
   email?: string | null;
+  userId?: string | null;
 };
 export type VerificationsResultsQuery$data = {
   readonly viewer: {
@@ -29,6 +30,11 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "email"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "userId"
   }
 ],
 v1 = {
@@ -144,6 +150,11 @@ return {
                 "kind": "Literal",
                 "name": "first",
                 "value": 20
+              },
+              {
+                "kind": "Variable",
+                "name": "userId",
+                "variableName": "userId"
               }
             ],
             "concreteType": "IdentityVerificationConnection",
@@ -391,16 +402,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6504208695c10f4fbf68edd6e5c4ca9f",
+    "cacheID": "49859c41701443fbe27cf49f654c5a5b",
     "id": null,
     "metadata": {},
     "name": "VerificationsResultsQuery",
     "operationKind": "query",
-    "text": "query VerificationsResultsQuery(\n  $email: String\n) {\n  viewer {\n    ...VerificationsTable_viewer\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment VerificationsTable_viewer on Viewer {\n  identityVerificationsConnection(first: 20, email: $email) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        createdAt\n        email\n        internalID\n        name\n        state\n        userID\n        scanReferences {\n          createdAt\n          extractedFirstName\n          extractedLastName\n          extractedIdFailReason\n          extractedSimilarityFailReason\n          finishedAt\n          id\n          internalID\n          jumioID\n          result\n        }\n        overrides {\n          createdAt\n          newState\n          oldState\n          reason\n          userID\n          creator {\n            email\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query VerificationsResultsQuery(\n  $email: String\n  $userId: String\n) {\n  viewer {\n    ...VerificationsTable_viewer\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment VerificationsTable_viewer on Viewer {\n  identityVerificationsConnection(first: 20, email: $email, userId: $userId) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        createdAt\n        email\n        internalID\n        name\n        state\n        userID\n        scanReferences {\n          createdAt\n          extractedFirstName\n          extractedLastName\n          extractedIdFailReason\n          extractedSimilarityFailReason\n          finishedAt\n          id\n          internalID\n          jumioID\n          result\n        }\n        overrides {\n          createdAt\n          newState\n          oldState\n          reason\n          userID\n          creator {\n            email\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "ff4e1296e6e260590af65bdbedd33f3a";
+(node as any).hash = "7a4e4d71657d74f9062118a403317d24";
 
 export default node;
