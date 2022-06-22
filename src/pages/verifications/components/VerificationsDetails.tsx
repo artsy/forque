@@ -4,6 +4,7 @@ import { VerificationsScanReferences } from "./VerificationsScanReferences"
 import type { Override, ScanReference } from "./types"
 
 interface VerificationsDetailsProps {
+  identityVerificationID: string
   overrides: Override[]
   scanReferences: ScanReference[]
 }
@@ -17,7 +18,10 @@ export const VerificationsDetails: React.FC<VerificationsDetailsProps> = (
         <Column span={1}></Column>
         <Column span={10}>
           <VerificationsScanReferences scanReferences={props.scanReferences} />
-          <VerificationsOverrides overrides={props.overrides} />
+          <VerificationsOverrides
+            identityVerificationID={props.identityVerificationID}
+            overrides={props.overrides}
+          />
         </Column>
       </GridColumns>
     </>

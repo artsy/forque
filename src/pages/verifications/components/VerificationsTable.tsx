@@ -136,6 +136,7 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
               return (
                 <>
                   <VerificationsDetails
+                    identityVerificationID={row.original.internalID}
                     scanReferences={row.original.scanReferences}
                     overrides={row.original.overrides}
                   />

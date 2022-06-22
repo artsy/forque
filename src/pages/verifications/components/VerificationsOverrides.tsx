@@ -1,16 +1,20 @@
-import { Button, Column, GridColumns, Text, useToasts } from "@artsy/palette"
+import { Button, Column, GridColumns, Text } from "@artsy/palette"
 import { Table } from "components/Table"
 import { useState } from "react"
 import type { Override } from "./types"
+import { VerificationsOverridesCreate } from "./VerificationsOverridesCreate"
 
 interface VerificationsOverridesProps {
+  identityVerificationID: string
   overrides: Override[]
 }
 
 export const VerificationsOverrides: React.FC<VerificationsOverridesProps> = (
   props
 ) => {
+  const identityVerificationID = props.identityVerificationID
   const overrides = props.overrides
+  const [displayOverrideForm, setDisplayOverrideForm] = useState(false)
 
   const onRowClick = () => {
     // do nothing
@@ -19,19 +23,31 @@ export const VerificationsOverrides: React.FC<VerificationsOverridesProps> = (
   return (
     <>
       <GridColumns>
-        <Column>
-          <Text variant="lg" my={1}>
-            Overrides
-          </Text>
+        <Column my={1}>
+          <Text variant="lg">Overrides</Text>
         </Column>
-        <Column p={1}>
-          <CreateOverrideButton
-            onCreate={async () => {
-              console.log("creating override")
-              // ShowOverrideModal to collect state and reason for override
-            }}
-          ></CreateOverrideButton>
-        </Column>
+        {displayOverrideForm ? (
+          <Column p={1}>
+            <VerificationsOverridesCreate
+              identityVerificationID={identityVerificationID}
+            />
+          </Column>
+        ) : (
+          <Column p={1}>
+            <Button
+              size="small"
+              variant="secondaryOutline"
+              width={80}
+              onClick={async (event) => {
+                event.stopPropagation()
+                event.preventDefault()
+                setDisplayOverrideForm(true)
+              }}
+            >
+              Create
+            </Button>
+          </Column>
+        )}
       </GridColumns>
       <Table
         columns={[
@@ -60,39 +76,5 @@ export const VerificationsOverrides: React.FC<VerificationsOverridesProps> = (
         onRowClick={onRowClick}
       />
     </>
-  )
-}
-
-const CreateOverrideButton: React.FC<{
-  onCreate: () => Promise<void>
-}> = ({ onCreate }) => {
-  const { sendToast } = useToasts()
-  const [showConfirmMessage, setShowConfirmMessage] = useState(false)
-  const [isCreating, setIsCreating] = useState(false)
-
-  return (
-    <Button
-      size="small"
-      variant="secondaryOutline"
-      width={80}
-      loading={isCreating}
-      onClick={async (event) => {
-        event.stopPropagation()
-        event.preventDefault()
-
-        setShowConfirmMessage(true)
-
-        if (showConfirmMessage) {
-          setIsCreating(true)
-          await onCreate()
-          sendToast({
-            message: "Successfully created override",
-            variant: "alert",
-          })
-        }
-      }}
-    >
-      {showConfirmMessage ? "Create?" : "Create"}
-    </Button>
   )
 }

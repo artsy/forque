@@ -1,6 +1,10 @@
 import { render, screen } from "@testing-library/react"
 import { VerificationsDetails } from "../VerificationsDetails"
-import { overrides, scanReferences } from "../__fixtures__/verifications"
+import {
+  identityVerificationID,
+  overrides,
+  scanReferences,
+} from "../__fixtures__/verifications"
 
 xit("shows verifications", () => {
   // pending relay testing support
@@ -9,6 +13,7 @@ xit("shows verifications", () => {
 it("shows verifications details", () => {
   render(
     <VerificationsDetails
+      identityVerificationID={identityVerificationID}
       scanReferences={scanReferences}
       overrides={overrides}
     />

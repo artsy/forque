@@ -1,5 +1,7 @@
 import type { Override, ScanReference } from "../types"
 
+export const identityVerificationID = "identityVerificationID"
+
 export const overrides: Override[] = [
   {
     createdAt: "just now",
