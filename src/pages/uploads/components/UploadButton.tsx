@@ -4,18 +4,19 @@ import styled from "styled-components"
 import { Uploader } from "./Uploader"
 
 export const UploadButton = () => {
-  const [file, setFile] = useState<File | null>(null)
+  const [files, setFiles] = useState<File[] | null>(null)
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.currentTarget.files?.[0]
-    if (!file) return
-    setFile(file)
+    if (!event.target.files) return
+    const fileList: File[] = Array.from(event.target.files)
+    if (fileList.length <= 0) return
+    setFiles(fileList)
   }
 
   return (
     <>
       <Box position="relative">
-        <FileInput id="file" type="file" onChange={handleChange} />
+        <FileInput id="file" type="file" onChange={handleChange} multiple />
 
         <Button
           // @ts-ignore
@@ -27,11 +28,13 @@ export const UploadButton = () => {
         </Button>
       </Box>
 
-      {file && (
+      {files && (
         <>
           <Spacer mt={4} />
 
-          <Uploader file={file} />
+          {files.map((file, i) => (
+            <Uploader key={i} file={file} />
+          ))}
         </>
       )}
     </>

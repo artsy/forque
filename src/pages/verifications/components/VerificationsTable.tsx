@@ -9,6 +9,7 @@ import { VerificationsDetails } from "./VerificationsDetails"
 interface VerificationsTableProps {
   viewer: VerificationsTable_viewer$key
   email: string
+  userId: string
 }
 
 export const VerificationsTable: React.FC<VerificationsTableProps> = (
@@ -30,6 +31,7 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
           after: $after
           before: $before
           email: $email
+          userId: $userId
         ) {
           pageInfo {
             hasNextPage
@@ -87,7 +89,11 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
     <>
       <Spacer my={2} />
       <Text variant="xl" mb={4}>
-        {props.email}
+        {!!props.email && props.email}
+      </Text>
+      <Spacer my={2} />
+      <Text variant="xl" mb={4}>
+        {!!props.userId && props.userId}
       </Text>
       {!verifications.length && (
         <Text variant="xl" mb={4}>
