@@ -2,11 +2,13 @@ import { Column, GridColumns } from "@artsy/palette"
 import { VerificationsOverrides } from "./VerificationsOverrides"
 import { VerificationsScanReferences } from "./VerificationsScanReferences"
 import type { Override, ScanReference } from "./types"
+import { RefetchFnDynamic } from "react-relay"
 
 interface VerificationsDetailsProps {
   identityVerificationID: string
   overrides: Override[]
   scanReferences: ScanReference[]
+  relayRefetch: RefetchFnDynamic<any, any>
 }
 
 export const VerificationsDetails: React.FC<VerificationsDetailsProps> = (
@@ -21,6 +23,7 @@ export const VerificationsDetails: React.FC<VerificationsDetailsProps> = (
           <VerificationsOverrides
             identityVerificationID={props.identityVerificationID}
             overrides={props.overrides}
+            relayRefetch={props.relayRefetch}
           />
         </Column>
       </GridColumns>

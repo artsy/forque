@@ -1,12 +1,14 @@
 import { Button, Column, GridColumns, Text } from "@artsy/palette"
 import { Table } from "components/Table"
 import { useState } from "react"
+import { RefetchFnDynamic } from "react-relay"
 import type { Override } from "./types"
 import { VerificationsOverridesCreate } from "./VerificationsOverridesCreate"
 
 interface VerificationsOverridesProps {
   identityVerificationID: string
   overrides: Override[]
+  relayRefetch: RefetchFnDynamic<any, any>
 }
 
 export const VerificationsOverrides: React.FC<VerificationsOverridesProps> = (
@@ -30,6 +32,7 @@ export const VerificationsOverrides: React.FC<VerificationsOverridesProps> = (
           <Column p={1}>
             <VerificationsOverridesCreate
               identityVerificationID={identityVerificationID}
+              relayRefetch={props.relayRefetch}
             />
           </Column>
         ) : (

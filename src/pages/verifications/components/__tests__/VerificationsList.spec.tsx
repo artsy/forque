@@ -5,14 +5,27 @@ import {
   overrides,
   scanReferences,
 } from "../__fixtures__/verifications"
+import { verificationOverrideSucessResponse } from "../__fixtures__/verificationOverrideCreateMutationResponse"
 
 xit("shows verifications", () => {
   // pending relay testing support
 })
 
+const mockCreateIdentityVerificationOverride = jest.fn()
+
+jest.mock("../../mutations/useCreateIdentityVerificationOverride", () => ({
+  useCreateIdentityVerificationOverride: () => ({
+    submitMutation: mockCreateIdentityVerificationOverride,
+  }),
+}))
+
 it("shows verifications details", () => {
+  mockCreateIdentityVerificationOverride.mockImplementation(
+    () => verificationOverrideSucessResponse
+  )
   render(
     <VerificationsDetails
+      relayRefetch={jest.fn()}
       identityVerificationID={identityVerificationID}
       scanReferences={scanReferences}
       overrides={overrides}

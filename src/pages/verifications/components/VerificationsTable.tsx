@@ -145,6 +145,7 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
                     identityVerificationID={row.original.internalID}
                     scanReferences={row.original.scanReferences}
                     overrides={row.original.overrides}
+                    relayRefetch={refetch}
                   />
                 </>
               )

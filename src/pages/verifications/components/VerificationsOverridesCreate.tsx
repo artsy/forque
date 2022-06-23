@@ -7,11 +7,13 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { Form, Formik } from "formik"
+import { RefetchFnDynamic } from "react-relay"
 import * as Yup from "yup"
 import { useCreateIdentityVerificationOverride } from "../mutations/useCreateIdentityVerificationOverride"
 
 interface VerificationsOverridesProps {
   identityVerificationID: string
+  relayRefetch: RefetchFnDynamic<any, any>
 }
 
 export const VerificationsOverridesCreate: React.FC<
@@ -68,6 +70,20 @@ export const VerificationsOverridesCreate: React.FC<
               variant: "success",
               message: "Identity verification override created",
             })
+            props.relayRefetch(
+              {
+                first: 1,
+              },
+              {
+                onComplete: (error) => {
+                  if (error) {
+                    console.error("Refetch Error:", error)
+                  } else {
+                    console.log("Refetch Success")
+                  }
+                },
+              }
+            )
           } catch (error) {
             console.error(
               "[forque] Error creating identity verification override:",
