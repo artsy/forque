@@ -29,7 +29,7 @@ afterEach(() => {
 it("shows a toast message when an identity verfication is created", async () => {
   mockCreateIdentityVerification.mockImplementation(() => successResponse)
 
-  render(<VerificationsCreate email={undefined} />)
+  render(<VerificationsCreate />)
 
   const input = screen.getByPlaceholderText("user@example.com")
 
