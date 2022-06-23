@@ -5,7 +5,11 @@ import * as Yup from "yup"
 import { useRouter } from "next/router"
 import { VerificationsResults } from "./VerificationsResults"
 
-export const VerificationsList: React.FC = () => {
+interface VerificationsListProps {
+  email: string | undefined
+}
+
+export const VerificationsList: React.FC<VerificationsListProps> = (props) => {
   const [email, setEmail] = useState("")
 
   const router = useRouter()
@@ -19,7 +23,7 @@ export const VerificationsList: React.FC = () => {
     <>
       <Formik<InputTypes>
         initialValues={{
-          emailInput: "",
+          emailInput: props.email ?? "",
         }}
         onSubmit={({ emailInput }) => {
           setUserId("")

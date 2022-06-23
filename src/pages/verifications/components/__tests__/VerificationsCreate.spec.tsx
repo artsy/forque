@@ -29,7 +29,7 @@ afterEach(() => {
 it("shows a toast message when an identity verfication is created", async () => {
   mockCreateIdentityVerification.mockImplementation(() => successResponse)
 
-  render(<VerificationsCreate />)
+  render(<VerificationsCreate email={undefined} />)
 
   const input = screen.getByPlaceholderText("user@example.com")
 
@@ -48,7 +48,7 @@ it("shows a toast message when an identity verfication is created", async () => 
 it("sends the correct input with the mutation", async () => {
   mockCreateIdentityVerification.mockImplementation(() => successResponse)
 
-  render(<VerificationsCreate />)
+  render(<VerificationsCreate email={undefined} />)
 
   const emailInput = screen.getByPlaceholderText("user@example.com")
   const nameInput = screen.getByPlaceholderText("Jane Doe")

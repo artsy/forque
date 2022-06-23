@@ -3,7 +3,13 @@ import { Form, Formik } from "formik"
 import * as Yup from "yup"
 import { useCreateIdentityVerification } from "../mutations/useCreateIdentityVerification"
 
-export const VerificationsCreate: React.FC = () => {
+interface VerificationsCreateProps {
+  email: string | undefined
+}
+
+export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
+  props
+) => {
   const { submitMutation: submitIdentityVerificationMutation } =
     useCreateIdentityVerification()
 
@@ -17,7 +23,7 @@ export const VerificationsCreate: React.FC = () => {
   return (
     <>
       <Formik<InputTypes>
-        initialValues={{ email: "", name: "" }}
+        initialValues={{ email: props.email ?? "", name: "" }}
         validationSchema={Yup.object().shape({
           email: Yup.string()
             .required("A user email is required")
