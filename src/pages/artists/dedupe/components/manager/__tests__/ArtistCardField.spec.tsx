@@ -31,7 +31,7 @@ describe("when mode is 'select fields'", () => {
   })
 
   describe("when the field is single-valued", () => {
-    it("displays the field name and value as a clickable element", () => {
+    it("displays the field name and value as a clickable element", async () => {
       render(
         <ArtistCardField
           fieldName="birthday"
@@ -48,7 +48,7 @@ describe("when mode is 'select fields'", () => {
       expect(screen.getByText("birthday")).toBeInTheDocument()
       expect(screen.getByText("1950")).toBeInTheDocument()
 
-      userEvent.click(screen.getByRole("button"))
+      await userEvent.click(screen.getByRole("button"))
       expect(dispatch).toHaveBeenCalledWith({
         type: "prefer value",
         fieldName: "birthday",
@@ -58,7 +58,7 @@ describe("when mode is 'select fields'", () => {
   })
 
   describe("when the field is multi-valued", () => {
-    xit("displays the field name and value as a clickable element", () => {
+    xit("displays the field name and value as a clickable element", async () => {
       render(
         <ArtistCardField
           fieldName="artworks"
@@ -75,7 +75,7 @@ describe("when mode is 'select fields'", () => {
       expect(screen.getByText("artworks")).toBeInTheDocument()
       expect(screen.getByText("42")).toBeInTheDocument()
 
-      userEvent.click(screen.getByRole("button"))
+      await userEvent.click(screen.getByRole("button"))
       expect(dispatch).toHaveBeenCalledWith({
         type: "add value",
         fieldName: "artworks",
