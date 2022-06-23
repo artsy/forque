@@ -4,7 +4,7 @@ import * as Yup from "yup"
 import { useCreateIdentityVerification } from "../mutations/useCreateIdentityVerification"
 
 interface VerificationsCreateProps {
-  email: string | undefined
+  email?: string
 }
 
 export const VerificationsCreate: React.FC<VerificationsCreateProps> = (

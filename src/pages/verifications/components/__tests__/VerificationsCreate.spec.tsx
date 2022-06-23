@@ -48,7 +48,7 @@ it("shows a toast message when an identity verfication is created", async () => 
 it("sends the correct input with the mutation", async () => {
   mockCreateIdentityVerification.mockImplementation(() => successResponse)
 
-  render(<VerificationsCreate email={undefined} />)
+  render(<VerificationsCreate />)
 
   const emailInput = screen.getByPlaceholderText("user@example.com")
   const nameInput = screen.getByPlaceholderText("Jane Doe")
@@ -75,7 +75,7 @@ it("sends the correct input with the mutation", async () => {
 xit("shows a toast message when an identity verification fails to be created", async () => {
   mockCreateIdentityVerification.mockImplementation(() => failureResponse)
 
-  render(<VerificationsCreate email={undefined} />)
+  render(<VerificationsCreate />)
 
   const input = screen.getByPlaceholderText("user@example.com")
 

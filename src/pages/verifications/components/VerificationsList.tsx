@@ -6,7 +6,7 @@ import { useRouter } from "next/router"
 import { VerificationsResults } from "./VerificationsResults"
 
 interface VerificationsListProps {
-  email: string | undefined
+  email?: string
 }
 
 export const VerificationsList: React.FC<VerificationsListProps> = (props) => {
