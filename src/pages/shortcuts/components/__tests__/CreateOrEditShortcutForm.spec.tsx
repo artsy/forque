@@ -23,13 +23,13 @@ jest.mock("next/config", () => () => ({
 }))
 
 describe("CreateOrEditShortcutForm", () => {
-  it("renders the form with all Input fields", () => {
+  it("renders the form with all Input fields", async () => {
     render(<CreateOrEditShortcutForm isEditContext={false} />)
 
     expect(screen.getByText(/artsy.net\//)).toBeInTheDocument()
     expect(screen.getByText(/Redirects to/)).toBeInTheDocument()
 
-    userEvent.click(screen.getByTestId("utmCheckbox"))
+    await userEvent.click(screen.getByTestId("utmCheckbox"))
 
     expect(screen.getByText("Source")).toBeInTheDocument()
     expect(screen.getByText("Medium")).toBeInTheDocument()
