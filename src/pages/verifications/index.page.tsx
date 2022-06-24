@@ -3,14 +3,14 @@ import { Tab, Tabs } from "@artsy/palette"
 import { VerificationsCreate } from "./components/VerificationsCreate"
 import { VerificationsList } from "./components/VerificationsList"
 import { useSession } from "next-auth/react"
-import { Action, assertPermitted, UserWithAccessToken } from "system"
+import { assertPermitted, UserWithAccessToken } from "system"
 import { useRouter } from "next/router"
 
 const VerificationsPage: React.FC = () => {
   const router = useRouter()
   const session = useSession()
   const user = session.data?.user as UserWithAccessToken
-  assertPermitted(user, Action.list, "verifications")
+  assertPermitted(user, "verifications")
 
   if (Array.isArray(router.query.email)) {
     throw new Error(

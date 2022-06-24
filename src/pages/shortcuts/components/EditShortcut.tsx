@@ -1,10 +1,10 @@
 import { Form, Formik } from "formik"
-import { Button, Flex, Input, Spacer, useToasts, Text } from "@artsy/palette"
+import { Button, Flex, Input, Spacer, useToasts } from "@artsy/palette"
 import { useState } from "react"
 import * as Yup from "yup"
 import { CreateOrEditShortcutForm } from "./CreateOrEditShortcutForm"
 import { useSession } from "next-auth/react"
-import { isPermittedAccess, UserWithAccessToken } from "system"
+import { UserWithAccessToken } from "system"
 import getConfig from "next/config"
 
 interface SearchResponse {
@@ -51,14 +51,6 @@ export const EditShortcut = () => {
     } catch (error) {
       console.error(`[FORQUE] error updating shortcut: ${error}`)
     }
-  }
-
-  if (isPermittedAccess(user, "shortcuts")) {
-    return (
-      <>
-        <Text>NOPE</Text>
-      </>
-    )
   }
 
   return (

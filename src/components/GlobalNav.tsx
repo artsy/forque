@@ -5,7 +5,7 @@ import Link from "next/link"
 import { useRouter } from "next/router"
 import { FC } from "react"
 import styled, { css } from "styled-components"
-import { isPermittedAccess } from "system"
+import { isPermitted } from "system"
 import type { UserWithAccessToken } from "system"
 
 interface GlobalNavProps {
@@ -40,22 +40,22 @@ export const GlobalNav: FC<GlobalNavProps> = ({ user }) => {
               <Item href="/artists/dedupe">Dedupe Artists</Item>
             )} */}
 
-            {isPermittedAccess(user, "feature_flags") && (
+            {isPermitted(user, "feature_flags") && (
               <Item href="/feature-flags">Feature Flags</Item>
             )}
 
-            {isPermittedAccess(user, "my_collection") && (
+            {isPermitted(user, "my_collection") && (
               <Item href="/my-collection">My Collection</Item>
             )}
 
-            {isPermittedAccess(user, "uploads") && (
+            {isPermitted(user, "uploads") && (
               <Item href="/uploads">Uploads</Item>
             )}
 
-            {isPermittedAccess(user, "shortcuts") && (
+            {isPermitted(user, "shortcuts") && (
               <Item href="/shortcuts">Shortcuts</Item>
             )}
-            {isPermittedAccess(user, "verifications") && (
+            {isPermitted(user, "verifications") && (
               <Item href="/verifications">Verifications</Item>
             )}
             <Item href="#" onClick={() => signOut()}>

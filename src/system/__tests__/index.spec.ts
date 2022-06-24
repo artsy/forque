@@ -1,9 +1,4 @@
-import {
-  isPermittedAccess,
-  Action,
-  UserWithAccessToken,
-  isPermittedAction,
-} from "system"
+import { isPermitted, Action, UserWithAccessToken } from "system"
 
 const basicUser: UserWithAccessToken = {
   id: "fake",
@@ -12,13 +7,13 @@ const basicUser: UserWithAccessToken = {
   roles: [],
 }
 
-describe("isPermitted", () => {
+describe("isPermitted WITHOUT an action argument", () => {
   it("rejects unauthorized user", () => {
     const user: UserWithAccessToken = {
       ...basicUser,
       roles: ["genomer"],
     }
-    expect(isPermittedAccess(user, "artists")).toEqual(false)
+    expect(isPermitted(user, "artists")).toEqual(false)
   })
 
   it("permits authorized user", () => {
@@ -26,17 +21,17 @@ describe("isPermitted", () => {
       ...basicUser,
       roles: ["metadata_admin"],
     }
-    expect(isPermittedAccess(user, "artists")).toEqual(true)
+    expect(isPermitted(user, "artists")).toEqual(true)
   })
 })
 
-describe("isPermittedAction", () => {
+describe("isPermitted WITH an action argument", () => {
   it("returns true when user roles permit the action", () => {
     const user: UserWithAccessToken = {
       ...basicUser,
       roles: ["team"],
     }
-    expect(isPermittedAction(user, "artists", Action.transfer)).toEqual(true)
+    expect(isPermitted(user, "artists", Action.transfer)).toEqual(true)
   })
 
   it("rejects unrecognized action", () => {
@@ -44,7 +39,7 @@ describe("isPermittedAction", () => {
       ...basicUser,
       roles: ["metadata_admin"],
     }
-    expect(isPermittedAction(user, "artists", Action.transfer)).toEqual(false)
+    expect(isPermitted(user, "artists", Action.transfer)).toEqual(false)
   })
 
   it("permits user who is has permission for a certain action", () => {
@@ -52,6 +47,6 @@ describe("isPermittedAction", () => {
       ...basicUser,
       roles: ["content_manager", "team"],
     }
-    expect(isPermittedAction(user, "artists", Action.transfer)).toEqual(true)
+    expect(isPermitted(user, "artists", Action.transfer)).toEqual(true)
   })
 })

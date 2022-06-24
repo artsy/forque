@@ -5,7 +5,7 @@ import { usersQuery } from "__generated__/usersQuery.graphql"
 import Head from "next/head"
 import { UsersTable } from "./components/UsersTable"
 import { useSession } from "next-auth/react"
-import { assertPermittedAccess, UserWithAccessToken } from "system"
+import { assertPermitted, UserWithAccessToken } from "system"
 
 interface UserProps {
   viewer: usersQuery["response"]["viewer"]
@@ -14,7 +14,7 @@ interface UserProps {
 const Users: React.FC<UserProps> = ({ viewer }) => {
   const session = useSession()
   const user = session.data?.user as UserWithAccessToken
-  assertPermittedAccess(user, "users")
+  assertPermitted(user, "users")
 
   return (
     <>

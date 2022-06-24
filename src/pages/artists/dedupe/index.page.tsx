@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useMetaphysics } from "hooks"
 import { ArtistList, Skeleton } from "./components/list/ArtistList"
 import { useSession } from "next-auth/react"
-import { assertPermittedAccess, UserWithAccessToken } from "system"
+import { assertPermitted, UserWithAccessToken } from "system"
 
 const PER_PAGE = 36
 
@@ -18,7 +18,7 @@ export type RecentArtist = {
 export default function Page() {
   const session = useSession()
   const user = session.data?.user as UserWithAccessToken
-  assertPermittedAccess(user, "artists")
+  assertPermitted(user, "artists")
 
   const [page, setPage] = useState<number>(1)
 

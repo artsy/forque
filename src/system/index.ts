@@ -52,29 +52,33 @@ const PERMISSIONS: Record<string, Record<string, Role[]>> = {
   },
   verifications: {
     [Action.create]: [Role.verification_admin],
-    [Action.list]: [Role.verification_admin],
+    [Action.list]: [Role.metadata_admin],
   },
 }
 
 type Domain = keyof typeof PERMISSIONS
 
-export const isPermittedAccess = (
+export const isPermitted = (
   user: UserWithAccessToken,
-  domain: Domain
+  domain: Domain,
+  action?: Action
 ): boolean => {
-  return user.roles.some((role) => {
-    for (const actionEnum in PERMISSIONS[domain]) {
-      if (actionPermittedByRole(domain, actionEnum, role)) return true
-    }
-    return false
-  })
+  if (action) {
+    return user.roles.some((role) => {
+      return actionPermittedByRole(domain, action, role)
+    })
+  } else {
+    return user.roles.some((role) => {
+      for (const action in PERMISSIONS[domain]) {
+        if (actionPermittedByRole(domain, action, role)) return true
+      }
+      return false
+    })
+  }
 }
 
-export const assertPermittedAccess = (
-  user: UserWithAccessToken,
-  domain: Domain
-) => {
-  if (!isPermittedAccess(user, domain)) {
+export const assertPermitted = (user: UserWithAccessToken, domain: Domain) => {
+  if (!isPermitted(user, domain)) {
     const permittedRoles = buildPermittedRoles(domain)
 
     const message = `Unauthorized: ${domain} requires role(s): ${permittedRoles.join(
@@ -84,18 +88,6 @@ export const assertPermittedAccess = (
     throw new Error(message)
   }
 }
-
-export const isPermittedAction = (
-  user: UserWithAccessToken,
-  domain: Domain,
-  action: Action
-): boolean => {
-  return user.roles.some((role) => {
-    return actionPermittedByRole(domain, action, role)
-  })
-}
-
-// helpers
 
 const buildPermittedRoles = (domain: Domain): string[] => {
   const approvedRoles: string[] = []
