@@ -1,4 +1,5 @@
 import type { User } from "next-auth"
+import { intersection, uniq } from "lodash"
 
 export type UserWithAccessToken = User & {
   accessToken: string
@@ -63,18 +64,11 @@ export const isPermitted = (
   domain: Domain,
   action?: Action
 ): boolean => {
-  if (action) {
-    return user.roles.some((role) => {
-      return actionPermittedByRole(domain, action, role)
-    })
-  } else {
-    return user.roles.some((role) => {
-      for (const action in PERMISSIONS[domain]) {
-        if (actionPermittedByRole(domain, action, role)) return true
-      }
-      return false
-    })
-  }
+  const permittedRoles = action
+    ? PERMISSIONS[domain][action]
+    : flattenedArray(domain)
+
+  return intersection(user.roles, permittedRoles).length > 0
 }
 
 export const assertPermitted = (user: UserWithAccessToken, domain: Domain) => {
@@ -89,30 +83,15 @@ export const assertPermitted = (user: UserWithAccessToken, domain: Domain) => {
   }
 }
 
-const buildPermittedRoles = (domain: Domain): string[] => {
-  const approvedRoles: string[] = []
-
-  for (const action in PERMISSIONS[domain]) {
-    PERMISSIONS[domain][action].forEach((role) => {
-      if (!approvedRoles.includes(role)) approvedRoles.push(role)
-    })
-  }
-
-  return approvedRoles
+export const buildPermittedRoles = (domain: Domain): string[] => {
+  const permittedRoles = flattenedArray(domain)
+  return uniq(permittedRoles)
 }
 
-const actionPermittedByRole = (
-  domain: string,
-  action: string,
-  userRole: string
-): boolean => {
-  let userPermittedByRoles = false
-
-  PERMISSIONS[domain][action].forEach((permittedRole) => {
-    if (userRole == permittedRole) {
-      userPermittedByRoles = true
-    }
-  })
-
-  return userPermittedByRoles
+const flattenedArray = (domain: Domain) => {
+  // Flattend Array of ALL roles permitted to perform ANY action in the domain
+  return Object.values(PERMISSIONS[domain]).reduce(
+    (previous, next) => previous.concat(next),
+    []
+  )
 }
