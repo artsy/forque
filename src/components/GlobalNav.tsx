@@ -35,17 +35,28 @@ export const GlobalNav: FC<GlobalNavProps> = ({ user }) => {
             {/* {isPermitted(user, [Action.list], "users") && (
               <Item href="/users">Users</Item>
             )}
+
             {isPermitted(user, [Action.dedupe], "artists") && (
               <Item href="/artists/dedupe">Dedupe Artists</Item>
             )} */}
+
+            {isPermittedAccess(user, "feature_flags") && (
+              <Item href="/feature-flags">Feature Flags</Item>
+            )}
+
             {isPermittedAccess(user, "my_collection") && (
               <Item href="/my-collection">My Collection</Item>
             )}
+
             {isPermittedAccess(user, "uploads") && (
               <Item href="/uploads">Uploads</Item>
             )}
+
             {isPermittedAccess(user, "shortcuts") && (
               <Item href="/shortcuts">Shortcuts</Item>
+            )}
+            {isPermittedAccess(user, "verifications") && (
+              <Item href="/verifications">Verifications</Item>
             )}
             <Item href="#" onClick={() => signOut()}>
               Logout
@@ -98,7 +109,7 @@ const Item: FC<{ href: string; onClick?: () => void }> = ({
 }) => {
   const router = useRouter()
   const active =
-    href === "/" ? router.pathname === "/" : router.pathname.startsWith(href)
+    href === "/" ? router?.pathname === "/" : router?.pathname?.startsWith(href)
 
   return (
     <Box onClick={onClick}>

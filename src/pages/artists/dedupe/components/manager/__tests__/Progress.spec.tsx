@@ -44,11 +44,11 @@ it("renders controls", () => {
   screen.getByRole("button", { name: /Continue/ })
 })
 
-it("allows reset", () => {
+it("allows reset", async () => {
   state = { ...initialState, currentStep: Step.SELECT_GOOD_RECORD }
   render(<Progress state={state} dispatch={dispatch} />)
 
-  userEvent.click(screen.getByRole("button", { name: /Reset/ }))
+  await userEvent.click(screen.getByRole("button", { name: /Reset/ }))
 
   expect(dispatch).toHaveBeenCalledWith({ type: "reset" } as Action)
 })

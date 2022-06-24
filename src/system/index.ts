@@ -6,12 +6,13 @@ export type UserWithAccessToken = User & {
 }
 
 // all supported roles
-// NOTE: Do not add Admin to supported roles. It is to be deprectated.
 export enum Role {
+  // NOTE: Do not add Admin to supported roles. It is to be deprecated.
   customer_support = "customer_support",
   metadata_admin = "metadata_admin",
   team = "team",
   content_manager = "content_manager",
+  verification_admin = "verification_admin",
 }
 
 export enum Action {
@@ -24,24 +25,34 @@ export enum Action {
 
 // For each _domain_, a map of _actions_ to the authorized _roles_.
 const PERMISSIONS: Record<string, Record<string, Role[]>> = {
-  users: {
-    [Action.list]: [Role.customer_support],
-  },
   artists: {
     [Action.dedupe]: [Role.metadata_admin],
     [Action.list]: [Role.metadata_admin],
     [Action.transfer]: [Role.team],
   },
+  // TODO: We need to follow up and narrow the role to something less than
+  // `team`. Perhaps we can use `product_development`.
+  feature_flags: {
+    [Action.list]: [Role.team],
+    [Action.create]: [Role.team],
+  },
   my_collection: {
     [Action.transfer]: [Role.customer_support],
+  },
+  shortcuts: {
+    [Action.create]: [Role.content_manager],
+    [Action.edit]: [Role.content_manager],
   },
   uploads: {
     [Action.list]: [Role.team],
     [Action.create]: [Role.team],
   },
-  shortcuts: {
-    [Action.create]: [Role.content_manager],
-    [Action.edit]: [Role.content_manager],
+  users: {
+    [Action.list]: [Role.customer_support],
+  },
+  verifications: {
+    [Action.create]: [Role.verification_admin],
+    [Action.list]: [Role.verification_admin],
   },
 }
 
