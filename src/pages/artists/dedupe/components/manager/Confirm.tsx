@@ -1,7 +1,10 @@
-import React, { Dispatch, useState } from "react"
+import React, { Dispatch } from "react"
 import { Action, RecordStatus, SingleValuedField, State } from "./state"
 import { ArtistCardHeader } from "./ArtistCardHeader"
 import { Artist } from "../types"
+import { useMergeArtists } from "../../mutations/useMergeArtists"
+import { useToasts } from "@artsy/palette"
+import { useRouter } from "next/router"
 
 interface Props {
   state: State
@@ -12,10 +15,13 @@ interface Props {
  * Final step: confirm before sending merge payload to Gravity
  */
 export const Confirm: React.FC<Props> = ({ state }) => {
-  const [payload, setPayload] = useState<Payload>()
-
   const mergedArtist = deriveMergedArtistRecord(state)
   const badArtists = getBadArtists(state)
+
+  const { submitMutation } = useMergeArtists()
+  const { sendToast } = useToasts()
+
+  const router = useRouter()
 
   return (
     <div>
@@ -31,21 +37,46 @@ export const Confirm: React.FC<Props> = ({ state }) => {
         <button
           className="bg-black100 text-white100 p-1 my-2 rounded-lg"
           onClick={async () => {
-            const payload = getPayload(state)
-            setPayload(payload)
+            try {
+              const result = await submitMutation({
+                variables: {
+                  input: {
+                    goodId: state.goodId!,
+                    badIds: state.badIds,
+                  },
+                },
+              })
+
+              const data = result.mergeArtists?.mergeArtistsResponseOrError
+              if (data?.__typename == "MergeArtistsFailure") {
+                throw new Error(data.mutationError?.message)
+              }
+
+              const goToNextScreen = () => {
+                router.push(`/artists/dedupe`)
+              }
+
+              sendToast({
+                variant: "success",
+                message: `Artist merger succeeded`,
+                description: `The discarded artists were successfully merged into ${mergedArtist.slug}`,
+                ttl: 4000,
+              })
+              setTimeout(goToNextScreen, 2000)
+            } catch (error) {
+              sendToast({
+                variant: "error",
+                message: `Artist merger failed`,
+                description: (error as any).message,
+              })
+
+              console.error("[forque] Error merging artists:", error)
+            }
           }}
         >
           Ok, proceed
         </button>
       </div>
-
-      {/* temporary */}
-      {payload && (
-        <div className="my-2">
-          <p className="my-2">Ok, Gravity. Here is your payload:</p>
-          <pre className="">{JSON.stringify(payload, null, 2)}</pre>
-        </div>
-      )}
 
       <div>
         <ArtistCardHeader
@@ -116,23 +147,6 @@ function getBadArtists(state: State): Artist[] {
     return badArtist
   })
   return badArtists
-}
-
-type Payload = {
-  good_id: State["goodId"]
-  bad_ids: State["badIds"]
-  overrides: State["overrides"]
-  additions: State["additions"]
-}
-
-function getPayload(state: State): Payload {
-  const { goodId, badIds, overrides, additions } = state
-  return {
-    good_id: goodId,
-    bad_ids: badIds,
-    overrides,
-    additions,
-  }
 }
 
 const ConfirmedField: React.FC<{

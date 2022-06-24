@@ -4,6 +4,12 @@ import { render, screen } from "@testing-library/react"
 import { ArtistDupesManager } from "../ArtistDupesManager"
 import artist from "../__fixtures__/artist-with-dupes"
 
+jest.mock("next/config", () => () => ({
+  publicRuntimeConfig: {
+    NEXT_PUBLIC_GRAVITY_URL: "https://stagingapi.artsy.net",
+  },
+}))
+
 it("displays the found clusters", () => {
   render(<ArtistDupesManager artist={artist} />)
 

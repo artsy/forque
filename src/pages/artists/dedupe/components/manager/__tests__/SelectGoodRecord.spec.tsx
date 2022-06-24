@@ -6,7 +6,7 @@ import { SelectGoodRecord } from "../SelectGoodRecord"
 import { Action, initialState } from "../state"
 import artist from "../__fixtures__/artist-with-dupes"
 
-it("renders a clickable card for each dupe", () => {
+it("renders a clickable card for each dupe", async () => {
   const dispatch = jest.fn()
   render(
     <SelectGoodRecord
@@ -25,7 +25,7 @@ it("renders a clickable card for each dupe", () => {
     screen.getByRole("button", { name: /warren-king[^-]/ })
   ).toBeInTheDocument()
 
-  userEvent.click(screen.getByRole("button", { name: /warren-king-2/ }))
+  await userEvent.click(screen.getByRole("button", { name: /warren-king-2/ }))
 
   expect(dispatch).toHaveBeenCalledWith({
     type: "keep artist",
