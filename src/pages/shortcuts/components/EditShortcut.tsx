@@ -4,7 +4,7 @@ import { useState } from "react"
 import * as Yup from "yup"
 import { CreateOrEditShortcutForm } from "./CreateOrEditShortcutForm"
 import { useSession } from "next-auth/react"
-import { isPermitted, UserWithAccessToken, Action } from "system"
+import { isPermittedAccess, UserWithAccessToken } from "system"
 import getConfig from "next/config"
 
 interface SearchResponse {
@@ -53,7 +53,7 @@ export const EditShortcut = () => {
     }
   }
 
-  if (isPermitted(user, "shortcuts", Action.edit)) {
+  if (isPermittedAccess(user, "shortcuts")) {
     return (
       <>
         <Text>NOPE</Text>

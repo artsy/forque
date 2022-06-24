@@ -1,4 +1,9 @@
-import { isPermitted, Action, UserWithAccessToken } from "system"
+import {
+  isPermittedAccess,
+  Action,
+  UserWithAccessToken,
+  isPermittedAction,
+} from "system"
 
 const basicUser: UserWithAccessToken = {
   id: "fake",
@@ -13,7 +18,7 @@ describe("isPermitted", () => {
       ...basicUser,
       roles: ["genomer"],
     }
-    expect(isPermitted(user, "artists")).toEqual(false)
+    expect(isPermittedAccess(user, "artists")).toEqual(false)
   })
 
   it("permits authorized user", () => {
@@ -21,15 +26,17 @@ describe("isPermitted", () => {
       ...basicUser,
       roles: ["metadata_admin"],
     }
-    expect(isPermitted(user, "artists")).toEqual(true)
+    expect(isPermittedAccess(user, "artists")).toEqual(true)
   })
+})
 
-  it("permits user who is authorized for any action", () => {
+describe("isPermittedAction", () => {
+  it("returns true when user roles permit the action", () => {
     const user: UserWithAccessToken = {
       ...basicUser,
-      roles: ["metadata_admin"],
+      roles: ["team"],
     }
-    expect(isPermitted(user, "artists")).toEqual(true)
+    expect(isPermittedAction(user, "artists", Action.transfer)).toEqual(true)
   })
 
   it("rejects unrecognized action", () => {
@@ -37,7 +44,7 @@ describe("isPermitted", () => {
       ...basicUser,
       roles: ["metadata_admin"],
     }
-    expect(isPermitted(user, "artists", Action.transfer)).toEqual(false)
+    expect(isPermittedAction(user, "artists", Action.transfer)).toEqual(false)
   })
 
   it("permits user who is has permission for a certain action", () => {
@@ -45,6 +52,6 @@ describe("isPermitted", () => {
       ...basicUser,
       roles: ["content_manager", "team"],
     }
-    expect(isPermitted(user, "artists", Action.transfer)).toEqual(true)
+    expect(isPermittedAction(user, "artists", Action.transfer)).toEqual(true)
   })
 })
