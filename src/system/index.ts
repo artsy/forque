@@ -18,9 +18,9 @@ export enum Role {
 
 export enum Action {
   list = "list",
-  dedupe = "dedup",
+  dedupe = "dedupe",
   create = "create",
-  transfer = "tranfer",
+  transfer = "transfer",
   edit = "edit",
 }
 
