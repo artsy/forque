@@ -29,7 +29,6 @@ const PERMISSIONS: Record<string, Record<string, Role[]>> = {
   artists: {
     [Action.dedupe]: [Role.metadata_admin],
     [Action.list]: [Role.metadata_admin],
-    [Action.transfer]: [Role.team],
   },
   // TODO: We need to follow up and narrow the role to something less than
   // `team`. Perhaps we can use `product_development`.
@@ -53,7 +52,7 @@ const PERMISSIONS: Record<string, Record<string, Role[]>> = {
   },
   verifications: {
     [Action.create]: [Role.verification_admin],
-    [Action.list]: [Role.metadata_admin],
+    [Action.list]: [Role.verification_admin],
   },
 }
 
