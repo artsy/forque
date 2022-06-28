@@ -11,12 +11,8 @@ export const useCreateIdentityVerificationOverride = () => {
         createIdentityVerificationOverride(input: $input) {
           createIdentityVerificationOverrideResponseOrError {
             ... on IdentityVerificationOverrideMutationSuccess {
-              identityVerificationOverride {
-                userID
-                reason
-                newState
-                oldState
-                createdAt
+              identityVerification {
+                ...VerificationsOverrides_identityVerification
               }
             }
             ... on IdentityVerificationOverrideMutationFailure {

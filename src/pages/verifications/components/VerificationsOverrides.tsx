@@ -1,21 +1,36 @@
 import { Button, Column, GridColumns, Text } from "@artsy/palette"
 import { Table } from "components/Table"
 import { useState } from "react"
-import { RefetchFnDynamic } from "react-relay"
-import type { Override } from "./types"
+import { graphql, useFragment } from "react-relay"
+import { VerificationsOverrides_identityVerification$key } from "__generated__/VerificationsOverrides_identityVerification.graphql"
 import { VerificationsOverridesCreate } from "./VerificationsOverridesCreate"
 
 interface VerificationsOverridesProps {
-  identityVerificationID: string
-  overrides: Override[]
-  relayRefetch: RefetchFnDynamic<any, any>
+  identityVerification: VerificationsOverrides_identityVerification$key
 }
 
 export const VerificationsOverrides: React.FC<VerificationsOverridesProps> = (
   props
 ) => {
-  const identityVerificationID = props.identityVerificationID
-  const overrides = props.overrides
+  const data = useFragment(
+    graphql`
+      fragment VerificationsOverrides_identityVerification on IdentityVerification {
+        id
+        internalID
+        overrides {
+          createdAt
+          newState
+          oldState
+          reason
+          userID
+          creator {
+            email
+          }
+        }
+      }
+    `,
+    props.identityVerification
+  )
   const [displayOverrideForm, setDisplayOverrideForm] = useState(false)
 
   const onRowClick = () => {
@@ -31,8 +46,7 @@ export const VerificationsOverrides: React.FC<VerificationsOverridesProps> = (
         {displayOverrideForm ? (
           <Column p={1}>
             <VerificationsOverridesCreate
-              identityVerificationID={identityVerificationID}
-              relayRefetch={props.relayRefetch}
+              identityVerificationID={data.internalID}
             />
           </Column>
         ) : (
@@ -75,7 +89,7 @@ export const VerificationsOverrides: React.FC<VerificationsOverridesProps> = (
             accessor: "reason",
           },
         ]}
-        data={overrides}
+        data={data?.overrides as any}
         onRowClick={onRowClick}
       />
     </>

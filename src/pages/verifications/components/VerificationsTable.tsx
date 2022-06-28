@@ -42,6 +42,7 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
           }
           edges {
             node {
+              id
               createdAt
               email
               internalID
@@ -60,16 +61,7 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
                 jumioID
                 result
               }
-              overrides {
-                createdAt
-                newState
-                oldState
-                reason
-                userID
-                creator {
-                  email
-                }
-              }
+              ...VerificationsOverrides_identityVerification
             }
           }
         }
@@ -142,10 +134,8 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
               return (
                 <>
                   <VerificationsDetails
-                    identityVerificationID={row.original.internalID}
                     scanReferences={row.original.scanReferences}
-                    overrides={row.original.overrides}
-                    relayRefetch={refetch}
+                    identityVerification={row.original}
                   />
                 </>
               )

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ef116af060edf116ffff65df5008ba71>>
+ * @generated SignedSource<<afc14b52e3cc42fecf097d7a9821d484>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,7 @@ export type VerificationsTable_viewer$data = {
     };
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly id: string;
         readonly createdAt: string | null;
         readonly email: string | null;
         readonly internalID: string;
@@ -39,16 +40,7 @@ export type VerificationsTable_viewer$data = {
           readonly jumioID: string;
           readonly result: string | null;
         } | null> | null;
-        readonly overrides: ReadonlyArray<{
-          readonly createdAt: string | null;
-          readonly newState: string;
-          readonly oldState: string;
-          readonly reason: string;
-          readonly userID: string | null;
-          readonly creator: {
-            readonly email: string;
-          } | null;
-        } | null> | null;
+        readonly " $fragmentSpreads": FragmentRefs<"VerificationsOverrides_identityVerification">;
       } | null;
     } | null> | null;
   } | null;
@@ -64,14 +56,14 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "createdAt",
+  "name": "id",
   "storageKey": null
 },
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "email",
+  "name": "createdAt",
   "storageKey": null
 },
 v2 = {
@@ -79,13 +71,6 @@ v2 = {
   "args": null,
   "kind": "ScalarField",
   "name": "internalID",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "userID",
   "storageKey": null
 };
 return {
@@ -229,6 +214,13 @@ return {
               "selections": [
                 (v0/*: any*/),
                 (v1/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "email",
+                  "storageKey": null
+                },
                 (v2/*: any*/),
                 {
                   "alias": null,
@@ -244,7 +236,13 @@ return {
                   "name": "state",
                   "storageKey": null
                 },
-                (v3/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "userID",
+                  "storageKey": null
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -253,7 +251,7 @@ return {
                   "name": "scanReferences",
                   "plural": true,
                   "selections": [
-                    (v0/*: any*/),
+                    (v1/*: any*/),
                     {
                       "alias": null,
                       "args": null,
@@ -289,13 +287,7 @@ return {
                       "name": "finishedAt",
                       "storageKey": null
                     },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "id",
-                      "storageKey": null
-                    },
+                    (v0/*: any*/),
                     (v2/*: any*/),
                     {
                       "alias": null,
@@ -315,50 +307,9 @@ return {
                   "storageKey": null
                 },
                 {
-                  "alias": null,
                   "args": null,
-                  "concreteType": "IdentityVerificationOverride",
-                  "kind": "LinkedField",
-                  "name": "overrides",
-                  "plural": true,
-                  "selections": [
-                    (v0/*: any*/),
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "newState",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "oldState",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "reason",
-                      "storageKey": null
-                    },
-                    (v3/*: any*/),
-                    {
-                      "alias": null,
-                      "args": null,
-                      "concreteType": "User",
-                      "kind": "LinkedField",
-                      "name": "creator",
-                      "plural": false,
-                      "selections": [
-                        (v1/*: any*/)
-                      ],
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
+                  "kind": "FragmentSpread",
+                  "name": "VerificationsOverrides_identityVerification"
                 }
               ],
               "storageKey": null
@@ -375,6 +326,6 @@ return {
 };
 })();
 
-(node as any).hash = "810d0585b22a6b9aa9cc9ea73ed22b10";
+(node as any).hash = "842c7d97aa53c497bd5020049c46fea7";
 
 export default node;

@@ -25,7 +25,6 @@ it("shows verifications details", () => {
   )
   render(
     <VerificationsDetails
-      relayRefetch={jest.fn()}
       identityVerificationID={identityVerificationID}
       scanReferences={scanReferences}
       overrides={overrides}
