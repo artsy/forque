@@ -5,13 +5,13 @@ import Head from "next/head"
 import { useRouter } from "next/router"
 import { FC, useState } from "react"
 import useSWR from "swr"
-import { Action, assertPermitted, UserWithAccessToken } from "system"
+import { assertPermitted, UserWithAccessToken } from "system"
 import { UploadButton } from "./components/UploadButton"
 
 const UploadsPage: FC = () => {
   const session = useSession()
   const user = session.data?.user as UserWithAccessToken
-  assertPermitted(user, Action.create, "uploads")
+  assertPermitted(user, "uploads")
 
   const router = useRouter()
 

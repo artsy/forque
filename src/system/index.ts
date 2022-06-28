@@ -1,4 +1,5 @@
 import type { User } from "next-auth"
+import { intersection, uniq } from "lodash"
 
 export type UserWithAccessToken = User & {
   accessToken: string
@@ -16,11 +17,11 @@ export enum Role {
 }
 
 export enum Action {
-  list,
-  dedupe,
-  create,
-  transfer,
-  edit,
+  list = "list",
+  dedupe = "dedupe",
+  create = "create",
+  transfer = "transfer",
+  edit = "edit",
 }
 
 // For each _domain_, a map of _actions_ to the authorized _roles_.
@@ -59,29 +60,37 @@ type Domain = keyof typeof PERMISSIONS
 
 export const isPermitted = (
   user: UserWithAccessToken,
-  actions: Action[],
-  domain: Domain
-) => {
-  return actions.some((action) => {
-    const permittedRoles = PERMISSIONS[domain][action] || []
-    return permittedRoles.some((permittedRole) =>
-      user.roles.includes(`${permittedRole}`)
-    )
-  })
+  domain: Domain,
+  action?: Action
+): boolean => {
+  const permittedRoles = action
+    ? PERMISSIONS[domain][action]
+    : flattenedArray(domain)
+
+  return intersection(user.roles, permittedRoles).length > 0
 }
 
-export const assertPermitted = (
-  user: UserWithAccessToken,
-  action: Action,
-  domain: Domain
-) => {
-  if (!isPermitted(user, [action], domain)) {
-    const permittedRoles = PERMISSIONS[domain][action] || []
-    const message = `Unauthorized: ${domain} (${
-      Action[action]
-    }) requires roles: ${permittedRoles.join(
+export const assertPermitted = (user: UserWithAccessToken, domain: Domain) => {
+  if (!isPermitted(user, domain)) {
+    const permittedRoles = buildPermittedRoles(domain)
+
+    const message = `Unauthorized: ${domain} requires role(s): ${permittedRoles.join(
       ", "
     )}. Please contact your product team for assistance.`
+
     throw new Error(message)
   }
+}
+
+export const buildPermittedRoles = (domain: Domain): string[] => {
+  const permittedRoles = flattenedArray(domain)
+  return uniq(permittedRoles)
+}
+
+const flattenedArray = (domain: Domain) => {
+  // Flattend Array of ALL roles permitted to perform ANY action in the domain
+  return Object.values(PERMISSIONS[domain]).reduce(
+    (previous, next) => previous.concat(next),
+    []
+  )
 }
