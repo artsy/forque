@@ -5,7 +5,8 @@ import { Artist } from "../types"
 import { useMergeArtists } from "../../mutations/useMergeArtists"
 import { useToasts } from "@artsy/palette"
 import { useRouter } from "next/router"
-import _ from "lodash"
+import omitBy from "lodash/omitBy"
+import isEmpty from "lodash/isEmpty"
 
 interface Props {
   state: State
@@ -44,7 +45,7 @@ export const Confirm: React.FC<Props> = ({ state }) => {
                   input: {
                     goodId: state.goodId!,
                     badIds: state.badIds,
-                    overrides: _.omitBy(state.overrides, _.isEmpty),
+                    overrides: omitBy(state.overrides, isEmpty),
                   },
                 },
               })
