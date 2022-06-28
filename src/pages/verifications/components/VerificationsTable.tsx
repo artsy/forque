@@ -49,18 +49,7 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
               name
               state
               userID
-              scanReferences {
-                createdAt
-                extractedFirstName
-                extractedLastName
-                extractedIdFailReason
-                extractedSimilarityFailReason
-                finishedAt
-                id
-                internalID
-                jumioID
-                result
-              }
+              ...VerificationsScanReferences_identityVerification
               ...VerificationsOverrides_identityVerification
             }
           }
@@ -134,8 +123,8 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
               return (
                 <>
                   <VerificationsDetails
-                    scanReferences={row.original.scanReferences}
-                    identityVerification={row.original}
+                    identityVerificationScanReferences={row.original}
+                    identityVerificationOverrides={row.original}
                   />
                 </>
               )

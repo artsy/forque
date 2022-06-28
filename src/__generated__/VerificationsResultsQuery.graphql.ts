@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<30eef72384893463ab295afa286cec3b>>
+ * @generated SignedSource<<48ac3d290c4ba5561219990073fa2a4a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -402,12 +402,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5ea7a938342ed280f50c4fca83352fa2",
+    "cacheID": "d9ac1a0896394ca511c1d14c56f703f1",
     "id": null,
     "metadata": {},
     "name": "VerificationsResultsQuery",
     "operationKind": "query",
-    "text": "query VerificationsResultsQuery(\n  $email: String\n  $userId: String\n) {\n  viewer {\n    ...VerificationsTable_viewer\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment VerificationsOverrides_identityVerification on IdentityVerification {\n  id\n  internalID\n  overrides {\n    createdAt\n    newState\n    oldState\n    reason\n    userID\n    creator {\n      email\n      id\n    }\n    id\n  }\n}\n\nfragment VerificationsTable_viewer on Viewer {\n  identityVerificationsConnection(first: 20, email: $email, userId: $userId) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        id\n        createdAt\n        email\n        internalID\n        name\n        state\n        userID\n        scanReferences {\n          createdAt\n          extractedFirstName\n          extractedLastName\n          extractedIdFailReason\n          extractedSimilarityFailReason\n          finishedAt\n          id\n          internalID\n          jumioID\n          result\n        }\n        ...VerificationsOverrides_identityVerification\n      }\n    }\n  }\n}\n"
+    "text": "query VerificationsResultsQuery(\n  $email: String\n  $userId: String\n) {\n  viewer {\n    ...VerificationsTable_viewer\n  }\n}\n\nfragment ListPagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment VerificationsOverrides_identityVerification on IdentityVerification {\n  id\n  internalID\n  overrides {\n    createdAt\n    newState\n    oldState\n    reason\n    userID\n    creator {\n      email\n      id\n    }\n    id\n  }\n}\n\nfragment VerificationsScanReferences_identityVerification on IdentityVerification {\n  id\n  internalID\n  scanReferences {\n    createdAt\n    extractedFirstName\n    extractedLastName\n    extractedIdFailReason\n    extractedSimilarityFailReason\n    finishedAt\n    id\n    internalID\n    jumioID\n    result\n  }\n}\n\nfragment VerificationsTable_viewer on Viewer {\n  identityVerificationsConnection(first: 20, email: $email, userId: $userId) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...ListPagination_pageCursors\n    }\n    edges {\n      node {\n        id\n        createdAt\n        email\n        internalID\n        name\n        state\n        userID\n        ...VerificationsScanReferences_identityVerification\n        ...VerificationsOverrides_identityVerification\n      }\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,15 +1,37 @@
 import { Spacer, Text } from "@artsy/palette"
 import { Table } from "components/Table"
-import type { ScanReference } from "./types"
+import { graphql, useFragment } from "react-relay"
+import { VerificationsScanReferences_identityVerification$key } from "__generated__/VerificationsScanReferences_identityVerification.graphql"
 
-interface VerificationsDetailsProps {
-  scanReferences: ScanReference[]
+interface VerificationsScanReferencesProps {
+  identityVerification: VerificationsScanReferences_identityVerification$key
 }
 
 export const VerificationsScanReferences: React.FC<
-  VerificationsDetailsProps
+  VerificationsScanReferencesProps
 > = (props) => {
-  const scanReferences = props.scanReferences
+  // const scanReferences = props.scanReferences
+  const data = useFragment(
+    graphql`
+      fragment VerificationsScanReferences_identityVerification on IdentityVerification {
+        id
+        internalID
+        scanReferences {
+          createdAt
+          extractedFirstName
+          extractedLastName
+          extractedIdFailReason
+          extractedSimilarityFailReason
+          finishedAt
+          id
+          internalID
+          jumioID
+          result
+        }
+      }
+    `,
+    props.identityVerification
+  )
 
   const onRowClick = () => {
     // do nothing
@@ -59,7 +81,7 @@ export const VerificationsScanReferences: React.FC<
             accessor: "extractedIdFailReason",
           },
         ]}
-        data={scanReferences}
+        data={data.scanReferences as any}
         onRowClick={onRowClick}
       />
       <Spacer my={2} />
