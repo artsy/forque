@@ -2,13 +2,13 @@ import { Text } from "@artsy/palette"
 import { useSession } from "next-auth/react"
 import Head from "next/head"
 import { FC } from "react"
-import { Action, assertPermitted, UserWithAccessToken } from "system"
+import { assertPermitted, UserWithAccessToken } from "system"
 import { MyCollectionTransfer } from "./components/MyCollectionTransfer"
 
 const MyCollectionPage: FC = () => {
   const session = useSession()
   const user = session.data?.user as UserWithAccessToken
-  assertPermitted(user, Action.transfer, "my_collection")
+  assertPermitted(user, "my_collection")
 
   return (
     <>

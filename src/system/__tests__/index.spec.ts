@@ -1,44 +1,43 @@
-import { isPermitted, Action, UserWithAccessToken } from "system"
+import {
+  isPermitted,
+  Action,
+  UserWithAccessToken,
+  buildPermittedRoles,
+} from "system"
 
-const basicUser: UserWithAccessToken = {
+const user: UserWithAccessToken = {
   id: "fake",
   email: "fake@artsy.net",
   accessToken: "fake",
   roles: [],
 }
 
-describe("isPermitted", () => {
+describe("isPermitted WITHOUT an action argument", () => {
   it("rejects unauthorized user", () => {
-    const user: UserWithAccessToken = {
-      ...basicUser,
-      roles: ["genomer"],
-    }
-    expect(isPermitted(user, [Action.list], "artists")).toEqual(false)
+    ;(user.roles = ["genomer"]),
+      expect(isPermitted(user, "artists")).toEqual(false)
   })
 
   it("permits authorized user", () => {
-    const user: UserWithAccessToken = {
-      ...basicUser,
-      roles: ["metadata_admin"],
-    }
-    expect(isPermitted(user, [Action.list], "artists")).toEqual(true)
+    user.roles = ["metadata_admin"]
+    expect(isPermitted(user, "artists")).toEqual(true)
+  })
+})
+
+describe("isPermitted WITH an action argument", () => {
+  it("returns true when user roles permit the action", () => {
+    user.roles = ["content_manager", "metadata_admin"]
+    expect(isPermitted(user, "artists", Action.dedupe)).toEqual(true)
   })
 
-  it("permits user who is authorized for any of the specified actions", () => {
-    const user: UserWithAccessToken = {
-      ...basicUser,
-      roles: ["metadata_admin"],
-    }
-    expect(isPermitted(user, [Action.list, Action.create], "artists")).toEqual(
-      true
-    )
+  it("returns false when user roles don't permit the action", () => {
+    user.roles = ["metadata_admin"]
+    expect(isPermitted(user, "artists", Action.transfer)).toEqual(false)
   })
+})
 
-  it("rejects unrecognized action", () => {
-    const user: UserWithAccessToken = {
-      ...basicUser,
-      roles: ["metadata_admin"],
-    }
-    expect(isPermitted(user, [Action.transfer], "artists")).toEqual(false)
+describe("buildPermittedRoles", () => {
+  it("returns an array of all permitted roles for a domain", () => {
+    expect(buildPermittedRoles("artists")).toEqual(["metadata_admin"])
   })
 })
