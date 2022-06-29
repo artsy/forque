@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bd9e5c38aea42c4ff35de65dc3ffd02d>>
+ * @generated SignedSource<<6003a98053a89f4ef1a964594ee71c67>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,15 @@ export type MergeArtistsMutationInput = {
   badIds: ReadonlyArray<string>;
   clientMutationId?: string | null;
   goodId: string;
+  overrides?: MergeArtistsFieldOverrides | null;
+};
+export type MergeArtistsFieldOverrides = {
+  birthday?: string | null;
+  deathday?: string | null;
+  gender?: string | null;
+  hometown?: string | null;
+  location?: string | null;
+  nationality?: string | null;
 };
 export type useMergeArtistsMutation$variables = {
   input: MergeArtistsMutationInput;
