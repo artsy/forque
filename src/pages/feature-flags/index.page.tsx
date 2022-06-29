@@ -20,8 +20,8 @@ const FeatureFlagPage: React.FC<FeatureFlagPageProps> = (props) => {
   const user = session.data?.user as UserWithAccessToken
   assertPermitted(user, "feature_flags")
 
-  // HACK: Temprary guard to prevent taking action against production until a
-  // better solution is implemented.
+  // HACK: Temporary guard to prevent actions on production until a better
+  // solution is implemented.
   if (publicRuntimeConfig.NEXT_PUBLIC_METAPHYSICS_URL.includes("staging")) {
     return (
       <Banner variant="error">Feature Flags not available on staging</Banner>
