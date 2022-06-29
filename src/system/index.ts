@@ -1,5 +1,6 @@
 import type { User } from "next-auth"
-import { intersection, uniq } from "lodash"
+import intersection from "lodash/intersection"
+import uniq from "lodash/uniq"
 
 export type UserWithAccessToken = User & {
   accessToken: string
