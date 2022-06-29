@@ -44,6 +44,14 @@ const state: State = {
   ...initialState,
   goodId: goodArtist.internalID,
   badIds: [badArtist.internalID],
+  overrides: {
+    gender: badArtist.internalID,
+    nationality: badArtist.internalID,
+    birthday: null,
+    deathday: null,
+    hometown: null,
+    location: null,
+  },
 }
 
 it("renders a card for the merged artist and a button to proceed", async () => {
@@ -80,6 +88,10 @@ it("calls the mutation upon button press", async () => {
       input: {
         goodId: goodArtist.internalID,
         badIds: [badArtist.internalID],
+        overrides: {
+          gender: badArtist.internalID,
+          nationality: badArtist.internalID,
+        },
       },
     },
   })
