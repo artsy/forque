@@ -1,4 +1,5 @@
-import { identity, pickBy } from "lodash"
+import identity from "lodash/identity"
+import pickBy from "lodash/pickBy"
 
 const GEMINI_URL = "https://d7hftxdivxxvm.cloudfront.net"
 
