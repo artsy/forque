@@ -18,7 +18,7 @@ const FeatureFlagPage: React.FC<FeatureFlagPageProps> = (props) => {
   const { publicRuntimeConfig } = getConfig()
   const session = useSession()
   const user = session.data?.user as UserWithAccessToken
-  assertPermitted(user, "feature-flags")
+  assertPermitted(user, "feature_flags")
 
   // HACK: Temporary guard to prevent actions on production until a better
   // solution is implemented.
