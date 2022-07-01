@@ -5,8 +5,9 @@ import { VerificationsOverrides_identityVerification$key } from "__generated__/V
 import { VerificationsScanReferences_identityVerification$key } from "__generated__/VerificationsScanReferences_identityVerification.graphql"
 
 interface VerificationsDetailsProps {
-  identityVerificationScanReferences: VerificationsScanReferences_identityVerification$key
-  identityVerificationOverrides: VerificationsOverrides_identityVerification$key
+  identityVerification:
+    | VerificationsScanReferences_identityVerification$key
+    | VerificationsOverrides_identityVerification$key
 }
 
 export const VerificationsDetails: React.FC<VerificationsDetailsProps> = (
@@ -18,10 +19,14 @@ export const VerificationsDetails: React.FC<VerificationsDetailsProps> = (
         <Column span={1}></Column>
         <Column span={10}>
           <VerificationsScanReferences
-            identityVerification={props.identityVerificationScanReferences}
+            identityVerification={
+              props.identityVerification as VerificationsScanReferences_identityVerification$key
+            }
           />
           <VerificationsOverrides
-            identityVerification={props.identityVerificationOverrides}
+            identityVerification={
+              props.identityVerification as VerificationsOverrides_identityVerification$key
+            }
           />
         </Column>
       </GridColumns>
