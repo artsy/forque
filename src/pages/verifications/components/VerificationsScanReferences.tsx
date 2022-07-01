@@ -10,7 +10,6 @@ interface VerificationsScanReferencesProps {
 export const VerificationsScanReferences: React.FC<
   VerificationsScanReferencesProps
 > = (props) => {
-  // const scanReferences = props.scanReferences
   const data = useFragment(
     graphql`
       fragment VerificationsScanReferences_identityVerification on IdentityVerification {

@@ -89,7 +89,7 @@ export const VerificationsOverrides: React.FC<VerificationsOverridesProps> = (
             accessor: "reason",
           },
         ]}
-        data={data?.overrides as any}
+        data={data.overrides as any}
         onRowClick={onRowClick}
       />
     </>
