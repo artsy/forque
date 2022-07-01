@@ -1,3 +1,5 @@
+import { FragmentRefs } from "relay-runtime"
+
 /** Typical attributes for Scan References in the list view. */
 export type ScanReference = {
   createdAt: string | null
@@ -22,4 +24,17 @@ export type Override = {
   creator: {
     email: string | null
   }
+}
+
+export type IdentityVerification = {
+  createdAt: string | null
+  email: string | null
+  internalID: string
+  name: string | null
+  state: string
+  userID: string | null
+  " $fragmentSpreads": FragmentRefs<
+    | "VerificationsScanReferences_identityVerification"
+    | "VerificationsOverrides_identityVerification"
+  >
 }

@@ -1,11 +1,21 @@
 export const verificationOverrideSucessResponse = {
   createIdentityVerificationOverrideResponseOrError: {
     __typename: "IdentityVerificationOverrideMutationSuccess",
-    identityVerificationOverride: {
+    identityVerification: {
+      __typename: "IdentityVerification",
+      name: "joe plumber",
+      internalID: "456",
+      state: "passed",
       userID: "123",
-      reason: "testing",
-      newState: "failed",
-      oldState: "pending",
+      email: "admin@foo.com",
+      overrides: [
+        {
+          userID: "123",
+          reason: "testing",
+          newState: "failed",
+          oldState: "pending",
+        },
+      ],
     },
   },
 }

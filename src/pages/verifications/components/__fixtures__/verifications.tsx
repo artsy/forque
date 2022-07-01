@@ -1,4 +1,4 @@
-import type { Override, ScanReference } from "../types"
+import type { Override, ScanReference, IdentityVerification } from "../types"
 
 export const identityVerificationID = "identityVerificationID"
 
@@ -29,3 +29,16 @@ export const scanReferences: ScanReference[] = [
     result: "passed",
   },
 ]
+
+export const identityVerification: IdentityVerification = {
+  createdAt: "long time ago",
+  email: "admin@foo.com",
+  internalID: "456",
+  name: "joe plumber",
+  state: "pending",
+  userID: "123",
+  " $fragmentSpreads": {
+    VerificationsOverrides_identityVerification: true,
+    VerificationsScanReferences_identityVerification: true,
+  },
+}
