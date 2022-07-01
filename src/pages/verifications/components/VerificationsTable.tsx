@@ -109,14 +109,6 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
                 Header: "Email",
                 accessor: "email",
               },
-              {
-                Header: "Scans",
-                accessor: "scanReferences.length",
-              },
-              {
-                Header: "Overrides",
-                accessor: "overrides.length",
-              },
             ]}
             data={verifications}
             renderExpandedRow={(row: any) => {
