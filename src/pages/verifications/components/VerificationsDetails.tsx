@@ -1,11 +1,12 @@
 import { Column, GridColumns } from "@artsy/palette"
 import { VerificationsOverrides } from "./VerificationsOverrides"
 import { VerificationsScanReferences } from "./VerificationsScanReferences"
-import type { Override, ScanReference } from "./types"
+import { VerificationsOverrides_identityVerification$key } from "__generated__/VerificationsOverrides_identityVerification.graphql"
+import { VerificationsScanReferences_identityVerification$key } from "__generated__/VerificationsScanReferences_identityVerification.graphql"
 
 interface VerificationsDetailsProps {
-  overrides: Override[]
-  scanReferences: ScanReference[]
+  scanReferences: VerificationsScanReferences_identityVerification$key
+  overrides: VerificationsOverrides_identityVerification$key
 }
 
 export const VerificationsDetails: React.FC<VerificationsDetailsProps> = (
@@ -16,8 +17,8 @@ export const VerificationsDetails: React.FC<VerificationsDetailsProps> = (
       <GridColumns>
         <Column span={1}></Column>
         <Column span={10}>
-          <VerificationsScanReferences scanReferences={props.scanReferences} />
-          <VerificationsOverrides overrides={props.overrides} />
+          <VerificationsScanReferences data={props.scanReferences} />
+          <VerificationsOverrides data={props.overrides} />
         </Column>
       </GridColumns>
     </>
