@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { withSentryConfig } = require('@sentry/nextjs');
+const { withSentryConfig } = require("@sentry/nextjs")
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -23,9 +23,12 @@ const nextConfig = {
   sentry: {
     disableServerWebpackPlugin: true,
     disableClientWebpackPlugin: true,
-  }
+  },
+  images: {
+    domains: ["d32dm0rphc51dk.cloudfront.net", "d2v80f5yrouhh2.cloudfront.net"],
+  },
 }
 
 // Make sure adding Sentry options is the last code to run before exporting, to
 // ensure that your source maps include changes from all other Webpack plugins
-module.exports = withSentryConfig(nextConfig);
+module.exports = withSentryConfig(nextConfig)
