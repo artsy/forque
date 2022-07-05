@@ -23,7 +23,13 @@ const gravityFetcher = async (path: string, accessToken: string) => {
   return json
 }
 
-export const useGravity = (url: string) => {
+export const useGravity = <T>(
+  url: string
+): {
+  data: T
+  error: unknown
+  isLoading: boolean
+} => {
   const session = useSession()
   const user = session.data?.user as UserWithAccessToken
   const { accessToken } = user
