@@ -4,7 +4,7 @@ import { graphql, useFragment } from "react-relay"
 import { VerificationsScanReferences_identityVerification$key } from "__generated__/VerificationsScanReferences_identityVerification.graphql"
 
 interface VerificationsScanReferencesProps {
-  identityVerification: VerificationsScanReferences_identityVerification$key
+  data: VerificationsScanReferences_identityVerification$key
 }
 
 export const VerificationsScanReferences: React.FC<
@@ -29,7 +29,7 @@ export const VerificationsScanReferences: React.FC<
         }
       }
     `,
-    props.identityVerification
+    props.data
   )
 
   const onRowClick = () => {

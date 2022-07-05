@@ -6,7 +6,7 @@ import { VerificationsOverrides_identityVerification$key } from "__generated__/V
 import { VerificationsOverridesCreate } from "./VerificationsOverridesCreate"
 
 interface VerificationsOverridesProps {
-  identityVerification: VerificationsOverrides_identityVerification$key
+  data: VerificationsOverrides_identityVerification$key
 }
 
 export const VerificationsOverrides: React.FC<VerificationsOverridesProps> = (
@@ -29,7 +29,7 @@ export const VerificationsOverrides: React.FC<VerificationsOverridesProps> = (
         }
       }
     `,
-    props.identityVerification
+    props.data
   )
   const [displayOverrideForm, setDisplayOverrideForm] = useState(false)
 
