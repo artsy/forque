@@ -1,9 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { VerificationsCreate } from "../VerificationsCreate"
-import {
-  successResponse,
-  failureResponse,
-} from "../__fixtures__/verificationCreateMutationResponses"
+import { successResponse } from "../__fixtures__/verificationCreateMutationResponses"
 
 const mockSendToast = jest.fn()
 
@@ -23,6 +20,7 @@ jest.mock("../../mutations/useCreateIdentityVerification", () => ({
 }))
 
 afterEach(() => {
+  mockSendToast.mockClear()
   mockCreateIdentityVerification.mockClear()
 })
 
@@ -72,8 +70,10 @@ it("sends the correct input with the mutation", async () => {
   )
 })
 
-xit("shows a toast message when an identity verification fails to be created", async () => {
-  mockCreateIdentityVerification.mockImplementation(() => failureResponse)
+it("shows a toast message when an identity verification fails to be created", async () => {
+  mockCreateIdentityVerification.mockImplementation(() => {
+    throw new Error("cats in the server room")
+  })
 
   render(<VerificationsCreate />)
 
@@ -87,6 +87,7 @@ xit("shows a toast message when an identity verification fails to be created", a
     expect(mockSendToast).toHaveBeenCalledWith({
       variant: "error",
       message: "There was an error creating the identity verification",
+      description: "cats in the server room",
     })
   )
 })

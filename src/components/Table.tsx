@@ -124,6 +124,7 @@ const TableBase = styled(Box)`
     border-bottom: 1px solid ${themeGet("colors.black10")};
     border-left: 1px solid ${themeGet("colors.black10")};
     padding: ${themeGet("space.1")};
+    overflow: auto;
   }
 `
 const TR = Box

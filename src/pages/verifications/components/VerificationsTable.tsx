@@ -42,34 +42,15 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
           }
           edges {
             node {
+              id
               createdAt
               email
               internalID
               name
               state
               userID
-              scanReferences {
-                createdAt
-                extractedFirstName
-                extractedLastName
-                extractedIdFailReason
-                extractedSimilarityFailReason
-                finishedAt
-                id
-                internalID
-                jumioID
-                result
-              }
-              overrides {
-                createdAt
-                newState
-                oldState
-                reason
-                userID
-                creator {
-                  email
-                }
-              }
+              ...VerificationsScanReferences_identityVerification
+              ...VerificationsOverrides_identityVerification
             }
           }
         }
@@ -128,22 +109,14 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
                 Header: "Email",
                 accessor: "email",
               },
-              {
-                Header: "Scans",
-                accessor: "scanReferences.length",
-              },
-              {
-                Header: "Overrides",
-                accessor: "overrides.length",
-              },
             ]}
             data={verifications}
             renderExpandedRow={(row: any) => {
               return (
                 <>
                   <VerificationsDetails
-                    scanReferences={row.original.scanReferences}
-                    overrides={row.original.overrides}
+                    scanReferences={row.original}
+                    overrides={row.original}
                   />
                 </>
               )

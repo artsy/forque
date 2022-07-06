@@ -1,15 +1,37 @@
-import { Text } from "@artsy/palette"
+import { Button, Column, GridColumns, Text } from "@artsy/palette"
 import { Table } from "components/Table"
-import type { Override } from "./types"
+import { useState } from "react"
+import { graphql, useFragment } from "react-relay"
+import { VerificationsOverrides_identityVerification$key } from "__generated__/VerificationsOverrides_identityVerification.graphql"
+import { VerificationsOverridesCreate } from "./VerificationsOverridesCreate"
 
 interface VerificationsOverridesProps {
-  overrides: Override[]
+  data: VerificationsOverrides_identityVerification$key
 }
 
 export const VerificationsOverrides: React.FC<VerificationsOverridesProps> = (
   props
 ) => {
-  const overrides = props.overrides
+  const data = useFragment(
+    graphql`
+      fragment VerificationsOverrides_identityVerification on IdentityVerification {
+        id
+        internalID
+        overrides {
+          createdAt
+          newState
+          oldState
+          reason
+          userID
+          creator {
+            email
+          }
+        }
+      }
+    `,
+    props.data
+  )
+  const [displayOverrideForm, setDisplayOverrideForm] = useState(false)
 
   const onRowClick = () => {
     // do nothing
@@ -17,9 +39,33 @@ export const VerificationsOverrides: React.FC<VerificationsOverridesProps> = (
 
   return (
     <>
-      <Text variant="lg" my={1}>
-        Overrides
-      </Text>
+      <GridColumns>
+        <Column my={1}>
+          <Text variant="lg">Overrides</Text>
+        </Column>
+        {displayOverrideForm ? (
+          <Column p={1}>
+            <VerificationsOverridesCreate
+              identityVerificationID={data.internalID}
+            />
+          </Column>
+        ) : (
+          <Column p={1}>
+            <Button
+              size="small"
+              variant="secondaryOutline"
+              width={80}
+              onClick={async (event) => {
+                event.stopPropagation()
+                event.preventDefault()
+                setDisplayOverrideForm(true)
+              }}
+            >
+              Create
+            </Button>
+          </Column>
+        )}
+      </GridColumns>
       <Table
         columns={[
           {
@@ -43,7 +89,7 @@ export const VerificationsOverrides: React.FC<VerificationsOverridesProps> = (
             accessor: "reason",
           },
         ]}
-        data={overrides}
+        data={data.overrides as any}
         onRowClick={onRowClick}
       />
     </>

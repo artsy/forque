@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ef116af060edf116ffff65df5008ba71>>
+ * @generated SignedSource<<0b76ae3b48695c86da33f8d14e39a13f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,34 +21,14 @@ export type VerificationsTable_viewer$data = {
     };
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly id: string;
         readonly createdAt: string | null;
         readonly email: string | null;
         readonly internalID: string;
         readonly name: string | null;
         readonly state: string;
         readonly userID: string | null;
-        readonly scanReferences: ReadonlyArray<{
-          readonly createdAt: string | null;
-          readonly extractedFirstName: string | null;
-          readonly extractedLastName: string | null;
-          readonly extractedIdFailReason: string | null;
-          readonly extractedSimilarityFailReason: string | null;
-          readonly finishedAt: string | null;
-          readonly id: string;
-          readonly internalID: string;
-          readonly jumioID: string;
-          readonly result: string | null;
-        } | null> | null;
-        readonly overrides: ReadonlyArray<{
-          readonly createdAt: string | null;
-          readonly newState: string;
-          readonly oldState: string;
-          readonly reason: string;
-          readonly userID: string | null;
-          readonly creator: {
-            readonly email: string;
-          } | null;
-        } | null> | null;
+        readonly " $fragmentSpreads": FragmentRefs<"VerificationsScanReferences_identityVerification" | "VerificationsOverrides_identityVerification">;
       } | null;
     } | null> | null;
   } | null;
@@ -59,36 +39,7 @@ export type VerificationsTable_viewer$key = {
   readonly " $fragmentSpreads": FragmentRefs<"VerificationsTable_viewer">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "createdAt",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "email",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "userID",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -227,9 +178,34 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v0/*: any*/),
-                (v1/*: any*/),
-                (v2/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "id",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "createdAt",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "email",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -244,121 +220,22 @@ return {
                   "name": "state",
                   "storageKey": null
                 },
-                (v3/*: any*/),
                 {
                   "alias": null,
                   "args": null,
-                  "concreteType": "IdentityVerificationScanReference",
-                  "kind": "LinkedField",
-                  "name": "scanReferences",
-                  "plural": true,
-                  "selections": [
-                    (v0/*: any*/),
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "extractedFirstName",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "extractedLastName",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "extractedIdFailReason",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "extractedSimilarityFailReason",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "finishedAt",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "id",
-                      "storageKey": null
-                    },
-                    (v2/*: any*/),
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "jumioID",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "result",
-                      "storageKey": null
-                    }
-                  ],
+                  "kind": "ScalarField",
+                  "name": "userID",
                   "storageKey": null
                 },
                 {
-                  "alias": null,
                   "args": null,
-                  "concreteType": "IdentityVerificationOverride",
-                  "kind": "LinkedField",
-                  "name": "overrides",
-                  "plural": true,
-                  "selections": [
-                    (v0/*: any*/),
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "newState",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "oldState",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "reason",
-                      "storageKey": null
-                    },
-                    (v3/*: any*/),
-                    {
-                      "alias": null,
-                      "args": null,
-                      "concreteType": "User",
-                      "kind": "LinkedField",
-                      "name": "creator",
-                      "plural": false,
-                      "selections": [
-                        (v1/*: any*/)
-                      ],
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
+                  "kind": "FragmentSpread",
+                  "name": "VerificationsScanReferences_identityVerification"
+                },
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "VerificationsOverrides_identityVerification"
                 }
               ],
               "storageKey": null
@@ -373,8 +250,7 @@ return {
   "type": "Viewer",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "810d0585b22a6b9aa9cc9ea73ed22b10";
+(node as any).hash = "027e2fd6e11e15aacb2a7a630d5c6478";
 
 export default node;
