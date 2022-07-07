@@ -3,6 +3,8 @@ import { useMetaphysics } from "hooks"
 import { ArtistList, Skeleton } from "./components/list/ArtistList"
 import { useSession } from "next-auth/react"
 import { assertPermitted, UserWithAccessToken } from "system"
+import { ArtistAutocomplete } from "components/autocomplete/ArtistAutocomplete"
+import { useRouter } from "next/router"
 
 const PER_PAGE = 36
 
@@ -19,6 +21,7 @@ export default function Page() {
   const session = useSession()
   const user = session.data?.user as UserWithAccessToken
   assertPermitted(user, "artists")
+  const router = useRouter()
 
   const [page, setPage] = useState<number>(1)
 
@@ -65,8 +68,17 @@ export default function Page() {
       <h1 className="text-xxl mb-4 ">Dedupe Artists</h1>
 
       <div className="text-lg my-4">
-        Choose from the following recent artists. Potential duplicate clusters
-        are highlighted.
+        Choose an artist record in order to view and merge its potential
+        duplicate records.
+      </div>
+
+      <ArtistAutocomplete
+        onSelect={(artist) => router.push(`/artists/dedupe/${artist.value}`)}
+      />
+
+      <div className="text-lg my-4">
+        Or, choose from the following recent artists. Potential duplicate
+        clusters are highlighted.
       </div>
 
       <div className="mb-4">
