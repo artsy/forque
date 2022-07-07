@@ -34,11 +34,11 @@ export const GlobalNav: FC<GlobalNavProps> = ({ user }) => {
             <Item href="/">Home</Item>
             {/* {isPermitted(user, [Action.list], "users") && (
               <Item href="/users">Users</Item>
-            )}
-
-            {isPermitted(user, [Action.dedupe], "artists") && (
-              <Item href="/artists/dedupe">Dedupe Artists</Item>
             )} */}
+
+            {isPermitted(user, "artists") && (
+              <Item href="/artists/dedupe">Dedupe Artists</Item>
+            )}
 
             {isPermitted(user, "feature_flags") && (
               <Item href="/feature-flags">Feature Flags</Item>
