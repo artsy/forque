@@ -2,13 +2,20 @@ import { Flex, Checkbox, Button, Text, useToasts } from "@artsy/palette"
 import { Table } from "components/Table"
 import { graphql, useRefetchableFragment } from "react-relay"
 import { FeatureFlagsTable_featureFlag$key } from "__generated__/FeatureFlagsTable_featureFlag.graphql"
+import { FeatureFlagsTable$data } from "__generated__/FeatureFlagsTable.graphql"
 import { useDeleteFeatureFlag } from "../mutations/useDeleteFeatureFlag"
 import { useToggleFeatureFlag } from "../mutations/useToggleFeatureFlag"
 import FeatureFlagOverview from "./FeatureFlagOverview"
 import { startTransition, useState } from "react"
+import { AdminToggleFeatureFlagEnvironment } from "__generated__/useToggleFeatureFlagMutation.graphql"
 
 interface FeatureFlagsTableProps {
   viewer: FeatureFlagsTable_featureFlag$key
+}
+
+interface FeatureFlagEnvironment {
+  enabled: boolean
+  name: string
 }
 
 export const FeatureFlagFields = graphql`
@@ -74,52 +81,67 @@ const FeatureFlagTable: React.FC<FeatureFlagsTableProps> = ({ viewer }) => {
           {
             Header: "Stale",
             accessor: "stale",
-            Cell: (row: any) => {
+            Cell: (row: { value: boolean }) => {
               return <>{row.value.toString()}</>
             },
           },
           {
             Header: "Environments",
             accessor: "environments",
-            Cell: ({ row }: any) => {
+            Cell: ({
+              row: { values },
+            }: {
+              row: { values: FeatureFlagsTable$data }
+            }) => {
+              if (!values || !values.environments) return null
+
               return (
                 <Flex>
-                  {row.values.environments.map((env: any, key: number) => {
-                    return (
-                      <ToggleEnvCheckbox
-                        enabled={env.enabled}
-                        key={key}
-                        onSelect={async (selected: boolean) => {
-                          await toggleFeatureFlag({
-                            variables: {
-                              input: {
-                                name: row.values.name,
-                                environment: env.name.toUpperCase(),
-                                enabled: selected,
+                  {values.environments.map(
+                    (env: FeatureFlagEnvironment | null, key: number) => {
+                      if (!env) return null
+
+                      return (
+                        <ToggleEnvCheckbox
+                          enabled={env.enabled}
+                          key={key}
+                          onSelect={async (selected: boolean) => {
+                            await toggleFeatureFlag({
+                              variables: {
+                                input: {
+                                  name: values.name,
+                                  environment:
+                                    env.name.toUpperCase() as AdminToggleFeatureFlagEnvironment,
+                                  enabled: selected,
+                                },
                               },
-                            },
-                          })
-                        }}
-                      >
-                        {env.name}
-                      </ToggleEnvCheckbox>
-                    )
-                  })}
+                            })
+                          }}
+                        >
+                          {env.name}
+                        </ToggleEnvCheckbox>
+                      )
+                    }
+                  )}
                 </Flex>
               )
             },
           },
           {
             Header: "Actions",
-            Cell: ({ row }: any) => {
+            Cell: ({
+              row: { values },
+            }: {
+              row: { values: FeatureFlagsTable$data }
+            }) => {
               return (
                 <ArchiveButton
-                  name={row.values.name}
+                  name={values.name}
                   onArchive={async () => {
                     await deleteFeatureFlag({
                       variables: {
                         input: {
-                          name: row.values.name,
+                          name: values.name,
                         },
                       },
                     })
