@@ -24,7 +24,10 @@ const FeatureFlagPage: React.FC<FeatureFlagPageProps> = (props) => {
   // solution is implemented.
   if (publicRuntimeConfig.NEXT_PUBLIC_METAPHYSICS_URL.includes("staging")) {
     return (
-      <Banner variant="error">Feature Flags not available on staging</Banner>
+      <Banner variant="error">
+        Feature Flag management is only available on&nbsp;
+        <a href="https://tools.artsy.net/feature-flags">production</a>.
+      </Banner>
     )
   }
   return (
