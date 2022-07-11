@@ -7,6 +7,15 @@ interface VerificationsScanReferencesProps {
   data: VerificationsScanReferences_identityVerification$key
 }
 
+const NETVERIFY_VERIFICATIONS_BASEURL =
+  "https://portal.netverify.com/#/verifications/"
+
+const netverifyURL = (value: string) => {
+  return `
+    ${NETVERIFY_VERIFICATIONS_BASEURL}${value}?transactionReference=${value}
+  `
+}
+
 export const VerificationsScanReferences: React.FC<
   VerificationsScanReferencesProps
 > = (props) => {
@@ -50,6 +59,15 @@ export const VerificationsScanReferences: React.FC<
           {
             Header: "Jumio ID",
             accessor: "jumioID",
+            Cell: (props: any) => (
+              <a
+                href={netverifyURL(props.value)}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {props.value}
+              </a>
+            ),
           },
           {
             Header: "Created At",
