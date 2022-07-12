@@ -1,18 +1,18 @@
 import { Spacer, Text } from "@artsy/palette"
 import { Table } from "components/Table"
 import { graphql, useFragment } from "react-relay"
+import getConfig from "next/config"
 import { VerificationsScanReferences_identityVerification$key } from "__generated__/VerificationsScanReferences_identityVerification.graphql"
+
+const { publicRuntimeConfig } = getConfig()
 
 interface VerificationsScanReferencesProps {
   data: VerificationsScanReferences_identityVerification$key
 }
 
-const NETVERIFY_VERIFICATIONS_BASEURL =
-  "https://portal.netverify.com/#/verifications/"
-
 const netverifyURL = (value: string) => {
   return `
-    ${NETVERIFY_VERIFICATIONS_BASEURL}${value}?transactionReference=${value}
+    ${publicRuntimeConfig.NEXT_PUBLIC_NETVERIFY_BASEURL}/#/verifications/${value}?transactionReference=${value}
   `
 }
 
