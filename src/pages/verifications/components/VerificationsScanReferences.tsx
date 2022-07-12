@@ -1,10 +1,19 @@
 import { Spacer, Text } from "@artsy/palette"
 import { Table } from "components/Table"
 import { graphql, useFragment } from "react-relay"
+import getConfig from "next/config"
 import { VerificationsScanReferences_identityVerification$key } from "__generated__/VerificationsScanReferences_identityVerification.graphql"
+
+const { publicRuntimeConfig } = getConfig()
 
 interface VerificationsScanReferencesProps {
   data: VerificationsScanReferences_identityVerification$key
+}
+
+const netverifyURL = (value: string) => {
+  return `
+    ${publicRuntimeConfig.NEXT_PUBLIC_NETVERIFY_BASEURL}/#/verifications/${value}?transactionReference=${value}
+  `
 }
 
 export const VerificationsScanReferences: React.FC<
@@ -50,6 +59,15 @@ export const VerificationsScanReferences: React.FC<
           {
             Header: "Jumio ID",
             accessor: "jumioID",
+            Cell: (props: any) => (
+              <a
+                href={netverifyURL(props.value)}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {props.value}
+              </a>
+            ),
           },
           {
             Header: "Created At",
