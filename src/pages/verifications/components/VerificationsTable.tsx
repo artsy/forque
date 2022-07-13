@@ -1,6 +1,6 @@
 import { Spacer, Text } from "@artsy/palette"
 import { ListPagination } from "components/ListPagination"
-import { Table } from "components/Table"
+import { Table2 } from "components/Table2"
 import { useExtractNodes } from "hooks"
 import { graphql, useRefetchableFragment } from "react-relay"
 import { VerificationsTable_viewer$key } from "__generated__/VerificationsTable_viewer.graphql"
@@ -83,47 +83,41 @@ export const VerificationsTable: React.FC<VerificationsTableProps> = (
       )}
       {!!verifications.length && (
         <>
-          <Table
+          <Table2<typeof verifications[0]>
             columns={[
               {
-                Header: "Verification ID",
+                header: "Verification ID",
                 accessor: "internalID",
               },
               {
-                Header: "Created At",
+                header: "Created At",
                 accessor: "createdAt",
               },
               {
-                Header: "State",
+                header: "State",
                 accessor: "state",
               },
               {
-                Header: "User ID",
+                header: "User ID",
                 accessor: "userID",
               },
               {
-                Header: "Name",
+                header: "Name",
                 accessor: "name",
               },
               {
-                Header: "Email",
+                header: "Email",
                 accessor: "email",
               },
             ]}
             data={verifications}
-            renderExpandedRow={(row: any) => {
+            renderExpandedRow={({ values }) => {
               return (
-                <>
-                  <VerificationsDetails
-                    scanReferences={row.original}
-                    overrides={row.original}
-                  />
-                </>
+                <VerificationsDetails
+                  scanReferences={values}
+                  overrides={row.original}
+                />
               )
-            }}
-            onRowClick={(row) => {
-              //@ts-ignore
-              row.toggleRowExpanded()
             }}
           />
           {showPagination && (
