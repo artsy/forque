@@ -22,7 +22,10 @@ const FeatureFlagPage: React.FC<FeatureFlagPageProps> = (props) => {
 
   // HACK: Temporary guard to prevent actions on production until a better
   // solution is implemented.
-  if (publicRuntimeConfig.NEXT_PUBLIC_METAPHYSICS_URL.includes("staging")) {
+  if (
+    process.env.NODE_ENV !== "development" &&
+    publicRuntimeConfig.NEXT_PUBLIC_METAPHYSICS_URL.includes("staging")
+  ) {
     return (
       <Banner variant="error">
         Feature Flag management is only available on&nbsp;

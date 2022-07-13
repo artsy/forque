@@ -1,13 +1,16 @@
 import { Flex, Checkbox, Button, Text, useToasts } from "@artsy/palette"
-import { Table } from "components/Table"
 import { graphql, useRefetchableFragment } from "react-relay"
-import { FeatureFlagsTable_featureFlag$key } from "__generated__/FeatureFlagsTable_featureFlag.graphql"
+import {
+  // FeatureFlagsTable_featureFlag$data,
+  FeatureFlagsTable_featureFlag$key,
+} from "__generated__/FeatureFlagsTable_featureFlag.graphql"
 import { FeatureFlagsTable$data } from "__generated__/FeatureFlagsTable.graphql"
 import { useDeleteFeatureFlag } from "../mutations/useDeleteFeatureFlag"
 import { useToggleFeatureFlag } from "../mutations/useToggleFeatureFlag"
 import FeatureFlagOverview from "./FeatureFlagOverview"
 import { startTransition, useState } from "react"
 import { AdminToggleFeatureFlagEnvironment } from "__generated__/useToggleFeatureFlagMutation.graphql"
+import { Table2 } from "components/Table2"
 
 interface FeatureFlagsTableProps {
   viewer: FeatureFlagsTable_featureFlag$key
@@ -64,35 +67,31 @@ const FeatureFlagTable: React.FC<FeatureFlagsTableProps> = ({ viewer }) => {
 
   return (
     <>
-      <Table
+      <Table2<FeatureFlagsTable$data>
         columns={[
           {
-            Header: "Name",
+            header: "Name",
             accessor: "name",
           },
           {
-            Header: "Type",
+            header: "Type",
             accessor: "type",
           },
           {
-            Header: "Created At",
+            header: "Created At",
             accessor: "createdAt",
           },
           {
-            Header: "Stale",
+            header: "Stale",
             accessor: "stale",
-            Cell: (row: { value: boolean }) => {
-              return <>{row.value.toString()}</>
+            Cell: ({ value }) => {
+              return <>{value.toString()}</>
             },
           },
           {
-            Header: "Environments",
+            header: "Environments",
             accessor: "environments",
-            Cell: ({
-              row: { values },
-            }: {
-              row: { values: FeatureFlagsTable$data }
-            }) => {
+            Cell: ({ values }) => {
               if (!values || !values.environments) return null
 
               return (
@@ -128,12 +127,12 @@ const FeatureFlagTable: React.FC<FeatureFlagsTableProps> = ({ viewer }) => {
             },
           },
           {
-            Header: "Actions",
-            Cell: ({
-              row: { values },
-            }: {
-              row: { values: FeatureFlagsTable$data }
-            }) => {
+            header: "Actions",
+            Cell: ({ values }) => {
+              if (!values) {
+                return null
+              }
+
               return (
                 <ArchiveButton
                   name={values.name}
@@ -155,12 +154,9 @@ const FeatureFlagTable: React.FC<FeatureFlagsTableProps> = ({ viewer }) => {
             },
           },
         ]}
-        data={data.admin?.featureFlags as any}
-        renderExpandedRow={(row) => {
-          return <FeatureFlagOverview row={row} my={1} />
-        }}
-        onRowClick={(row) => {
-          row.toggleExpandRow()
+        data={data.admin?.featureFlags as FeatureFlagsTable$data[]}
+        renderExpandedRow={({ values }) => {
+          return <FeatureFlagOverview values={values} my={1} />
         }}
       />
     </>
