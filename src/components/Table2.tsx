@@ -6,7 +6,10 @@ import { ReactElement, useState } from "react"
 interface Column<T> {
   header: string
   accessor?: string
-  Cell?: (props: { value?: any; values?: T }) => ReactElement | null
+  Cell?: (props: {
+    value?: string | boolean | number
+    values?: T
+  }) => ReactElement | null
 }
 
 interface TableProps<T> {
@@ -49,10 +52,10 @@ export const Table2 = <T,>({
               }}
             >
               {columns.map((column, key) => {
-                const CellRenderer = column.Cell
+                const Cell = column.Cell
                 const accessor = column.accessor
 
-                if (!(accessor || CellRenderer)) {
+                if (!(accessor || Cell)) {
                   throw new Error(
                     'Either "accessor" or "Cell" must be provided to column configuration.'
                   )
@@ -64,11 +67,7 @@ export const Table2 = <T,>({
 
                 return (
                   <TD key={key}>
-                    {CellRenderer ? (
-                      <CellRenderer value={value} values={row} />
-                    ) : (
-                      <>{value}</>
-                    )}
+                    {Cell ? <Cell value={value} values={row} /> : <>{value}</>}
                   </TD>
                 )
               })}
@@ -107,8 +106,7 @@ const TR = <T,>({
 
   return (
     <>
-      <Box
-        as="tr"
+      <tr
         className={className}
         onClick={() => {
           if (renderExpandedRow) {
@@ -118,7 +116,7 @@ const TR = <T,>({
         style={style}
       >
         {children}
-      </Box>
+      </tr>
 
       {renderExpandedRow && isExpanded && (
         <tr>
