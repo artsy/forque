@@ -1,5 +1,5 @@
 import Head from "next/head"
-import { Tab, Tabs } from "@artsy/palette"
+import { Tab, TabInfo, Tabs } from "@artsy/palette"
 import { VerificationsCreate } from "./components/VerificationsCreate"
 import { VerificationsList } from "./components/VerificationsList"
 import { useSession } from "next-auth/react"
@@ -26,7 +26,16 @@ const VerificationsPage: React.FC = () => {
         <title>Identity Verifications | Artsy</title>
       </Head>
 
-      <Tabs initialTabIndex={initialTabIndex}>
+      <Tabs
+        initialTabIndex={initialTabIndex}
+        onChange={(activeTab) => {
+          if ((activeTab as TabInfo).name === "Create") {
+            router.push("/verifications?action=create")
+          } else {
+            router.push("/verifications")
+          }
+        }}
+      >
         <Tab name="List">
           <VerificationsList email={router.query.email} />
         </Tab>
