@@ -29,7 +29,7 @@ export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
             .required("A user email is required")
             .email("Please enter a valid email"),
         })}
-        onSubmit={async (values) => {
+        onSubmit={async (values, { resetForm }) => {
           try {
             await submitIdentityVerificationMutation({
               variables: {
@@ -47,6 +47,7 @@ export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
               variant: "success",
               message: "Identity verification created",
             })
+            resetForm()
           } catch (err) {
             console.error("[forque] Error creating identity verification:", err)
 
