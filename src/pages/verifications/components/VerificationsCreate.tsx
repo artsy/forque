@@ -9,7 +9,7 @@ interface VerificationsCreateProps {
 }
 
 interface VerificationMessage {
-  message?: string
+  recipient?: string
   url?: string
 }
 
@@ -32,12 +32,15 @@ export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
   return (
     <>
       {verificationMessage.url && (
-        <Banner mt={1} variant="defaultLight">
-          <p>
-            {verificationMessage.message} <br></br>
-            <a href={verificationMessage.url}>{verificationMessage.url}</a>
-          </p>
-        </Banner>
+        <>
+          <Banner variant="defaultLight">
+            <p>
+              {verificationMessage.recipient} <br></br>
+              <a href={verificationMessage.url}>{verificationMessage.url}</a>
+            </p>
+          </Banner>
+          <Spacer my={2} />
+        </>
       )}
       <Formik<InputTypes>
         initialValues={{ email: props.email ?? "", name: "" }}
@@ -67,8 +70,8 @@ export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
                 ?.verificationURL ?? ""
 
             setVerificationMessage({
-              message: "The following verification URL was sent to the user:",
-              url: verificationURL,
+              recipient: `Identify verification sent to ${values.email}`,
+              url: `Verification URL: ${verificationURL}`,
             })
 
             resetForm()
