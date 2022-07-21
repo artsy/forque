@@ -12,17 +12,6 @@ interface VerificationURLMessage {
   url: string
 }
 
-const displayVerificationURL = (url: string) => {
-  const forceUrl = process.env.production
-    ? "https://artsy.net"
-    : "https://staging.artsy.net"
-
-  return {
-    message: "The following verification URL was sent to the user:",
-    url: `${forceUrl}/${url}`,
-  }
-}
-
 let verificationURLMessage: VerificationURLMessage
 
 export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
@@ -76,7 +65,11 @@ export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
               mutationResponse.sendIdentityVerificationEmail
                 ?.confirmationOrError?.identityVerificationEmail
                 ?.verificationURL ?? ""
-            verificationURLMessage = displayVerificationURL(verificationURL)
+
+            verificationURLMessage = {
+              message: "The following verification URL was sent to the user:",
+              url: verificationURL,
+            }
 
             resetForm()
             sendToast({
