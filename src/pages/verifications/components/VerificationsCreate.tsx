@@ -1,18 +1,17 @@
 import { Input, Spacer, Button, useToasts, Banner } from "@artsy/palette"
 import { Form, Formik } from "formik"
 import * as Yup from "yup"
+import React, { useState } from "react"
 import { useCreateIdentityVerification } from "../mutations/useCreateIdentityVerification"
 
 interface VerificationsCreateProps {
   email?: string
 }
 
-interface VerificationURLMessage {
+interface VerificationMessage {
   message?: string
-  url: string
+  url?: string
 }
-
-let verificationURLMessage: VerificationURLMessage
 
 export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
   props
@@ -22,6 +21,9 @@ export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
 
   const { sendToast } = useToasts()
 
+  const [verificationMessage, setVerificationMessage] =
+    useState<VerificationMessage>({})
+
   interface InputTypes {
     email: string
     name: string
@@ -29,13 +31,11 @@ export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
 
   return (
     <>
-      {verificationURLMessage && (
-        <Banner variant="defaultLight">
+      {verificationMessage.url && (
+        <Banner mt={1} variant="defaultLight">
           <p>
-            {verificationURLMessage.message} <br></br>
-            <a href={verificationURLMessage.url}>
-              {verificationURLMessage.url}
-            </a>
+            {verificationMessage.message} <br></br>
+            <a href={verificationMessage.url}>{verificationMessage.url}</a>
           </p>
         </Banner>
       )}
@@ -66,10 +66,10 @@ export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
                 ?.confirmationOrError?.identityVerificationEmail
                 ?.verificationURL ?? ""
 
-            verificationURLMessage = {
+            setVerificationMessage({
               message: "The following verification URL was sent to the user:",
               url: verificationURL,
-            }
+            })
 
             resetForm()
             sendToast({
