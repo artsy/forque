@@ -58,7 +58,6 @@ export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
             .email("Please enter a valid email"),
         })}
         onSubmit={async (values, { resetForm }) => {
-          console.log(values)
           try {
             const mutationResponse = await submitIdentityVerificationMutation({
               variables: {
