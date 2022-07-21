@@ -14,6 +14,7 @@ export const useCreateIdentityVerification = () => {
             ... on IdentityVerificationEmailMutationSuccessType {
               identityVerificationEmail {
                 internalID
+                verificationURL
               }
             }
 
