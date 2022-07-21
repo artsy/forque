@@ -41,7 +41,7 @@ export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
   return (
     <>
       {verificationURLMessage && (
-        <Banner dismissable variant="defaultLight">
+        <Banner variant="defaultLight">
           <p>
             {verificationURLMessage.message} <br></br>
             <a href={verificationURLMessage.url}>
@@ -60,9 +60,7 @@ export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
         onSubmit={async (values, { resetForm }) => {
           console.log(values)
           try {
-            const {
-              sendIdentityVerificationEmail: { confirmationOrError: response },
-            } = await submitIdentityVerificationMutation({
+            const mutationResponse = await submitIdentityVerificationMutation({
               variables: {
                 input: {
                   email: values.email,
@@ -75,10 +73,12 @@ export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
               },
             })
 
-            verificationURLMessage = displayVerificationURL(
-              response.identityVerificationEmail.verificationURL
-            )
-            console.log(this)
+            const verificationURL: string =
+              mutationResponse.sendIdentityVerificationEmail
+                ?.confirmationOrError?.identityVerificationEmail
+                ?.verificationURL ?? ""
+            verificationURLMessage = displayVerificationURL(verificationURL)
+
             resetForm()
             sendToast({
               variant: "success",
