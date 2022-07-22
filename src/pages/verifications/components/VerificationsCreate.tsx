@@ -64,14 +64,13 @@ export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
               },
             })
 
-            const verificationURL: string =
+            const pageURL: string =
               mutationResponse.sendIdentityVerificationEmail
-                ?.confirmationOrError?.identityVerificationEmail
-                ?.verificationURL ?? ""
+                ?.confirmationOrError?.identityVerification?.pageURL ?? ""
 
             setVerificationMessage({
               recipient: `Identify verification sent to ${values.email}`,
-              url: `Verification URL: ${verificationURL}`,
+              url: `Verification Page URL: ${pageURL}`,
             })
 
             resetForm()

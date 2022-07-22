@@ -12,9 +12,8 @@ export const useCreateIdentityVerification = () => {
           clientMutationId
           confirmationOrError {
             ... on IdentityVerificationEmailMutationSuccessType {
-              identityVerificationEmail {
-                internalID
-                verificationURL
+              identityVerification {
+                pageURL
               }
             }
 
