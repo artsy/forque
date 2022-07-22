@@ -35,7 +35,9 @@ export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
         <>
           <Banner variant="defaultLight">
             <p>
-              {verificationMessage.recipient} <br></br>
+              {verificationMessage.recipient}
+              <br></br>
+              Verification Page URL:
               <a href={verificationMessage.url}>{verificationMessage.url}</a>
             </p>
           </Banner>
@@ -70,7 +72,7 @@ export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
 
             setVerificationMessage({
               recipient: `Identify verification sent to ${values.email}`,
-              url: `Verification Page URL: ${pageURL}`,
+              url: pageURL,
             })
 
             resetForm()
