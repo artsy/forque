@@ -4895,9 +4895,6 @@ type CommercePartner {
 }
 
 enum CommercePaymentMethodEnum {
-  # ACH Transfer
-  ACH_TRANSFER
-
   # Credit Card
   CREDIT_CARD
 
@@ -11633,6 +11630,7 @@ type PartnerArtistDocument {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+  publicUrl: String!
   size: Int!
   title: String!
   uri: String!
@@ -11884,6 +11882,7 @@ type PartnerShowDocument {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+  publicUrl: String!
   size: Int!
   title: String!
   uri: String!
