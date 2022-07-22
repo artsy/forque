@@ -1,12 +1,12 @@
 import { Box, Text, Spacer, Button, BoxProps } from "@artsy/palette"
-import { Row } from "react-table"
+import { FeatureFlagsTable$data } from "__generated__/FeatureFlagsTable.graphql"
 
 interface FeatureFlagOverview extends BoxProps {
-  row: Row
+  values: FeatureFlagsTable$data
 }
 
 const FeatureFlagOverview: React.FC<FeatureFlagOverview> = ({
-  row,
+  values,
   ...rest
 }) => {
   return (
@@ -22,7 +22,7 @@ const FeatureFlagOverview: React.FC<FeatureFlagOverview> = ({
         as="a"
         size="small"
         variant="secondaryOutline"
-        href={`https://unleash.artsy.net/projects/default/features/${row.values.name}/overview`}
+        href={`https://unleash.artsy.net/projects/default/features/${values.name}/overview`}
         target="_blank"
         mr={1}
       >
@@ -34,20 +34,20 @@ const FeatureFlagOverview: React.FC<FeatureFlagOverview> = ({
         as="a"
         size="small"
         variant="secondaryOutline"
-        href={`https://unleash.artsy.net/projects/default/features/${row.values.name}/metrics`}
+        href={`https://unleash.artsy.net/projects/default/features/${values.name}/metrics`}
         target="_blank"
         mr={1}
       >
         Metrics
       </Button>
 
-      {row.values.type === "EXPERIMENT" ? (
+      {values.type === "EXPERIMENT" ? (
         <Button
           // @ts-ignore
           as="a"
           size="small"
           variant="secondaryOutline"
-          href={`https://unleash.artsy.net/projects/default/features/${row.values.name}/variants`}
+          href={`https://unleash.artsy.net/projects/default/features/${values.name}/variants`}
           target="_blank"
         >
           Edit Variants
@@ -58,7 +58,7 @@ const FeatureFlagOverview: React.FC<FeatureFlagOverview> = ({
           as="a"
           size="small"
           variant="secondaryOutline"
-          href={`https://unleash.artsy.net/projects/default/features/${row.values.name}/edit`}
+          href={`https://unleash.artsy.net/projects/default/features/${values.name}/edit`}
           target="_blank"
         >
           Edit
