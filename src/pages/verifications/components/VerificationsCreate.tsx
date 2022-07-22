@@ -34,8 +34,9 @@ export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
       {verificationMessage.url && (
         <>
           <Banner variant="defaultLight">
-            <p>{verificationMessage.recipient} </p>
             <p>
+              {verificationMessage.recipient}
+              <br></br>
               Verification Page URL:
               <a href={verificationMessage.url}>{verificationMessage.url}</a>
             </p>
