@@ -72,7 +72,7 @@ export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
 
             setVerificationMessage({
               recipient: `Identify verification sent to ${values.email}`,
-              url: `${pageURL}`,
+              url: pageURL,
             })
 
             resetForm()
