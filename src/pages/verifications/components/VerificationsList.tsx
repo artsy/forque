@@ -25,9 +25,10 @@ export const VerificationsList: React.FC<VerificationsListProps> = (props) => {
         initialValues={{
           emailInput: props.email ?? "",
         }}
-        onSubmit={({ emailInput }) => {
+        onSubmit={({ emailInput }, { resetForm }) => {
           setUserId("")
           setEmail(emailInput)
+          resetForm()
         }}
         validateOnChange={true}
         validationSchema={Yup.object().shape({

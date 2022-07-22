@@ -78,6 +78,7 @@ export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
               variant: "success",
               message: "Identity verification created",
             })
+            resetForm()
           } catch (err) {
             console.error("[forque] Error creating identity verification:", err)
 
