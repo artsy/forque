@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9347b8dabc222ff66b22cdee41f03714>>
+ * @generated SignedSource<<a8f3a00a46947a4962d2314be7a2b0bb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,8 +22,8 @@ export type useCreateIdentityVerificationMutation$data = {
   readonly sendIdentityVerificationEmail: {
     readonly clientMutationId: string | null;
     readonly confirmationOrError: {
-      readonly identityVerificationEmail?: {
-        readonly internalID: string;
+      readonly identityVerification?: {
+        readonly pageURL: string | null;
       } | null;
       readonly mutationError?: {
         readonly error: string | null;
@@ -63,7 +63,7 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "pageURL",
   "storageKey": null
 },
 v4 = {
@@ -128,9 +128,9 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "IdentityVerificationEmail",
+                    "concreteType": "IdentityVerification",
                     "kind": "LinkedField",
-                    "name": "identityVerificationEmail",
+                    "name": "identityVerification",
                     "plural": false,
                     "selections": [
                       (v3/*: any*/)
@@ -188,9 +188,9 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "IdentityVerificationEmail",
+                    "concreteType": "IdentityVerification",
                     "kind": "LinkedField",
-                    "name": "identityVerificationEmail",
+                    "name": "identityVerification",
                     "plural": false,
                     "selections": [
                       (v3/*: any*/),
@@ -218,16 +218,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a9fe482c382663951bb51e6662303af0",
+    "cacheID": "49326994ac6a11213f08694bc6c8df0a",
     "id": null,
     "metadata": {},
     "name": "useCreateIdentityVerificationMutation",
     "operationKind": "mutation",
-    "text": "mutation useCreateIdentityVerificationMutation(\n  $input: SendIdentityVerificationEmailMutationInput!\n) {\n  sendIdentityVerificationEmail(input: $input) {\n    clientMutationId\n    confirmationOrError {\n      __typename\n      ... on IdentityVerificationEmailMutationSuccessType {\n        identityVerificationEmail {\n          internalID\n          id\n        }\n      }\n      ... on IdentityVerificationEmailMutationFailureType {\n        mutationError {\n          error\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useCreateIdentityVerificationMutation(\n  $input: SendIdentityVerificationEmailMutationInput!\n) {\n  sendIdentityVerificationEmail(input: $input) {\n    clientMutationId\n    confirmationOrError {\n      __typename\n      ... on IdentityVerificationEmailMutationSuccessType {\n        identityVerification {\n          pageURL\n          id\n        }\n      }\n      ... on IdentityVerificationEmailMutationFailureType {\n        mutationError {\n          error\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "2004e271e6fc4aeb82bf008d04eaacab";
+(node as any).hash = "81e9da009dda16c16a3597ff6c6d1998";
 
 export default node;
