@@ -1,10 +1,16 @@
-import { Input, Spacer, Button, useToasts } from "@artsy/palette"
+import { Input, Spacer, Button, useToasts, Banner } from "@artsy/palette"
 import { Form, Formik } from "formik"
 import * as Yup from "yup"
+import React, { useState } from "react"
 import { useCreateIdentityVerification } from "../mutations/useCreateIdentityVerification"
 
 interface VerificationsCreateProps {
   email?: string
+}
+
+interface VerificationMessage {
+  recipient?: string
+  url?: string
 }
 
 export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
@@ -15,6 +21,9 @@ export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
 
   const { sendToast } = useToasts()
 
+  const [verificationMessage, setVerificationMessage] =
+    useState<VerificationMessage>({})
+
   interface InputTypes {
     email: string
     name: string
@@ -22,6 +31,19 @@ export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
 
   return (
     <>
+      {verificationMessage.url && (
+        <>
+          <Banner variant="defaultLight">
+            <p>
+              {verificationMessage.recipient}
+              <br></br>
+              Verification Page URL:
+              <a href={verificationMessage.url}>{verificationMessage.url}</a>
+            </p>
+          </Banner>
+          <Spacer my={2} />
+        </>
+      )}
       <Formik<InputTypes>
         initialValues={{ email: props.email ?? "", name: "" }}
         validationSchema={Yup.object().shape({
@@ -31,7 +53,7 @@ export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
         })}
         onSubmit={async (values, { resetForm }) => {
           try {
-            await submitIdentityVerificationMutation({
+            const mutationResponse = await submitIdentityVerificationMutation({
               variables: {
                 input: {
                   email: values.email,
@@ -43,6 +65,17 @@ export const VerificationsCreate: React.FC<VerificationsCreateProps> = (
                   ?.mutationError
               },
             })
+
+            const pageURL: string =
+              mutationResponse.sendIdentityVerificationEmail
+                ?.confirmationOrError?.identityVerification?.pageURL ?? ""
+
+            setVerificationMessage({
+              recipient: `Identify verification sent to ${values.email}`,
+              url: pageURL,
+            })
+
+            resetForm()
             sendToast({
               variant: "success",
               message: "Identity verification created",
