@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<73ca208cb633feb2c74757d1a176841f>>
+ * @generated SignedSource<<e2fcd1e2a3a39bb255105903dde26740>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,10 +11,11 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type UpdateUserMutationInput = {
   clientMutationId?: string | null;
+  completedOnboardingAt?: string | null;
   dataTransferOptOut?: boolean | null;
-  email: string;
+  email?: string | null;
   id: string;
-  name: string;
+  name?: string | null;
   phone?: string | null;
 };
 export type useUpdateUserMutation$variables = {
