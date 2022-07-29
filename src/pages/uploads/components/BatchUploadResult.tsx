@@ -1,5 +1,4 @@
-import { Box, CheckCircleIcon, Spacer, Text, XCircleIcon } from "@artsy/palette"
-import Link from "next/link"
+import { Box, CheckCircleIcon, Text, XCircleIcon } from "@artsy/palette"
 import { FC } from "react"
 
 interface BatchResultProps {
@@ -9,8 +8,6 @@ interface BatchResultProps {
 export const BatchUploadResult: FC<BatchResultProps> = ({ results }) => {
   return (
     <>
-      <Spacer mt={4} />
-
       {results.map((result, i) => (
         <Box
           key={i}
@@ -22,9 +19,12 @@ export const BatchUploadResult: FC<BatchResultProps> = ({ results }) => {
         >
           {result.status === "success" ? (
             <>
-              <Link href={`/uploads/${encodeURIComponent(result.key)}`}>
+              <a
+                href={`/uploads/${encodeURIComponent(result.key)}`}
+                target="_blank noreferrer"
+              >
                 {result.key}
-              </Link>
+              </a>
               <CheckCircleIcon />
             </>
           ) : (

@@ -62,6 +62,8 @@ export const UploadButton = () => {
         </>
       )}
 
+      <Spacer mt={4} />
+
       {displayBatch && <BatchUploadResult results={uploadResults} />}
     </>
   )
